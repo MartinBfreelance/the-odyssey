@@ -1,0 +1,248 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="THE ODYSSEY | Slow Travel Magazine & Guides Complets">
+  
+  <!-- HERO SLIDER AUTOMATIQUE 3 SECONDES -->
+  <section class="relative h-[80vh] w-full bg-neutral-950 flex items-center justify-center text-center px-6 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <!-- Image 1 (Active par défaut) -->
+      <img 
+        src="/images/drone/drone-albania-5.JPG" 
+        alt="The Odyssey Slide 1" 
+        class="slide-img absolute inset-0 w-full h-full object-cover opacity-65 transition-opacity duration-1000 ease-in-out" 
+      />
+      <!-- Image 2 (Masquée) -->
+      <img 
+        src="/images/drone/drone-albania-1.JPG" 
+        alt="The Odyssey Slide 2" 
+        class="slide-img absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" 
+      />
+      <!-- Image 3 (Masquée) -->
+      <img 
+        src="/images/drone/drone-albania-2.JPG" 
+        alt="The Odyssey Slide 3" 
+        class="slide-img absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" 
+      />
+      <!-- Dégradé adouci persistant par-dessus le slider -->
+      <div class="absolute inset-0 bg-gradient-to-b from-neutral-950/20 via-transparent to-[#FAF9F6]/25 z-10"></div>
+    </div>
+
+    <!-- TEXTE FIXE MAGAZINE BLANC -->
+    <div class="relative z-20 max-w-4xl mx-auto text-white space-y-4">
+      <span class="text-[10px] font-mono tracking-[0.5em] uppercase text-neutral-200 block drop-shadow-xs">Slow Travel Magazine</span>
+      <h1 class="text-4xl sm:text-7xl font-serif font-light tracking-tight leading-[1.15] drop-shadow-md">
+        Prendre le temps de<br/><span class="italic font-normal text-neutral-100">découvrir le monde.</span>
+      </h1>
+      <p class="text-neutral-200 max-w-md mx-auto text-[10px] font-mono tracking-widest uppercase pt-4 drop-shadow-xs">
+        Guides complets de 1 à 2 semaines pour explorateurs libres
+      </p>
+    </div>
+  </section>
+
+  <!-- LISTE DES GUIDES (GRILLE DE 4 CARTES PAR LIGNE SUR ÉCRAN LARGE) -->
+  <section id="destinations" class="max-w-[95%] mx-auto px-4 py-20 border-t border-neutral-200/60 scroll-mt-20">
+    <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-400 block mb-12 text-center sm:text-left">Nos Itinéraires au Long Cours</span>
+    
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-16">
+      <!-- CARD 1 : ALBANIE -->
+      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
+          <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
+          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Itinéraire Albanie" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+        </div>
+        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-1.5">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // Balkans</span>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Albanie : Riviera & Parcs</h2>
+            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">De Tirana aux plages sauvages de Ksamil. Un road-trip équilibré d'une semaine complète entre villages de pierre et criques cachées.</p>
+          </div>
+          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Logements conseillés</a>
+            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Albanie (-5%)</a>
+            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 2 : LA CORSE -->
+      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
+          <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">2 Semaines</span>
+          <img src="https://unsplash.com" alt="Guide Corse" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+        </div>
+        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-1.5">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Corse : L'Île de Beauté</h2>
+            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">15 jours des calanques de Piana aux falaises de Bonifacio. Les plus belles aiguilles de Bavella et criques d'eau turquoise.</p>
+          </div>
+          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Réserver ses bergeries</a>
+            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Corse</a>
+            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 3 : CHICAGO -->
+      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
+          <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
+          <img src="https://unsplash.com" alt="Guide Chicago" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+        </div>
+        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-1.5">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Amérique // USA</span>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Chicago : Architecture & Blues</h2>
+            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">Une semaine immersive le long du Michigan. Exploration des gratte-ciels cultes, du Millenium Park et des clubs de jazz historiques.</p>
+          </div>
+          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Downtown Chicago</a>
+            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM USA (-5%)</a>
+            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 4 : MIAMI -->
+      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
+          <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">2 Semaines</span>
+          <img src="https://unsplash.com" alt="Guide Miami" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+        </div>
+        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-1.5">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Amérique // USA</span>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Miami & Floride : Le Soleil</h2>
+            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">15 jours de South Beach aux marais des Everglades. Itinéraire magique sur l'Overseas Highway jusqu'au bout de Key West.</p>
+          </div>
+          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Boutiques hôtels Miami</a>
+            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Floride</a>
+            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
+          </div>
+        </div>
+      </article>
+      <!-- CARD 5 : SAINT-TROPEZ -->
+      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
+          <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
+          <img src="https://unsplash.com" alt="Guide Saint-Tropez" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+        </div>
+        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-1.5">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Saint-Tropez & Villages du Var</h2>
+            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">Une semaine de douceur de vivre. Des ruelles de la Ponche aux sentiers côtiers de Ramatuelle et vignobles cachés du Var.</p>
+          </div>
+          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Logements de charme</a>
+            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM France</a>
+            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 6 : BORDEAUX -->
+      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
+          <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
+          <img src="https://unsplash.com" alt="Guide Bordeaux" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+        </div>
+        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-1.5">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Bordeaux & Épopée Viticole</h2>
+            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">7 jours d'immersion culturelle. Splendeurs architecturales de la ville de pierre, Cité du Vin et escapades à Saint-Émilion.</p>
+          </div>
+          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Centre Historique</a>
+            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Europe</a>
+            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 7 : BASSIN D'ARCACHON -->
+      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
+          <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
+          <img src="https://unsplash.com" alt="Guide Arcachon" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+        </div>
+        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-1.5">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Le Bassin d'Arcachon & Cap Ferret</h2>
+            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">Une semaine iodée. Ascension de la Dune du Pilat, dégustation d'huîtres dans les cabanes ostréicoles et traversée en pinasse.</p>
+          </div>
+          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Réserver ses cabanes</a>
+            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM France</a>
+            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 8 : BIARRITZ -->
+      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
+          <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">2 Semaines</span>
+          <img src="https://unsplash.com" alt="Guide Biarritz" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+        </div>
+        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-1.5">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Biarritz & Le Pays Basque</h2>
+            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">15 jours majeurs entre vagues de l'Océan Atlantique, sessions de surf, et immersion dans les villages d'Espelette.</p>
+          </div>
+          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Côte Basque</a>
+            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM France</a>
+            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+  <!-- SECTION MONÉTISATION PRINCIPALE -->
+  <section id="bons-plans" class="max-w-4xl mx-auto px-8 py-16 bg-neutral-950 text-white rounded-none my-16 border-t-4 border-amber-600">
+    <div class="space-y-12">
+      <div class="space-y-3">
+        <p class="text-amber-600 font-mono text-[9px] uppercase tracking-[0.3em]">Conciergerie & Partenaires</p>
+        <h2 class="text-2xl font-serif font-light tracking-tight">Les Réductions du Voyageur Privilégié</h2>
+        <p class="text-neutral-400 text-xs font-light leading-relaxed">Nous sélectionnons nos partenaires avec soin. En passant par nos invitations, vous économisez sur vos réservations tout en soutenant notre travail indépendant.</p>
+      </div>
+      <div id="astuces" class="grid sm:grid-cols-2 gap-8 text-left font-mono text-[10px]">
+        <div class="border border-neutral-800 p-6 space-y-3 bg-neutral-900/40">
+          <p class="text-amber-500 uppercase tracking-wider font-bold">📱 Forfaits Internet eSIM</p>
+          <p class="text-neutral-400 leading-relaxed">Activez vos données à l'étranger instantanément. Bénéficiez de 5% de remise immédiate pour éviter les hors-forfaits.</p>
+          <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors">Lien Privilège Saily ⮕</a>
+        </div>
+        <div class="border border-neutral-800 p-6 space-y-3 bg-neutral-900/40">
+          <p class="text-amber-500 uppercase tracking-wider font-bold">🏥 Assurance Voyage & Santé</p>
+          <p class="text-neutral-400 leading-relaxed">Couverture médicale complète, rapatriement et annulation de vol pour explorer le globe en totale sérénité.</p>
+          <a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors">Bénéficier des 5% Chapka ⮕</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<!-- SCRIPT CHRONO AUTOMATIQUE 3 SECONDES (3000ms) -->
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('.slide-img');
+    let currentIndex = 0;
+
+    if(images.length > 0) {
+      setInterval(() => {
+        images[currentIndex].style.opacity = '0';
+        currentIndex = (currentIndex + 1) % images.length;
+        images[currentIndex].style.opacity = '0.6';
+      }, 3000);
+    }
+  });
+</script>
