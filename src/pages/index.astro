@@ -269,7 +269,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Asie // Japon // Tokyo</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Tokyo : Immersion Urbaine</h2>
+            <h2 class="text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Tokyo : Immersion Urbaine</h2>
             <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine vibrante au cœur de la capitale nippone. Des passages piétons de Shibuya aux sanctuaires cachés d'Asakusa.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
@@ -290,7 +290,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // Russie // Moscou</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Moscou : Cœur Historique</h2>
+            <h2 class="text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Moscou : Cœur Historique</h2>
             <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">7 jours à la découverte des secrets de la Place Rouge, de l'architecture impériale du Kremlin et des métros cathédrales.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
@@ -543,6 +543,8 @@ import Layout from '../layouts/Layout.astro';
         if (currentPage > 1) { 
           currentPage--; 
           updatePagination(); 
+          // Scroll fluide automatique et calé sous le header fixe
+          document.getElementById('destinations')?.scrollIntoView({ behavior: 'smooth' });
           needle.style.transform = 'rotate(-60deg)'; 
           setTimeout(() => needle.style.transform = 'rotate(0deg)', 250); 
         } 
@@ -551,6 +553,8 @@ import Layout from '../layouts/Layout.astro';
         if (currentPage < Math.ceil(visibleCards.length / cardsPerPage)) { 
           currentPage++; 
           updatePagination(); 
+          // Scroll fluide automatique et calé sous le header fixe
+          document.getElementById('destinations')?.scrollIntoView({ behavior: 'smooth' });
           needle.style.transform = 'rotate(60deg)'; 
           setTimeout(() => needle.style.transform = 'rotate(0deg)', 250); 
         } 
