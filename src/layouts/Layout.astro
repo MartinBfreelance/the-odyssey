@@ -14,8 +14,9 @@ import '../styles/global.css';
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<title>{title}</title>
-		<link rel="preconnect" href="https://googleapis.com">
-		<link rel="preconnect" href="https://gstatic.com" crossorigin>
+		<!-- Correction des URLs Google Fonts Preconnect -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 	</head>
 	<body class="bg-[#FAF9F6] text-neutral-900 antialiased min-h-screen flex flex-col justify-between">
@@ -28,13 +29,13 @@ import '../styles/global.css';
 				<a href="#" class="flex items-center space-x-4 group">
 					<!-- Boussole fine blanche qui pivote au survol -->
 					<div class="w-8 h-8 text-white group-hover:text-amber-400 relative flex items-center justify-center">
-						<svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-full h-full">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-full h-full">
 							<circle cx="12" cy="12" r="10" />
 							<circle cx="12" cy="12" r="7" stroke-dasharray="2 2" />
 							<path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.5" />
 						</svg>
 						<div class="absolute inset-0 flex items-center justify-center group-hover:rotate-180 transition-transform duration-1000 ease-out">
-							<svg xmlns="http://w3.org" fill="currentColor" viewBox="0 0 24 24" class="w-full h-full scale-60 text-white group-hover:text-amber-400">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-full h-full scale-60 text-white group-hover:text-amber-400">
 								<path d="M12 2l2.5 7.5L12 12l-2.5-2.5L12 2zm0 20l2.5-7.5L12 12l-2.5 2.5L12 22z" />
 							</svg>
 						</div>
@@ -89,4 +90,9 @@ import '../styles/global.css';
 <style is:global>
 	h1, h2, h3, .font-serif { font-family: 'Playfair Display', serif; }
 	body, .font-sans { font-family: 'Inter', sans-serif; }
+
+	/* Texture de papier fine, presque imperceptible (opacité de 1.2%) sur fond blanc albâtre */
+	body {
+		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.012'/%3E%3C/svg%3E");
+	}
 </style>
