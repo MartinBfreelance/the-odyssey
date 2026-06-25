@@ -25,26 +25,23 @@ import '../styles/global.css';
 		<header class="w-full fixed top-0 left-0 z-50 bg-neutral-950/10 backdrop-blur-md border-b border-white/10 transition-all duration-300">
 			<div class="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
 				
-				<!-- BLOC MARQUE GAUCHE COMPOSÉ EN BLANC PUR -->
-				<a href="#" class="flex items-center space-x-4 group">
-					<!-- Boussole fine blanche qui pivote au survol -->
-					<div class="w-8 h-8 text-white group-hover:text-amber-400 relative flex items-center justify-center">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-full h-full">
-							<circle cx="12" cy="12" r="10" />
-							<circle cx="12" cy="12" r="7" stroke-dasharray="2 2" />
-							<path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.5" />
-						</svg>
-						<div class="absolute inset-0 flex items-center justify-center group-hover:rotate-180 transition-transform duration-1000 ease-out">
-							<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-full h-full scale-60 text-white group-hover:text-amber-400">
-								<path d="M12 2l2.5 7.5L12 12l-2.5-2.5L12 2zm0 20l2.5-7.5L12 12l-2.5 2.5L12 22z" />
-							</svg>
-						</div>
-					</div>
-					<div class="flex flex-col">
-						<span class="text-sm font-serif tracking-[0.35em] font-bold text-white group-hover:text-amber-400 transition-colors">THE ODYSSEY</span>
-						<span class="text-[7px] font-mono tracking-[0.2em] text-white/60 uppercase mt-0.5">Slow Travel Magazine</span>
-					</div>
-				</a>
+				<!-- LOGO AVEC LA LIGNE DE CODE DE TEXTE DIRECTEMENT AJUSTÉE -->
+        <a href="/" class="flex items-center space-x-3 group select-none">
+          <div class="w-7 h-7 text-neutral-900 group-hover:rotate-45 group-hover:text-amber-600 transition-all duration-500 ease-out shrink-0">
+            <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+              <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+              <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+              <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+            </svg>
+          </div>
+          <div class="flex flex-col text-left leading-none">
+  <span class="font-serif text-sm sm:text-base font-medium tracking-[0.25em] text-white uppercase group-hover:text-amber-500 transition-colors">THE ODYSSEY</span>
+  <span class="text-[7.5px] font-mono tracking-[0.18em] uppercase text-neutral-400 mt-1">Slow Travel Journal</span>
+</div>
+
+        </a>
 
 				<!-- BLOC NAVIGATION DROITE -->
 				<div class="flex items-center space-x-12">

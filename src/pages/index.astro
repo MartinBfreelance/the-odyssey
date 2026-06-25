@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="THE ODYSSEY | Slow Travel Magazine & Guides Complets">
+<Layout title="THE ODYSSEY | Slow Travel Journal & Guide">
   
   <!-- HERO SLIDER PLEIN ÉCRAN TOTAL (H-SCREEN STYLE BOKO STUDIO) -->
   <section class="relative h-screen w-full bg-neutral-950 flex items-center justify-center text-center px-4 sm:px-6 overflow-hidden">
@@ -23,24 +23,28 @@ import Layout from '../layouts/Layout.astro';
         class="slide-img absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" 
       />
       
-      <!-- MASQUE NOIR TRANSITORY COMPATIBLE CHROME/SAFARI -->
+      <!-- MASQUES ET FADES DE TRANSITION -->
       <div class="absolute inset-0 bg-gradient-to-b from-neutral-950/20 via-transparent to-neutral-950/30 z-10"></div>
-      
-      <!-- FADE DE TRANSITION BASSE COMPATIBLE TOUS MOTEURS -->
       <div class="absolute bottom-0 left-0 right-0 h-[25vh] bg-gradient-to-b from-transparent to-[#FAF7F2] z-10"></div>
     </div>
 
-    <!-- TEXTE INTEGRÉ AVEC UNITÉS ADAPTATIVES EM/REM -->
+    <!-- ZONE DE TEXTE INTÉGRÉE MISE À JOUR AVEC TES NOUVEAUX TEXTES EDITORIAUX -->
     <div class="relative z-20 w-full max-w-4xl mx-auto text-white space-y-4 px-2">
-      <span class="text-[10px] font-mono tracking-[0.5em] uppercase text-neutral-200 block drop-shadow-xs">Slow Travel Magazine</span>
+      <!-- 1. TEXTE DU HAUT : SLOW TRAVEL JOURNAL -->
+      <span class="text-[10px] font-mono tracking-[0.5em] uppercase text-neutral-200 block drop-shadow-xs">Slow Travel Journal</span>
+      
+      <!-- 2. TITRE PRINCIPAL COMMENCANT EN ANGLAIS -->
       <h1 class="text-3xl sm:text-5xl md:text-7xl font-serif font-light tracking-tight leading-[1.2] drop-shadow-md">
-        Prendre le temps de<br/><span class="italic font-normal text-neutral-100">découvrir le monde.</span>
+        Take the time to<br/><span class="italic font-normal text-neutral-100">discover the world.</span>
       </h1>
-      <p class="text-neutral-200 max-w-md mx-auto text-[9px] sm:text-[10px] font-mono tracking-widest uppercase pt-2 sm:pt-4 drop-shadow-xs">
-        Guides complets de 1 à 2 semaines pour explorateurs libres
+      
+      <!-- 3. SOUS-TITRE COMPLET INTÉGRÉ D'UN EXPLORATEUR À D'AUTRES -->
+      <p class="text-neutral-200/90 max-w-md mx-auto text-[9px] sm:text-[10px] font-mono tracking-widest uppercase pt-2 sm:pt-4 drop-shadow-xs">
+        Complete guides from one explorer to another
       </p>
     </div>
   </section>
+
   <!-- SECTION DESTINATIONS SÉCURISÉE CONTRE LE ZOOM -->
   <section id="destinations" class="w-full max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 py-16 sm:py-20 border-t border-neutral-200/60 scroll-mt-20 overflow-hidden">
     
