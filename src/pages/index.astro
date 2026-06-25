@@ -4,7 +4,7 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="THE ODYSSEY | Slow Travel Magazine & Guides Complets">
   
-  <!-- HERO SLIDER PLEIN ÉCRAN + EFFET DE GRADIENT COURT ET LISSÉ DE BOKO STUDIO -->
+  <!-- HERO SLIDER PLEIN ÉCRAN TOTAL (H-SCREEN STYLE BOKO STUDIO) -->
   <section class="relative h-screen w-full bg-neutral-950 flex items-center justify-center text-center px-6 overflow-hidden">
     <div class="absolute inset-0 z-0">
       <img 
@@ -23,10 +23,10 @@ import Layout from '../layouts/Layout.astro';
         class="slide-img absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" 
       />
       
-      <!-- MASQUE DE SURROUND NOIR TRANSITORY (Empêche le blanc de remonter trop haut sur l'image) -->
+      <!-- MASQUE DE SURROUND NOIR TRANSITORY -->
       <div class="absolute inset-0 bg-gradient-to-b from-neutral-950/20 via-transparent to-neutral-950/30 z-10"></div>
       
-      <!-- FADE DE TRANSITION ULTRA COURT TOUT EN BAS VERS LE FOND IVOIRE (STYLE EXACT BOKO) -->
+      <!-- FADE DE TRANSITION ULTRA COURT TOUT EN BAS VERS LE FOND IVOIRE -->
       <div class="absolute bottom-0 left-0 right-0 h-[25vh] bg-gradient-to-b from-transparent to-[#FAF9F6] z-10"></div>
     </div>
 
@@ -60,7 +60,7 @@ import Layout from '../layouts/Layout.astro';
     
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-16">
       
-      <!-- CARD 1 : ALBANIE -->
+      <!-- CARD 1 : ALBANIE (IMAGE DRONE UNIQUE 5) -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
@@ -80,11 +80,11 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </article>
 
-      <!-- CARD 2 : LA CORSE -->
+      <!-- CARD 2 : LA CORSE (IMAGE DRONE UNIQUE 1) -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">2 Semaines</span>
-          <img src="https://unsplash.com" alt="Guide Corse" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Corse" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-1.5">
@@ -99,11 +99,11 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
       </article>
-      <!-- CARD 3 : CHICAGO -->
+      <!-- CARD 3 : CHICAGO (IMAGE DRONE UNIQUE 2) -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
-          <img src="https://unsplash.com" alt="Guide Chicago" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Chicago" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-1.5">
@@ -119,11 +119,11 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </article>
 
-      <!-- CARD 4 : MIAMI -->
+      <!-- CARD 4 : MIAMI (IMAGE DRONE UNIQUE 5) -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">2 Semaines</span>
-          <img src="https://unsplash.com" alt="Guide Miami" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Miami" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-1.5">
@@ -139,11 +139,11 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </article>
 
-      <!-- CARD 5 : SAINT-TROPEZ -->
+      <!-- CARD 5 : SAINT-TROPEZ (IMAGE DRONE UNIQUE 1) -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
-          <img src="https://unsplash.com" alt="Guide Saint-Tropez" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Saint-Tropez" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-1.5">
@@ -158,11 +158,11 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
       </article>
-      <!-- CARD 6 : BORDEAUX -->
+      <!-- CARD 6 : BORDEAUX (IMAGE DRONE UNIQUE 2) -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
-          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Bordeaux" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Bordeaux" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-1.5">
@@ -178,11 +178,11 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </article>
 
-      <!-- CARD 7 : BASSIN D'ARCACHON -->
+      <!-- CARD 7 : BASSIN D'ARCACHON (IMAGE DRONE UNIQUE 5) -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
-          <img src="https://unsplash.com" alt="Guide Arcachon" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Arcachon" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-1.5">
@@ -198,11 +198,11 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </article>
 
-      <!-- CARD 8 : BIARRITZ -->
+      <!-- CARD 8 : BIARRITZ (IMAGE DRONE UNIQUE 1) -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">2 Semaines</span>
-          <img src="https://unsplash.com" alt="Guide Biarritz" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Biarritz" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-1.5">
@@ -261,7 +261,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
 
-    <!-- COLONNE DROITE : LE FLUX INSTAGRAM PUR -->
+    <!-- COLONNE DROITE : LE FLUX INSTAGRAM PUR (VIGNETTES INTERNES STABLES) -->
     <div class="w-full lg:w-[45%] bg-white border border-neutral-200/50 p-8 rounded-sm shadow-2xs space-y-6 text-center">
       <div class="space-y-4">
         <div class="flex items-center justify-center space-x-3">
@@ -276,16 +276,17 @@ import Layout from '../layouts/Layout.astro';
         </a>
       </div>
 
+      <!-- Grille de 9 vignettes qui alternent proprement tes 3 photos locales (Fini les carrés blancs brisés !) -->
       <div class="grid grid-cols-3 gap-2 pt-4">
         <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-5.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
-        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
-        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
         <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
         <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
-        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
-        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
-        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
-        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-5.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-5.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
       </div>
     </div>
   </section>
