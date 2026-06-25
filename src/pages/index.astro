@@ -4,9 +4,9 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="THE ODYSSEY | Slow Travel Magazine & Guides Complets">
   
-  <!-- HERO SLIDER PLEIN ÉCRAN + EFFET DE GRADIENT COURT ET LISSÉ DE BOKO STUDIO -->
-  <section class="relative h-screen w-full bg-neutral-950 flex items-center justify-center text-center px-6 overflow-hidden">
-    <div class="absolute inset-0 z-0">
+  <!-- HERO SLIDER PLEIN ÉCRAN TOTAL (H-SCREEN STYLE BOKO STUDIO) -->
+  <section class="relative h-screen w-full bg-neutral-950 flex items-center justify-center text-center px-4 sm:px-6 overflow-hidden">
+    <div class="absolute inset-0 z-0 pointer-events-none select-none">
       <img 
         src="/images/drone/drone-albania-5.JPG" 
         alt="The Odyssey Slide 1" 
@@ -23,56 +23,84 @@ import Layout from '../layouts/Layout.astro';
         class="slide-img absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" 
       />
       
-      <!-- MASQUE DE SURROUND NOIR TRANSITORY (Empêche le blanc de remonter trop haut sur l'image) -->
+      <!-- MASQUE NOIR TRANSITORY COMPATIBLE CHROME/SAFARI -->
       <div class="absolute inset-0 bg-gradient-to-b from-neutral-950/20 via-transparent to-neutral-950/30 z-10"></div>
       
-      <!-- FADE DE TRANSITION ULTRA COURT TOUT EN BAS VERS LE FOND ALBÂTRE PROPRE (STYLE EXACT BOKO) -->
-      <div class="absolute bottom-0 left-0 right-0 h-[25vh] bg-gradient-to-b from-transparent to-[#FAF9F6] z-10"></div>
+      <!-- FADE DE TRANSITION BASSE COMPATIBLE TOUS MOTEURS -->
+      <div class="absolute bottom-0 left-0 right-0 h-[25vh] bg-gradient-to-b from-transparent to-[#FAF7F2] z-10"></div>
     </div>
 
-    <!-- TEXTE INTEGRÉ DANS LE SLIDER IMMERSIF -->
-    <div class="relative z-20 max-w-4xl mx-auto text-white space-y-4">
+    <!-- TEXTE INTEGRÉ AVEC UNITÉS ADAPTATIVES EM/REM -->
+    <div class="relative z-20 w-full max-w-4xl mx-auto text-white space-y-4 px-2">
       <span class="text-[10px] font-mono tracking-[0.5em] uppercase text-neutral-200 block drop-shadow-xs">Slow Travel Magazine</span>
-      <h1 class="text-4xl sm:text-7xl font-serif font-light tracking-tight leading-[1.15] drop-shadow-md">
+      <h1 class="text-3xl sm:text-5xl md:text-7xl font-serif font-light tracking-tight leading-[1.2] drop-shadow-md">
         Prendre le temps de<br/><span class="italic font-normal text-neutral-100">découvrir le monde.</span>
       </h1>
-      <p class="text-neutral-200 max-w-md mx-auto text-[10px] font-mono tracking-widest uppercase pt-4 drop-shadow-xs">
+      <p class="text-neutral-200 max-w-md mx-auto text-[9px] sm:text-[10px] font-mono tracking-widest uppercase pt-2 sm:pt-4 drop-shadow-xs">
         Guides complets de 1 à 2 semaines pour explorateurs libres
       </p>
     </div>
   </section>
-  <!-- LISTE DES GUIDES COMPLETS ALIGNÉE -->
-  <section id="destinations" class="max-w-7xl mx-auto px-8 py-20 border-t border-neutral-200/60 scroll-mt-20">
+  <!-- SECTION DESTINATIONS SÉCURISÉE CONTRE LE ZOOM -->
+  <section id="destinations" class="w-full max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 py-16 sm:py-20 border-t border-neutral-200/60 scroll-mt-20 overflow-hidden">
     
-    <!-- TITRE DE SECTION AVEC ICONE SIGNATURE BOUSSOLE INTERACTIVE -->
-    <div class="flex items-center space-x-3 mb-12 justify-center sm:justify-start group/section-title cursor-default">
-      <div class="w-4 h-4 text-amber-600 group-hover/section-title:rotate-45 group-hover/section-title:text-amber-500 transition-all duration-500 ease-out">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="2"></path>
-          <path fill="currentColor" d="M12 7l1.5 3.5L12 12l-1.5-1.5zM12 17l1.5-3.5L12 12l-1.5 1.5z"></path>
-        </svg>
+    <!-- EN-TÊTE ULTRA-RESPONSIVE COMPATIBLE SAFARI ET CHROME MOBILE -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12 border-b border-neutral-200/40 pb-8">
+      
+      <!-- TITRE DE SECTION AVEC ICONE SIGNATURE BOUSSOLE INTERACTIVE -->
+      <div class="flex items-center space-x-3 group/section-title cursor-default text-center sm:text-left">
+        <div class="w-4 h-4 text-amber-600 group-hover/section-title:rotate-45 group-hover/section-title:text-amber-500 transition-all duration-500 ease-out shrink-0">
+          <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="2"></path>
+            <path fill="currentColor" d="M12 7l1.5 3.5L12 12l-1.5-1.5zM12 17l1.5-3.5L12 12l-1.5 1.5z"></path>
+          </svg>
+        </div>
+        <span class="text-[10px] font-mono tracking-[0.4em] uppercase text-neutral-400 group-hover/section-title:text-amber-700 transition-colors duration-300">
+          Nos Itinéraires au Long Cours
+        </span>
       </div>
-      <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-400 group-hover/section-title:text-amber-700 transition-colors duration-300">
-        Nos Itinéraires au Long Cours
-      </span>
+
+      <!-- FILTRES RESPONSIVES ALIGNÉS SANS CHEVAUCHEMENT -->
+      <div class="flex flex-col xs:flex-row items-center gap-3 w-full sm:w-auto justify-end">
+        <!-- Input Recherche -->
+        <div class="relative w-full xs:w-48 sm:w-56">
+          <input 
+            type="text" 
+            id="destination-search" 
+            placeholder="Rechercher..." 
+            class="w-full bg-[#FFFFFF] border border-neutral-200/80 px-3 py-2 pl-8 text-[11px] font-mono uppercase tracking-wider text-neutral-800 placeholder-neutral-400 focus:outline-hidden focus:border-amber-600 rounded-xs transition-colors shadow-2xs"
+          />
+          <span class="absolute left-2.5 top-2.5 text-neutral-400 text-[10px]">🔍</span>
+        </div>
+        
+        <!-- Menu Déroulant Compact -->
+        <div class="relative w-full xs:w-auto">
+          <select 
+            id="compact-filter" 
+            class="w-full xs:w-auto bg-[#FFFFFF] border border-neutral-200/80 px-4 py-2 pr-8 text-[11px] font-mono uppercase tracking-widest text-neutral-700 focus:outline-hidden focus:border-amber-600 rounded-xs transition-colors shadow-2xs appearance-none cursor-pointer"
+          >
+          </select>
+          <span class="absolute right-3 top-3 text-[8px] text-neutral-400 pointer-events-none">▼</span>
+        </div>
+      </div>
     </div>
     
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-16">
-      
+    <!-- CONTENEUR GRILLE BLINDÉ -->
+    <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 sm:gap-x-8 sm:gap-y-16 transition-all duration-500">
       <!-- CARD 1 : ALBANIE -->
-      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="Albanie" data-search="europe balkans albanie riviera parcs tirana ksamil">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
           <img src="/images/drone/drone-albania-5.JPG" alt="Guide Itinéraire Albanie" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
-        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-1.5">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // Balkans</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Albanie : Riviera & Parcs</h2>
-            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">De Tirana aux plages sauvages de Ksamil. Un road-trip équilibré d'une semaine complète entre villages de pierre et criques cachées.</p>
+        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // Balkans // Albanie</span>
+            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Albanie : Riviera & Parcs</h2>
+            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">De Tirana aux plages sauvages de Ksamil. Un road-trip équilibré d'une semaine complète entre villages de pierre et criques cachées.</p>
           </div>
-          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
             <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Logements conseillés</a>
             <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Albanie (-5%)</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
@@ -81,18 +109,18 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 2 : LA CORSE -->
-      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="France" data-search="europe france corse ile beaute piana bonifacio bavella">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">2 Semaines</span>
           <img src="/images/drone/drone-albania-1.JPG" alt="Guide Corse" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
-        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-1.5">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Corse : L'Île de Beauté</h2>
-            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">15 jours des calanques de Piana aux falaises de Bonifacio. Les plus belles aiguilles de Bavella et criques d'eau turquoise.</p>
+        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Corse</span>
+            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Corse : L'Île de Beauté</h2>
+            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">15 jours des calanques de Piana aux falaises de Bonifacio. Les plus belles aiguilles de Bavella et criques d'eau turquoise.</p>
           </div>
-          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
             <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Réserver ses bergeries</a>
             <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Corse</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
@@ -101,18 +129,18 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 3 : CHICAGO -->
-      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Amérique" data-country="USA" data-search="amerique usa chicago architecture michigan gratte ciel millenium park jazz">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
           <img src="/images/drone/drone-albania-2.JPG" alt="Guide Chicago" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
-        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-1.5">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Amérique // USA</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Chicago : Architecture</h2>
-            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">Une semaine immersive le long du Michigan. Exploration des gratte-ciels cultes, du Millenium Park et des clubs de jazz historiques.</p>
+        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Amérique // USA // Chicago</span>
+            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Chicago : Architecture</h2>
+            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine immersive le long du Michigan. Exploration des gratte-ciels cultes, du Millenium Park et des clubs de jazz historiques.</p>
           </div>
-          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
             <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Downtown Chicago</a>
             <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM USA (-5%)</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
@@ -121,38 +149,37 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 4 : MIAMI -->
-      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Amérique" data-country="USA" data-search="amerique usa miami floride soleil south beach everglades highway key west">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">2 Semaines</span>
           <img src="/images/drone/drone-albania-5.JPG" alt="Guide Miami" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
-        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-1.5">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Amérique // USA</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Miami & Floride : Le Soleil</h2>
-            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">15 jours de South Beach aux marais des Everglades. Itinéraire magique sur l'Overseas Highway jusqu'au bout de Key West.</p>
+        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Amérique // USA // Floride</span>
+            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Miami & Floride : Le Soleil</h2>
+            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">15 jours de South Beach aux marais des Everglades. Itinéraire magique sur l'Overseas Highway jusqu'au bout de Key West.</p>
           </div>
-          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
             <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Boutiques hôtels Miami</a>
             <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Floride</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
           </div>
         </div>
       </article>
-
       <!-- CARD 5 : SAINT-TROPEZ -->
-      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="France" data-search="europe france saint tropez var douceur ponche ramatuelle vignobles">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
           <img src="/images/drone/drone-albania-1.JPG" alt="Guide Saint-Tropez" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
-        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-1.5">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Saint-Tropez & Var</h2>
-            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">Une semaine de douceur de vivre. Des ruelles de la Ponche aux sentiers côtiers de Ramatuelle et vignobles cachés du Var.</p>
+        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Saint-Tropez</span>
+            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Saint-Tropez & Var</h2>
+            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine de douceur de vivre. Des ruelles de la Ponche aux sentiers côtiers de Ramatuelle et vignobles cachés du Var.</p>
           </div>
-          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
             <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Logements de charme</a>
             <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM France</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
@@ -161,18 +188,18 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 6 : BORDEAUX -->
-      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="France" data-search="europe france bordeaux vignobles immersion culturelle pierre cite du vin saint emilion">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
-          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Bordeaux" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Bordeaux" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
-        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-1.5">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Bordeaux & Vignobles</h2>
-            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">7 jours d'immersion culturelle. Splendeurs architecturales de la ville de pierre, Cité du Vin et escapades à Saint-Émilion.</p>
+        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Bordeaux</span>
+            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Bordeaux & Vignobles</h2>
+            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">7 jours d'immersion culturelle. Splendeurs architecturales de la ville de pierre, Cité du Vin et escapades à Saint-Émilion.</p>
           </div>
-          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
             <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Centre Historique</a>
             <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Europe</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
@@ -181,18 +208,18 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 7 : BASSIN D'ARCACHON -->
-      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="France" data-search="europe france arcachon bassin pilat huitres cabanes cap ferret">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
-          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Arcachon" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <img src="/images/drone/drone-albania-5.JPG" alt="Le Bassin d'Arcachon" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
-        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-1.5">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Le Bassin d'Arcachon</h2>
-            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">Une semaine iodée. Ascension de la Dune du Pilat, dégustation d'huîtres dans les cabanes ostréicoles et Cap Ferret.</p>
+        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Arcachon</span>
+            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Le Bassin d'Arcachon</h2>
+            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine iodée. Ascension de la Dune du Pilat, dégustation d'huîtres dans les cabanes ostréicoles et Cap Ferret.</p>
           </div>
-          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
             <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Réserver ses cabanes</a>
             <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM France</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
@@ -201,33 +228,105 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 8 : BIARRITZ -->
-      <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="France" data-search="europe france biarritz pays basque ocean atlantique surf espelette">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
           <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">2 Semaines</span>
-          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Biarritz" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Biarritz" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
         </div>
-        <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-1.5">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Biarritz & Le Pays Basque</h2>
-            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">15 jours majeurs entre vagues de l'Océan Atlantique, sessions de surf, et immersion dans les villages d'Espelette.</p>
+        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Biarritz</span>
+            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Biarritz & Le Pays Basque</h2>
+            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">15 jours majeurs entre vagues de l'Océan Atlantique, sessions de surf, et immersion dans les villages d'Espelette.</p>
           </div>
-          <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
+          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
             <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Côte Basque</a>
             <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM France</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
           </div>
         </div>
       </article>
+      <!-- CARD 9 : TOKYO -->
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Asie" data-country="Japon" data-search="asie japon tokyo architecture shibuya shinjuku mont fuji temple">
+        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
+          <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
+          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Tokyo" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+        </div>
+        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Asie // Japon // Tokyo</span>
+            <h2 class="text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Tokyo : Immersion Urbaine</h2>
+            <p class="text-xs text-neutral-500 font-light leading-relaxed">Une semaine vibrante au cœur de la capitale nippone. Des passages piétons de Shibuya aux sanctuaires cachés d'Asakusa.</p>
+          </div>
+          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Ryokan Tokyo</a>
+            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Japon (-5%)</a>
+            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 10 : MOSCOU -->
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="Russie" data-search="europe russie moscou kremlin place rouge architecture hiver">
+        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
+          <span class="absolute top-3 left-3 bg-neutral-950 text-white text-[7px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 z-10">1 Semaine</span>
+          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Moscou" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+        </div>
+        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // Russie // Moscou</span>
+            <h2 class="text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Moscou : Cœur Historique</h2>
+            <p class="text-xs text-neutral-500 font-light leading-relaxed">7 jours à la découverte des secrets de la Place Rouge, de l'architecture impériale du Kremlin et des métros cathédrales.</p>
+          </div>
+          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Moscou Centre</a>
+            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Russie</a>
+            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
+          </div>
+        </div>
+      </article>
 
     </div>
+
+    <!-- MODULE SLIDER COMPASS COMPACT RE-HAUSSÉ -->
+    <div class="w-full flex flex-col items-center justify-center mt-12 select-none overflow-hidden px-4">
+      <div class="flex items-center space-x-10 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.3em] text-neutral-400">
+        
+        <!-- Bouton West Fixe -->
+        <button id="prev-compass" class="flex items-center space-x-2.5 hover:text-amber-700 transition-colors cursor-pointer group/prev disabled:opacity-25 disabled:cursor-not-allowed shrink-0">
+          <span class="transform group-hover/prev:-translate-x-1 transition-transform duration-300">↼</span>
+          <span class="inline">West</span>
+        </button>
+
+        <!-- LOGO SLIDER COMPASS -->
+        <div id="compass-needle" class="w-14 h-14 text-neutral-800 transition-transform duration-500 ease-out flex items-center justify-center shrink-0">
+          <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+            <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+            <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+          </svg>
+        </div>
+
+        <!-- Bouton East Fixe -->
+        <button id="next-compass" class="flex items-center space-x-2.5 hover:text-amber-700 transition-colors cursor-pointer group/next disabled:opacity-25 disabled:cursor-not-allowed shrink-0">
+          <span class="inline">East</span>
+          <span class="transform group-hover/next:translate-x-1 transition-transform duration-300">⇁</span>
+        </button>
+      </div>
+      
+      <!-- Étiquette Épurée Édimestre -->
+      <div class="mt-4 text-[10px] sm:text-[11px] font-serif tracking-[0.35em] text-neutral-400 font-light italic text-center" id="page-display">THE ODYSSEY // PAGE I</div>
+    </div>
+
   </section>
-  <!-- SECTION PRÉSENTATION CORRIGÉE : PARFAITEMENT ALIGNÉE GAUCHE/DROITE (MAX-W-7XL) -->
-  <section class="max-w-7xl mx-auto px-8 py-24 border-t border-neutral-200/60 flex flex-col lg:flex-row items-start justify-between gap-16">
+  <!-- SECTION PRÉSENTATION ADAPTÉE À L'ENSEMBLE DES ÉCRANS -->
+  <section class="w-full max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 py-20 border-t border-neutral-200/60 flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-16 overflow-hidden">
     
     <!-- COLONNE GAUCHE : PHOTO ENTIÈRE + TEXTE MANIFESTE -->
-    <div class="w-full lg:w-[48%] space-y-8">
-      <div class="w-full h-[320px] overflow-hidden bg-neutral-100 rounded-sm shadow-2xs">
+    <div class="w-full lg:w-[48%] space-y-6 sm:space-y-8">
+      <div class="w-full h-[260px] sm:h-[350px] md:h-[400px] overflow-hidden bg-neutral-100 rounded-sm shadow-2xs">
         <img 
           src="/images/drone/drone-albania-1.JPG" 
           class="w-full h-full object-cover" 
@@ -235,12 +334,11 @@ import Layout from '../layouts/Layout.astro';
         />
       </div>
 
-      <!-- TEXTE DE BIENVENUE AVEC MINI-BOUSSOLE INTERACTIVE -->
       <div class="space-y-6">
         <div class="space-y-2 group/manifesto-title cursor-default">
-          <div class="flex items-center space-x-3">
+          <div class="flex items-center space-x-3 justify-center lg:justify-start">
             <div class="w-4 h-4 text-amber-600 group-hover/manifesto-title:rotate-45 group-hover/manifesto-title:text-amber-500 transition-all duration-500 ease-out">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="2"></path>
                 <path fill="currentColor" d="M12 7l1.5 3.5L12 12l-1.5-1.5zM12 17l1.5-3.5L12 12l-1.5 1.5z"></path>
@@ -250,25 +348,25 @@ import Layout from '../layouts/Layout.astro';
               Notre Manifeste
             </span>
           </div>
-          <h2 class="text-3xl sm:text-4xl font-serif font-light text-neutral-900 tracking-tight leading-tight">MARTIN — THE ODYSSEY</h2>
-          <p class="text-[10px] font-mono text-amber-700 uppercase tracking-widest italic">Créateur de Contenu & Écriture Photographique</p>
+          <h2 class="text-2xl sm:text-4xl font-serif font-light text-neutral-900 tracking-tight leading-tight text-center lg:text-left">MARTIN — THE ODYSSEY</h2>
+          <p class="text-[10px] font-mono text-amber-700 uppercase tracking-widest italic text-center lg:text-left">Créateur de Contenu & Écriture Photographique</p>
         </div>
         
-        <p class="text-xs text-neutral-500 font-light leading-relaxed">
+        <p class="text-xs text-neutral-500 font-light leading-relaxed text-center lg:text-left">
           Bonjour ! J'ai imaginé le slow magazine **The Odyssey** pour partager des itinéraires au long cours de 1 à 2 semaines, construits pas à pas, ainsi que pour transmettre ma passion de la découverte indépendante. 
         </p>
-        <p class="text-xs text-neutral-500 font-light leading-relaxed">
+        <p class="text-xs text-neutral-500 font-light leading-relaxed text-center lg:text-left">
           Ici, pas de survol rapide : chaque tracé fait l'objet d'une immersion approfondie, de conseils de guesthouses confidentielles et de clichés pris au lever du jour. L'aventure se prolonge également en direct avec notre communauté sur Instagram ❤️
         </p>
       </div>
     </div>
 
-    <!-- COLONNE DROITE : LE FLUX INSTAGRAM PUR -->
-    <div class="w-full lg:w-[45%] bg-white border border-neutral-200/50 p-8 rounded-sm shadow-2xs space-y-6 text-center">
+    <!-- COLONNE DROITE : LE FLUX INSTAGRAM GRAND SPECTACLE -->
+    <div class="w-full lg:w-[46%] bg-[#FFFFFF] border border-neutral-200/50 p-6 sm:p-10 rounded-sm shadow-2xs space-y-6 text-center">
       <div class="space-y-4">
         <div class="flex items-center justify-center space-x-3">
           <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 via-red-500 to-purple-600 p-[2px]">
-            <div class="w-full h-full bg-white rounded-full flex items-center justify-center text-xs">📸</div>
+            <div class="w-full h-full bg-[#FFFFFF] rounded-full flex items-center justify-center text-xs">📸</div>
           </div>
           <span class="text-xs font-bold text-neutral-900 tracking-wide">@the_odyssey_magazine</span>
         </div>
@@ -278,58 +376,175 @@ import Layout from '../layouts/Layout.astro';
         </a>
       </div>
 
-      <div class="grid grid-cols-3 gap-2 pt-4">
+      <div class="grid grid-cols-3 gap-2 sm:gap-3 pt-4">
         <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-5.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
         <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
         <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
         <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
         <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
         <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-5.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
-        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
         <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
         <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-5.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
       </div>
     </div>
   </section>
-  <!-- SECTION MONÉTISATION PARFAITEMENT ALIGNÉE GAUCHE/DROITE (MAX-W-7XL) -->
-  <section id="bons-plans" class="max-w-7xl mx-auto px-8 py-16 bg-neutral-950 text-white rounded-none my-16 border-t-4 border-amber-600">
-    <div class="space-y-12">
-      <div class="space-y-3">
-        <p class="text-amber-600 font-mono text-[9px] uppercase tracking-[0.3em]">Conciergerie & Partenaires</p>
-        <h2 class="text-2xl font-serif font-light tracking-tight">Les Réductions du Voyageur Privilégié</h2>
-        <p class="text-neutral-400 text-xs font-light leading-relaxed">Nous sélectionnons nos partenaires avec soin. En passant par nos invitations, vous économisez sur vos réservations tout en soutenant notre travail indépendant.</p>
-      </div>
-      <div id="astuces" class="grid sm:grid-cols-2 gap-8 text-left font-mono text-[10px]">
-        <div class="border border-neutral-800 p-6 space-y-3 bg-neutral-900/40">
-          <p class="text-amber-500 uppercase tracking-wider font-bold">📱 Forfaits Internet eSIM</p>
-          <p class="text-neutral-400 leading-relaxed">Activez vos données à l'étranger instantanément. Bénéficiez de 5% de remise immédiate pour éviter les hors-forfaits.</p>
-          <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors">Lien Privilège Saily →</a>
+     <!-- BLOC DE FUSION PROGRESSIF ALLONGÉ (400PX) ET CALÉ STRICTEMENT AU-DESSUS DE TA LIGNE NOIRE -->
+  <div class="w-full bg-gradient-to-b from-transparent to-[#0A0A0A] h-[400px] mt-24 pointer-events-none -mb-[1px]"></div>
+
+  <!-- ZONE DE CONCIERGERIE AVEC GRAND PADDING HAUT (PT-60) POUR SÉCURISER L'OPACITÉ DU TEXTE -->
+  <div class="w-full bg-[#0A0A0A] text-white pb-24 relative z-10">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 pt-12 sm:pt-16">
+      
+      <section id="bons-plans" class="w-full">
+        <div class="space-y-12">
+          
+          <!-- TITRE DE SECTION AVEC ICONE SIGNATURE BOUSSOLE INTERACTIVE -->
+          <div class="space-y-3 text-center sm:text-left">
+            <div class="flex items-center space-x-3 justify-center sm:justify-start group/manifesto-title cursor-default mb-2">
+              <div class="w-4 h-4 text-amber-600 group-hover/manifesto-title:rotate-45 group-hover/manifesto-title:text-amber-500 transition-all duration-500 ease-out">
+                <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="2"></path>
+                  <path fill="currentColor" d="M12 7l1.5 3.5L12 12l-1.5-1.5zM12 17l1.5-3.5L12 12l-1.5 1.5z"></path>
+                </svg>
+              </div>
+              <p class="text-amber-600 font-mono text-[9px] uppercase tracking-[0.3em] group-hover/manifesto-title:text-amber-500 transition-colors">Conciergerie & Partenaires</p>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-serif font-light tracking-tight">Les Réductions du Voyageur Privilégié</h2>
+            <p class="text-neutral-400 text-xs font-light leading-relaxed max-w-2xl">Nous sélectionnons nos partenaires avec soin. En passant par nos invitations, vous économisez sur vos réservations tout en soutenant notre travail indépendant.</p>
+          </div>
+
+          <div id="astuces" class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 text-left font-mono text-[10px]">
+            <div class="border border-neutral-800 p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm">
+              <p class="text-amber-500 uppercase tracking-wider font-bold">📱 Forfaits Internet eSIM</p>
+              <p class="text-neutral-400 leading-relaxed">Activez vos données à l'étranger instantanément. Bénéficiez de 5% de remise immédiate pour éviter les hors-forfaits.</p>
+              <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block">Lien Privilège Saily ⮕</a>
+            </div>
+            <div class="border border-neutral-800 p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm">
+              <p class="text-amber-500 uppercase tracking-wider font-bold">🏥 Assurance Voyage & Santé</p>
+              <p class="text-neutral-400 leading-relaxed">Couverture médicale complète, rapatriement et annulation de vol pour explorer le globe en totale sérénité.</p>
+              <a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block">Bénéficier des 5% Chapka ⮕</a>
+            </div>
+          </div>
         </div>
-        <div class="border border-neutral-800 p-6 space-y-3 bg-neutral-900/40">
-          <p class="text-amber-500 uppercase tracking-wider font-bold">🏥 Assurance Voyage & Santé</p>
-          <p class="text-neutral-400 leading-relaxed">Couverture médicale complète, rapatriement et annulation de vol pour explorer le globe en totale sérénité.</p>
-          <a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors">Bénéficier des 5% Chapka →</a>
-        </div>
-      </div>
+      </section>
+
     </div>
-  </section>
+  </div>
 </Layout>
 
-<!-- LOGIQUE MINI-MÉCANIQUE CHRONO SLIDER HERO -->
-<script is:inline>
+<script type="text/javascript">
   document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('destination-search');
+    const compactSelect = document.getElementById('compact-filter');
+    const needle = document.getElementById('compass-needle');
+    const pageDisplay = document.getElementById('page-display');
+    const prevCompass = document.getElementById('prev-compass');
+    const nextCompass = document.getElementById('next-compass');
+    const cards = document.querySelectorAll('.guide-card');
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let currentPage = 1;
+    let cardsPerPage = 8;
+    let visibleCards = [];
+
+    const romanNumerals = ["", "I", "II", "III", "IV"];
+
+    function checkDeviceWidth() {
+      if (window.innerWidth < 640) {
+        cardsPerPage = 4;
+      } else {
+        cardsPerPage = 8;
+      }
+    }
+    checkDeviceWidth();
+    window.addEventListener('resize', () => { checkDeviceWidth(); updatePagination(); });
+
+    const items = new Set();
+    cards.forEach(card => {
+      if(card.dataset.continent) items.add(card.dataset.continent);
+      if(card.dataset.country === "Russie" || card.dataset.country === "Japon") items.add(card.dataset.country);
+    });
+
+    let selectHTML = `<option value="all">Explorer le globe (Tous)</option>`;
+    items.forEach(item => {
+      const slug = item.toLowerCase().replace(/[^a-z0-9]/g, '');
+      selectHTML += `<option value="${slug}">${item}</option>`;
+    });
+    if(compactSelect) compactSelect.innerHTML = selectHTML;
+
+    function updatePagination() {
+      visibleCards = Array.from(cards).filter(card => {
+        const continentSlug = card.dataset.continent.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const countrySlug = card.dataset.country ? card.dataset.country.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
+        const matchesSelect = (currentFilter === 'all' || continentSlug === currentFilter || countrySlug === currentFilter);
+        const matchesSearch = card.dataset.search.includes(searchQuery);
+        return matchesSelect && matchesSearch;
+      });
+
+      const totalPages = Math.ceil(visibleCards.length / cardsPerPage) || 1;
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      cards.forEach(card => { card.style.display = 'none'; card.style.opacity = '0'; });
+      const start = (currentPage - 1) * cardsPerPage;
+      visibleCards.slice(start, start + cardsPerPage).forEach(card => {
+        card.style.display = 'flex';
+        setTimeout(() => card.style.opacity = '1', 50);
+      });
+
+      const roman = romanNumerals[currentPage] || currentPage;
+      if(pageDisplay) pageDisplay.innerText = `THE ODYSSEY // PAGE ${roman}`;
+
+      if(totalPages === 1) {
+        prevCompass.style.opacity = '0.25'; prevCompass.style.pointerEvents = 'none';
+        nextCompass.style.opacity = '0.25'; nextCompass.style.pointerEvents = 'none';
+        needle.style.transform = 'rotate(0deg)';
+      } else {
+        prevCompass.style.opacity = currentPage === 1 ? '0.25' : '1';
+        prevCompass.style.pointerEvents = currentPage === 1 ? 'none' : 'auto';
+        nextCompass.style.opacity = currentPage === totalPages ? '0.25' : '1';
+        nextCompass.style.pointerEvents = currentPage === totalPages ? 'none' : 'auto';
+      }
+    }
+
+    if(prevCompass && nextCompass && needle) {
+      prevCompass.addEventListener('mouseenter', () => { if(currentPage > 1) needle.style.transform = 'rotate(-30deg)'; });
+      prevCompass.addEventListener('mouseleave', () => needle.style.transform = 'rotate(0deg)');
+      nextCompass.addEventListener('mouseenter', () => { if(currentPage < Math.ceil(visibleCards.length / cardsPerPage)) needle.style.transform = 'rotate(30deg)'; });
+      nextCompass.addEventListener('mouseleave', () => needle.style.transform = 'rotate(0deg)');
+      
+      prevCompass.addEventListener('click', () => { 
+        if (currentPage > 1) { 
+          currentPage--; 
+          updatePagination(); 
+          needle.style.transform = 'rotate(-60deg)'; 
+          setTimeout(() => needle.style.transform = 'rotate(0deg)', 250); 
+        } 
+      });
+      nextCompass.addEventListener('click', () => { 
+        if (currentPage < Math.ceil(visibleCards.length / cardsPerPage)) { 
+          currentPage++; 
+          updatePagination(); 
+          needle.style.transform = 'rotate(60deg)'; 
+          setTimeout(() => needle.style.transform = 'rotate(0deg)', 250); 
+        } 
+      });
+    }
+
+    if(searchInput) searchInput.addEventListener('input', (e) => { searchQuery = e.target.value.toLowerCase().trim(); currentPage = 1; updatePagination(); });
+    if(compactSelect) compactSelect.addEventListener('change', (e) => { currentFilter = e.target.value; currentPage = 1; updatePagination(); });
+
+    updatePagination();
+
     const images = document.querySelectorAll('.slide-img');
     let currentIndex = 0;
-
-    if (images.length > 0) {
+    if(images.length > 0) {
       setInterval(() => {
-        if (images[currentIndex]) {
-          images[currentIndex].style.opacity = '0';
-        }
+        images[currentIndex].style.opacity = '0';
         currentIndex = (currentIndex + 1) % images.length;
-        if (images[currentIndex]) {
-          images[currentIndex].style.opacity = '0.6';
-        }
+        images[currentIndex].style.opacity = '0.6';
       }, 3000);
     }
   });
