@@ -17,7 +17,7 @@ import '../styles/global.css';
 		<!-- Correction des URLs Google Fonts Preconnect -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 	</head>
 	<body class="bg-[#FAF9F6] text-neutral-900 antialiased min-h-screen flex flex-col justify-between">
 		
@@ -28,7 +28,7 @@ import '../styles/global.css';
 				<!-- LOGO AVEC LA LIGNE DE CODE DE TEXTE DIRECTEMENT AJUSTÉE -->
         <a href="/" class="flex items-center space-x-3 group select-none">
           <div class="w-7 h-7 text-neutral-900 group-hover:rotate-45 group-hover:text-amber-600 transition-all duration-500 ease-out shrink-0">
-            <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
               <circle cx="12" cy="12" r="10"></circle>
               <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
               <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
@@ -73,11 +73,11 @@ import '../styles/global.css';
 			<slot />
 		</main>
 
-		<!-- FOOTER MAGAZINE -->
-		<footer class="bg-neutral-950 text-neutral-500 py-16 px-8 text-xs font-mono text-[9px] tracking-widest border-t border-neutral-900">
+		<!-- FOOTER MAGAZINE (SANS BORDURE SUPÉRIEURE ET NOM DE MARQUE AJUSTÉ) -->
+		<footer class="bg-neutral-950 text-neutral-500 pb-16 pt-6 px-8 text-xs font-mono text-[9px] tracking-widest">
 			<div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
 				<p class="text-white font-serif uppercase tracking-[0.3em] text-xs">THE ODYSSEY</p>
-				<p class="text-neutral-600">&copy; {new Date().getFullYear()} THE ODYSSEY MAGAZINE. TOUS DROITS RÉSERVÉS.</p>
+				<p class="text-neutral-600">&copy; {new Date().getFullYear()} THE ODYSSEY SLOW TRAVEL JOURNAL. TOUS DROITS RÉSERVÉS.</p>
 			</div>
 		</footer>
 
