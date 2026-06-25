@@ -20,21 +20,57 @@ import '../styles/global.css';
 	</head>
 	<body class="bg-[#FAF9F6] text-neutral-900 antialiased min-h-screen flex flex-col justify-between">
 		
-		<!-- HEADER UNIQUE ET SÉCURISÉ STYLE LUXE (COMME BOKO STUDIO) -->
-		<header class="w-full border-b border-neutral-200/60 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+		<!-- HEADER RECALIBRÉ ÉCARTÉ DROITE (STYLE COMPORTEMENT BOKO STUDIO) -->
+		<header class="w-full border-b border-neutral-200/50 bg-white/90 backdrop-blur-md sticky top-0 z-50">
 			<div class="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
-				<a href="#" class="flex flex-col group">
-					<span class="text-sm font-serif tracking-[0.4em] font-bold text-neutral-900 group-hover:text-amber-700 transition-colors">THE ODYSSEY</span>
-					<span class="text-[7px] font-mono tracking-[0.2em] text-neutral-400 uppercase mt-1">Slow Travel Magazine</span>
+				
+				<!-- BLOC MARQUE GAUCHE : VRAIE BOUSSOLE STYLISÉE GOLD + NOM -->
+				<a href="#" class="flex items-center space-x-4 group">
+					<!-- Vraie Boussole Stylisée Cadran & Aiguille Fine -->
+					<div class="w-8 h-8 text-amber-600 relative flex items-center justify-center">
+						<svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-full h-full">
+							<!-- Cadran extérieur et cercle intérieur fin -->
+							<circle cx="12" cy="12" r="10" />
+							<circle cx="12" cy="12" r="7" stroke-dasharray="2 2" />
+							<!-- Repères cardinaux (N, S, E, O) sous forme d'encoches fines -->
+							<path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.5" />
+						</svg>
+						<!-- Aiguille centrale aimantée qui pivote avec grâce au survol -->
+						<div class="absolute inset-0 flex items-center justify-center group-hover:rotate-180 transition-transform duration-1000 ease-out">
+							<svg xmlns="http://w3.org" fill="currentColor" viewBox="0 0 24 24" class="w-full h-full text-amber-600 scale-60">
+								<path d="M12 2l2.5 7.5L12 12l-2.5-2.5L12 2zm0 20l2.5-7.5L12 12l-2.5 2.5L12 22z" />
+							</svg>
+						</div>
+					</div>
+					<div class="flex flex-col">
+						<span class="text-sm font-serif tracking-[0.35em] font-bold text-neutral-900 group-hover:text-amber-700 transition-colors">THE ODYSSEY</span>
+						<span class="text-[7px] font-mono tracking-[0.2em] text-neutral-400 uppercase mt-0.5">Slow Travel Magazine</span>
+					</div>
 				</a>
-				<nav class="hidden md:flex items-center space-x-12 text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-500">
-					<a href="#destinations" class="text-neutral-900 hover:text-amber-700 transition-colors">Destinations</a>
-					<a href="#bons-plans" class="hover:text-amber-700 transition-colors">Bons Plans</a>
-					<a href="#astuces" class="hover:text-amber-700 transition-colors">Astuces</a>
-				</nav>
-				<a href="#bons-plans" class="text-[10px] font-mono uppercase tracking-[0.2em] bg-neutral-950 text-white px-5 py-2.5 hover:bg-amber-700 transition-colors">
-					Privilèges 🎁
-				</a>
+				<!-- DEUXIÈME ZONE DROITE : RASSEMBLEMENT DES MENUS ET DU BOUTON PRIVILÈGES -->
+				<div class="flex items-center space-x-12">
+					<!-- Nav poussée vers la droite de l'écran avec highlights dynamiques -->
+					<nav class="hidden md:flex items-center space-x-10 text-[10px] font-mono uppercase tracking-[0.25em] text-neutral-400">
+						<a href="#destinations" class="relative py-2 text-neutral-900 hover:text-amber-700 hover:scale-105 transition-all duration-300 group/link">
+							Destinations
+							<span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-amber-600 transition-all duration-300 group-hover/link:w-full"></span>
+						</a>
+						<a href="#bons-plans" class="relative py-2 hover:text-amber-700 hover:scale-105 transition-all duration-300 group/link">
+							Bons Plans
+							<span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-amber-600 transition-all duration-300 group-hover/link:w-full"></span>
+						</a>
+						<a href="#astuces" class="relative py-2 hover:text-amber-700 hover:scale-105 transition-all duration-300 group/link">
+							Astuces
+							<span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-amber-600 transition-all duration-300 group-hover/link:w-full"></span>
+						</a>
+					</nav>
+					
+					<!-- Bouton Privilèges noir final tout à droite -->
+					<a href="#bons-plans" class="text-[10px] font-mono uppercase tracking-[0.2em] bg-neutral-950 text-white px-5 py-2.5 hover:bg-amber-700 hover:scale-102 transition-all duration-300 rounded-xs shadow-2xs">
+						Privilèges 🎁
+					</a>
+				</div>
+
 			</div>
 		</header>
 

@@ -7,19 +7,16 @@ import Layout from '../layouts/Layout.astro';
   <!-- HERO SLIDER AUTOMATIQUE 3 SECONDES -->
   <section class="relative h-[80vh] w-full bg-neutral-950 flex items-center justify-center text-center px-6 overflow-hidden">
     <div class="absolute inset-0 z-0">
-      <!-- Image 1 -->
       <img 
         src="/images/drone/drone-albania-5.JPG" 
         alt="The Odyssey Slide 1" 
         class="slide-img absolute inset-0 w-full h-full object-cover opacity-65 transition-opacity duration-1000 ease-in-out" 
       />
-      <!-- Image 2 -->
       <img 
         src="/images/drone/drone-albania-1.JPG" 
         alt="The Odyssey Slide 2" 
         class="slide-img absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" 
       />
-      <!-- Image 3 -->
       <img 
         src="/images/drone/drone-albania-2.JPG" 
         alt="The Odyssey Slide 3" 
@@ -39,12 +36,25 @@ import Layout from '../layouts/Layout.astro';
       </p>
     </div>
   </section>
-
-  <!-- LISTE DES GUIDES (GRILLE DE 4 CARTES PAR LIGNE) -->
+  <!-- LISTE DES GUIDES AVEC MINI-BOUSSOLE INTERACTIVE -->
   <section id="destinations" class="max-w-[95%] mx-auto px-4 py-20 border-t border-neutral-200/60 scroll-mt-20">
-    <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-400 block mb-12 text-center sm:text-left">Nos Itinéraires au Long Cours</span>
+    
+    <!-- TITRE AVEC ICONE SIGNATURE INTERACTIVE -->
+    <div class="flex items-center space-x-3 mb-12 justify-center sm:justify-start group/section-title cursor-default">
+      <div class="w-4 h-4 text-amber-600 group-hover/section-title:rotate-45 group-hover/section-title:text-amber-500 transition-all duration-500 ease-out">
+        <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="2"></path>
+          <path fill="currentColor" d="M12 7l1.5 3.5L12 12l-1.5-1.5zM12 17l1.5-3.5L12 12l-1.5 1.5z"></path>
+        </svg>
+      </div>
+      <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-400 group-hover/section-title:text-amber-700 transition-colors duration-300">
+        Nos Itinéraires au Long Cours
+      </span>
+    </div>
     
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-16">
+      
       <!-- CARD 1 : ALBANIE -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
@@ -84,7 +94,6 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
       </article>
-
       <!-- CARD 3 : CHICAGO -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
@@ -98,8 +107,8 @@ import Layout from '../layouts/Layout.astro';
             <p class="text-[11px] text-neutral-500 font-light leading-relaxed">Une semaine immersive le long du Michigan. Exploration des gratte-ciels cultes, du Millenium Park et des clubs de jazz historiques.</p>
           </div>
           <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Downtown Chicago</a>
-            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM USA (-5%)</a>
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Downtown</a>
+            <a href="https://saily.com" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM USA</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer">Découvrir →</div>
           </div>
         </div>
@@ -124,6 +133,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
       </article>
+
       <!-- CARD 5 : SAINT-TROPEZ -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
@@ -163,7 +173,6 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
       </article>
-
       <!-- CARD 7 : BASSIN D'ARCACHON -->
       <article class="group flex flex-col justify-between h-full bg-white border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
         <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
@@ -206,65 +215,82 @@ import Layout from '../layouts/Layout.astro';
 
     </div>
   </section>
-  <!-- SECTION PRÉSENTATION & INSTAGRAM (STYLE IDENTIQUE À TA CAPTURE D'ÉCRAN) -->
-  <section class="max-w-xl mx-auto px-6 py-20 text-center space-y-8 border-t border-neutral-200/60">
+  <!-- SECTION PRÉSENTATION CORRIGÉE : IMAGE SIMPLE AU-DESSUS DU TEXTE À GAUCHE -->
+  <section class="max-w-7xl mx-auto px-8 py-24 border-t border-neutral-200/60 flex flex-col lg:flex-row items-start justify-between gap-16">
     
-    <!-- PHOTO RECOMPOSÉE EN DIAGONALE PREMIUM -->
-    <div class="relative w-full h-[380px] overflow-hidden bg-neutral-100 shadow-2xs">
-      <div class="absolute inset-0 flex">
-        <!-- Photo de gauche (Aurélie) -->
-        <div class="w-1/2 h-full overflow-hidden [clip-path:polygon(0_0,100%_0,0_100%)]">
-          <img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover scale-110" alt="The Odyssey Left" />
-        </div>
-        <!-- Photo de droite (Yann) -->
-        <div class="w-1/2 h-full overflow-hidden [clip-path:polygon(100%_0,100%_100%,0_100%)] -ml-[50%] flex-grow">
-          <img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover scale-110" alt="The Odyssey Right" />
-        </div>
-      </div>
-      <div class="absolute inset-0 bg-gradient-to-b from-neutral-900/10 to-transparent pointer-events-none"></div>
-    </div>
-
-    <!-- TEXTES DE DESCRIPTION CHALEUREUX -->
-    <div class="space-y-4 px-2">
-      <h2 class="text-xl font-mono uppercase tracking-[0.2em] text-neutral-900 font-bold">MARTIN — THE ODYSSEY</h2>
-      <p class="text-xs font-serif italic text-neutral-400">Créateur de Contenu & Récits au long cours</p>
-      
-      <p class="text-xs text-neutral-500 font-light leading-relaxed max-w-md mx-auto">
-        Bonjour ! J'ai créé le slow magazine **The Odyssey** pour partager des itinéraires complets de 1 à 2 semaines, ainsi que pour transmettre ma passion du voyage indépendant. Découvrez mes clichés aériens et mes guides de confiance. N'hésitez pas à me suivre également sur Instagram ❤️
-      </p>
-    </div>
-
-    <!-- GRILLE DE FLUX INSTAGRAM RECONNAISSABLE -->
-    <div class="pt-8 border-t border-neutral-200/40 space-y-4">
-      <div class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-400">— INSTAGRAM —</div>
-      
-      <div class="flex items-center justify-center space-x-3 py-2">
-        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-500 via-red-500 to-purple-600 p-[2px]">
-          <div class="w-full h-full bg-white rounded-full flex items-center justify-center font-bold text-xs text-neutral-900">📸</div>
-        </div>
-        <span class="text-xs font-bold text-neutral-900 tracking-wide">@the_odyssey_magazine</span>
+    <!-- COLONNE GAUCHE : PHOTO ENTIÈRE + TEXTE MANIFESTE -->
+    <div class="w-full lg:w-[48%] space-y-8">
+      <!-- Vraie image simple posée fièrement tout en haut à gauche -->
+      <div class="w-full h-[320px] overflow-hidden bg-neutral-100 rounded-sm shadow-2xs">
+        <img 
+          src="/images/drone/drone-albania-1.JPG" 
+          class="w-full h-full object-cover" 
+          alt="The Odyssey Exploration" 
+        />
       </div>
 
-      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="inline-block text-[10px] font-mono uppercase tracking-widest bg-sky-500 text-white font-bold px-6 py-2.5 rounded-md hover:bg-neutral-900 transition-colors shadow-2xs">
-        Follow on Instagram
-      </a>
+      <!-- TEXTE DE BIENVENUE AVEC MINI-BOUSSOLE INTERACTIVE -->
+      <div class="space-y-6">
+        <div class="space-y-2 group/manifesto-title cursor-default">
+          <div class="flex items-center space-x-3">
+            <!-- Mini boussole signature qui pivote au survol -->
+            <div class="w-4 h-4 text-amber-600 group-hover/manifesto-title:rotate-45 group-hover/manifesto-title:text-amber-500 transition-all duration-500 ease-out">
+              <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="2"></path>
+                <path fill="currentColor" d="M12 7l1.5 3.5L12 12l-1.5-1.5zM12 17l1.5-3.5L12 12l-1.5 1.5z"></path>
+              </svg>
+            </div>
+            <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-400 group-hover/manifesto-title:text-amber-700 transition-colors duration-300">
+              Notre Manifeste
+            </span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-light text-neutral-900 tracking-tight leading-tight">MARTIN — THE ODYSSEY</h2>
+          <p class="text-[10px] font-mono text-amber-700 uppercase tracking-widest italic">Créateur de Contenu & Écriture Photographique</p>
+        </div>
+        
+        <p class="text-xs text-neutral-500 font-light leading-relaxed">
+          Bonjour ! J'ai imaginé le slow magazine **The Odyssey** pour partager des itinéraires au long cours de 1 à 2 semaines, construits pas à pas, ainsi que pour transmettre ma passion de la découverte indépendante. 
+        </p>
+        <p class="text-xs text-neutral-500 font-light leading-relaxed">
+          Ici, pas de survol rapide : chaque tracé fait l'objet d'une immersion approfondie, de conseils de guesthouses confidentielles et de clichés pris au lever du jour. L'aventure se prolonge également en direct avec notre communauté sur Instagram ❤️
+        </p>
+      </div>
+    </div>
 
-      <!-- Les 9 petites vignettes photos style Instagram -->
-      <div class="grid grid-cols-3 gap-2 max-w-sm mx-auto pt-4">
-        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="/images/drone/drone-albania-5.JPG" class="w-full h-full object-cover" /></div>
-        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
-        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
-        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover" /></div>
-        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover" /></div>
-        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
-        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
-        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
-        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
+    <!-- COLONNE DROITE : LE FLUX INSTAGRAM PUR (IMAGE DU HAUT SUPPRIMÉE) -->
+    <div class="w-full lg:w-[45%] bg-white border border-neutral-200/50 p-8 rounded-sm shadow-2xs space-y-6 text-center">
+      
+      <!-- BOUTONS DE COMPTE TOUT EN HAUT À DROITE -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-center space-x-3">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 via-red-500 to-purple-600 p-[2px]">
+            <div class="w-full h-full bg-white rounded-full flex items-center justify-center text-xs">📸</div>
+          </div>
+          <span class="text-xs font-bold text-neutral-900 tracking-wide">@the_odyssey_magazine</span>
+        </div>
+
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="inline-block text-[10px] font-mono uppercase tracking-widest bg-sky-500 text-white font-bold px-8 py-3 rounded-md hover:bg-neutral-900 transition-colors shadow-2xs w-full sm:w-auto">
+          Follow on Instagram
+        </a>
+      </div>
+
+      <!-- Grille de 9 vignettes miniatures stables -->
+      <div class="grid grid-cols-3 gap-2 pt-4">
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-5.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
+        <div class="aspect-square overflow-hidden bg-neutral-100"><img src="https://unsplash.com" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" /></div>
       </div>
     </div>
   </section>
-  <!-- SECTION MONÉTISATION PRINCIPALE -->
-  <section id="bons-plans" class="max-w-4xl mx-auto px-8 py-16 bg-neutral-950 text-white rounded-none my-16 border-t-4 border-amber-600">
+    <!-- SECTION MONÉTISATION CORRIGÉE À 95% S'ALIGNANT AVEC LES CARTES AU DESSUS -->
+  <section id="bons-plans" class="max-w-[95%] mx-auto px-8 py-16 bg-neutral-950 text-white rounded-none my-16 border-t-4 border-amber-600">
     <div class="space-y-12">
       <div class="space-y-3">
         <p class="text-amber-600 font-mono text-[9px] uppercase tracking-[0.3em]">Conciergerie & Partenaires</p>
@@ -286,7 +312,8 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 </Layout>
-<!-- ANIMATION DU SLIDER HERO AUTOMATIQUE (3 SECONDES) -->
+
+<!-- LOGIQUE CHRONO SLIDER HERO -->
 <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', () => {
     const images = document.querySelectorAll('.slide-img');
