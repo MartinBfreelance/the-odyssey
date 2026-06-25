@@ -7,29 +7,28 @@ import Layout from '../layouts/Layout.astro';
   <!-- HERO SLIDER AUTOMATIQUE 3 SECONDES -->
   <section class="relative h-[80vh] w-full bg-neutral-950 flex items-center justify-center text-center px-6 overflow-hidden">
     <div class="absolute inset-0 z-0">
-      <!-- Image 1 (Active par défaut) -->
+      <!-- Image 1 -->
       <img 
         src="/images/drone/drone-albania-5.JPG" 
         alt="The Odyssey Slide 1" 
         class="slide-img absolute inset-0 w-full h-full object-cover opacity-65 transition-opacity duration-1000 ease-in-out" 
       />
-      <!-- Image 2 (Masquée) -->
+      <!-- Image 2 -->
       <img 
         src="/images/drone/drone-albania-1.JPG" 
         alt="The Odyssey Slide 2" 
         class="slide-img absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" 
       />
-      <!-- Image 3 (Masquée) -->
+      <!-- Image 3 -->
       <img 
         src="/images/drone/drone-albania-2.JPG" 
         alt="The Odyssey Slide 3" 
         class="slide-img absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" 
       />
-      <!-- Dégradé adouci persistant par-dessus le slider -->
       <div class="absolute inset-0 bg-gradient-to-b from-neutral-950/20 via-transparent to-[#FAF9F6]/25 z-10"></div>
     </div>
 
-    <!-- TEXTE FIXE MAGAZINE BLANC -->
+    <!-- TEXTE FIXE MAGAZINE -->
     <div class="relative z-20 max-w-4xl mx-auto text-white space-y-4">
       <span class="text-[10px] font-mono tracking-[0.5em] uppercase text-neutral-200 block drop-shadow-xs">Slow Travel Magazine</span>
       <h1 class="text-4xl sm:text-7xl font-serif font-light tracking-tight leading-[1.15] drop-shadow-md">
@@ -41,7 +40,7 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- LISTE DES GUIDES (GRILLE DE 4 CARTES PAR LIGNE SUR ÉCRAN LARGE) -->
+  <!-- LISTE DES GUIDES (GRILLE DE 4 CARTES PAR LIGNE) -->
   <section id="destinations" class="max-w-[95%] mx-auto px-4 py-20 border-t border-neutral-200/60 scroll-mt-20">
     <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-400 block mb-12 text-center sm:text-left">Nos Itinéraires au Long Cours</span>
     
@@ -95,7 +94,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-1.5">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Amérique // USA</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Chicago : Architecture & Blues</h2>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Chicago : Architecture</h2>
             <p class="text-[11px] text-neutral-500 font-light leading-relaxed">Une semaine immersive le long du Michigan. Exploration des gratte-ciels cultes, du Millenium Park et des clubs de jazz historiques.</p>
           </div>
           <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
@@ -134,7 +133,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-1.5">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Saint-Tropez & Villages du Var</h2>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Saint-Tropez & Var</h2>
             <p class="text-[11px] text-neutral-500 font-light leading-relaxed">Une semaine de douceur de vivre. Des ruelles de la Ponche aux sentiers côtiers de Ramatuelle et vignobles cachés du Var.</p>
           </div>
           <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
@@ -154,7 +153,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-1.5">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Bordeaux & Épopée Viticole</h2>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Bordeaux & Vignobles</h2>
             <p class="text-[11px] text-neutral-500 font-light leading-relaxed">7 jours d'immersion culturelle. Splendeurs architecturales de la ville de pierre, Cité du Vin et escapades à Saint-Émilion.</p>
           </div>
           <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
@@ -174,8 +173,8 @@ import Layout from '../layouts/Layout.astro';
         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-1.5">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Europe // France</span>
-            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Le Bassin d'Arcachon & Cap Ferret</h2>
-            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">Une semaine iodée. Ascension de la Dune du Pilat, dégustation d'huîtres dans les cabanes ostréicoles et traversée en pinasse.</p>
+            <h2 class="text-base font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Le Bassin d'Arcachon</h2>
+            <p class="text-[11px] text-neutral-500 font-light leading-relaxed">Une semaine iodée. Ascension de la Dune du Pilat, dégustation d'huîtres dans les cabanes ostréicoles et Cap Ferret.</p>
           </div>
           <div class="pt-3 border-t border-neutral-100 space-y-2 text-[9px] font-mono">
             <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Réserver ses cabanes</a>
@@ -207,6 +206,63 @@ import Layout from '../layouts/Layout.astro';
 
     </div>
   </section>
+  <!-- SECTION PRÉSENTATION & INSTAGRAM (STYLE IDENTIQUE À TA CAPTURE D'ÉCRAN) -->
+  <section class="max-w-xl mx-auto px-6 py-20 text-center space-y-8 border-t border-neutral-200/60">
+    
+    <!-- PHOTO RECOMPOSÉE EN DIAGONALE PREMIUM -->
+    <div class="relative w-full h-[380px] overflow-hidden bg-neutral-100 shadow-2xs">
+      <div class="absolute inset-0 flex">
+        <!-- Photo de gauche (Aurélie) -->
+        <div class="w-1/2 h-full overflow-hidden [clip-path:polygon(0_0,100%_0,0_100%)]">
+          <img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover scale-110" alt="The Odyssey Left" />
+        </div>
+        <!-- Photo de droite (Yann) -->
+        <div class="w-1/2 h-full overflow-hidden [clip-path:polygon(100%_0,100%_100%,0_100%)] -ml-[50%] flex-grow">
+          <img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover scale-110" alt="The Odyssey Right" />
+        </div>
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-b from-neutral-900/10 to-transparent pointer-events-none"></div>
+    </div>
+
+    <!-- TEXTES DE DESCRIPTION CHALEUREUX -->
+    <div class="space-y-4 px-2">
+      <h2 class="text-xl font-mono uppercase tracking-[0.2em] text-neutral-900 font-bold">MARTIN — THE ODYSSEY</h2>
+      <p class="text-xs font-serif italic text-neutral-400">Créateur de Contenu & Récits au long cours</p>
+      
+      <p class="text-xs text-neutral-500 font-light leading-relaxed max-w-md mx-auto">
+        Bonjour ! J'ai créé le slow magazine **The Odyssey** pour partager des itinéraires complets de 1 à 2 semaines, ainsi que pour transmettre ma passion du voyage indépendant. Découvrez mes clichés aériens et mes guides de confiance. N'hésitez pas à me suivre également sur Instagram ❤️
+      </p>
+    </div>
+
+    <!-- GRILLE DE FLUX INSTAGRAM RECONNAISSABLE -->
+    <div class="pt-8 border-t border-neutral-200/40 space-y-4">
+      <div class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-400">— INSTAGRAM —</div>
+      
+      <div class="flex items-center justify-center space-x-3 py-2">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-500 via-red-500 to-purple-600 p-[2px]">
+          <div class="w-full h-full bg-white rounded-full flex items-center justify-center font-bold text-xs text-neutral-900">📸</div>
+        </div>
+        <span class="text-xs font-bold text-neutral-900 tracking-wide">@the_odyssey_magazine</span>
+      </div>
+
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="inline-block text-[10px] font-mono uppercase tracking-widest bg-sky-500 text-white font-bold px-6 py-2.5 rounded-md hover:bg-neutral-900 transition-colors shadow-2xs">
+        Follow on Instagram
+      </a>
+
+      <!-- Les 9 petites vignettes photos style Instagram -->
+      <div class="grid grid-cols-3 gap-2 max-w-sm mx-auto pt-4">
+        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="/images/drone/drone-albania-5.JPG" class="w-full h-full object-cover" /></div>
+        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
+        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
+        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover" /></div>
+        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover" /></div>
+        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
+        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
+        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
+        <div class="aspect-square bg-neutral-100 overflow-hidden"><img src="https://unsplash.com" class="w-full h-full object-cover" /></div>
+      </div>
+    </div>
+  </section>
   <!-- SECTION MONÉTISATION PRINCIPALE -->
   <section id="bons-plans" class="max-w-4xl mx-auto px-8 py-16 bg-neutral-950 text-white rounded-none my-16 border-t-4 border-amber-600">
     <div class="space-y-12">
@@ -230,8 +286,7 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 </Layout>
-
-<!-- SCRIPT CHRONO AUTOMATIQUE 3 SECONDES (3000ms) -->
+<!-- ANIMATION DU SLIDER HERO AUTOMATIQUE (3 SECONDES) -->
 <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', () => {
     const images = document.querySelectorAll('.slide-img');
