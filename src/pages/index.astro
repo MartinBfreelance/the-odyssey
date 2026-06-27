@@ -1,30 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import destinationsData from '../data/destinations.json';
 ---
 
 <Layout title="THE ODYSSEY | Slow Travel Journal & Guide">
   
   <!-- HERO SLIDER PLEIN ÉCRAN -->
-  <section class="relative h-screen w-full bg-neutral-950 flex items-center justify-center text-center px-4 sm:px-6 overflow-hidden">
+  <section class="relative h-screen w-full bg-[#0A0A0A] flex items-center justify-center text-center px-4 sm:px-6 overflow-hidden">
     <div class="absolute inset-0 z-0 pointer-events-none select-none">
-      <img 
-        src="/images/drone/drone-albania-5.JPG" 
-        alt="The Odyssey Slide 1" 
-        class="slide-img absolute inset-0 w-full h-full object-cover opacity-65 transition-opacity duration-1000 ease-in-out" 
-      />
-      <img 
-        src="/images/drone/drone-albania-1.JPG" 
-        alt="The Odyssey Slide 2" 
-        class="slide-img absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" 
-      />
-      <img 
-        src="/images/drone/drone-albania-2.JPG" 
-        alt="The Odyssey Slide 3" 
-        class="slide-img absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" 
-      />
-      
-      <div class="absolute inset-0 bg-gradient-to-b from-neutral-950/20 via-transparent to-neutral-950/30 z-10"></div>
-      <div class="absolute bottom-0 left-0 right-0 h-[25vh] bg-gradient-to-b from-transparent to-[#FAF9F6] z-10"></div>
+      {destinationsData.slice(0, 3).map((dest, idx) => (
+        <img 
+          src={dest.image} 
+          alt={dest.titre} 
+          class={`slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${idx === 0 ? 'opacity-65' : 'opacity-0'}`} 
+        />
+      ))}
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#FAF9F6] z-10"></div>
     </div>
 
     <!-- ZONE DE TEXTE INTÉGRÉE (AVEC CONTRASTE BICOLORE) -->
@@ -66,7 +57,7 @@ import Layout from '../layouts/Layout.astro';
     <!-- BANDEAU GÉOMÉTRIQUE RIGIDE 12 COLONNES (ZÉRO DÉCALAGE DE PIXEL) -->
     <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center mb-10 p-5 sm:p-6 bg-white border border-neutral-200/50 rounded-3xl shadow-2xs font-mono text-[9px] tracking-wider select-none relative z-20">
       
-      <!-- Colonnes 1 à 6 (50% de la largeur) : Boutons d'Ambiance et de Profil (à gauche) -->
+      <!-- Colonnes 1 à 6 (50% de la largeur) : Boutons d'Ambiance et de Profil (à gauche, alignement vertical parfait des icônes) -->
       <div class="lg:col-span-6 flex flex-col gap-4">
         <!-- Ambiance -->
         <div id="filter-group-type" class="flex items-center gap-1.5 sm:gap-2 w-full">
@@ -133,9 +124,8 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <!-- Colonnes 11 à 12 (16.6% de la largeur) : Nombre de destinations (bloqué horizontalement) -->
-      <div class="lg:col-span-2 text-right w-full lg:pl-6 shrink-0">
+      <div class="lg:col-span-2 text-right w-full lg:pl-6 shrink-0 font-mono text-[9px] tracking-widest">
         <div class="text-neutral-500 font-medium whitespace-nowrap text-center lg:text-left">
-          <!-- Le conteneur "inline-block w-5" verrouille la largeur du chiffre pour empêcher tout décalage -->
           <span class="inline-block w-5 text-center font-bold text-neutral-900 text-xs sm:text-sm">
             <span id="results-count">0</span>
           </span> destinations
@@ -145,268 +135,39 @@ import Layout from '../layouts/Layout.astro';
     
     <!-- CONTENEUR GRILLE RE-DESIGNÉ (3 COLONNES MAX TYPE VOYAGE PRIVÉ) -->
     <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 transition-all duration-500">
-      
-      <!-- CARD 1 : ALBANIE -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="albanie" data-continent="Europe" data-country="Albanie" data-search="europe balkans albanie riviera parcs tirana ksamil">
-        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Itinéraire Albanie" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
-          <!-- Bouton Cœur positionné en haut à droite (top-3/right-3) avec fond glassmorphism discret -->
-          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          </button>
-        </div>
-        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // Balkans // Albanie</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Albanie : Riviera & Parcs</h2>
-            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">De Tirana aux plages sauvages de Ksamil. Un road-trip équilibré d'une semaine complète entre villages de pierre et criques cachées.</p>
+      {destinationsData.map((dest) => (
+        <article 
+          class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" 
+          data-id={dest.slug} 
+          data-continent={dest.continent} 
+          data-country={dest.geo.split(' // ').pop()} 
+          data-search={`${dest.continent} ${dest.geo.toLowerCase()} ${dest.titre.toLowerCase()} ${dest.sous_titre.toLowerCase()}`}
+        >
+          <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
+            <img src={dest.image} alt={dest.titre} class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
+            <!-- Bouton Cœur positionné en haut à droite (top-3/right-3) avec fond glassmorphism discret -->
+            <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+              </svg>
+            </button>
           </div>
-          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
-            <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
-            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
-              Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
+          <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">{dest.geo}</span>
+              <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">{dest.titre}</h2>
+              <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">{dest.sous_titre}</p>
+            </div>
+            <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
+              <a href={dest.liens.booking} target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
+              <a href={dest.liens.esim} target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
+              <a href={`/destinations/${dest.slug}`} class="dest-link pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
+                Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
+              </a>
             </div>
           </div>
-        </div>
-      </article>
-
-      <!-- CARD 2 : LA CORSE -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="corse" data-continent="Europe" data-country="Corse" data-search="europe france corse ile beaute piana bonifacio bavella">
-        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Corse" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
-          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          </button>
-        </div>
-        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Corse</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Corse : L'Île de Beauté</h2>
-            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">15 jours des calanques de piana aux falaises de Bonifacio. Les plus belles aiguilles de Bavella et criques d'eau turquoise.</p>
-          </div>
-          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
-            <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
-            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
-              Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 3 : CHICAGO -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="chicago" data-continent="Amérique" data-country="USA" data-search="amerique usa chicago architecture michigan gratte ciel millenium park jazz">
-        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Chicago" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
-          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          </button>
-        </div>
-        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Amérique // USA // Chicago</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Chicago : Architecture</h2>
-            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine immersive le long du Michigan. Exploration des gratte-ciels cultes, du Millenium Park et des clubs de jazz historiques.</p>
-          </div>
-          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
-            <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
-            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
-              Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 4 : MIAMI -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="miami" data-continent="Amérique" data-country="USA" data-search="amerique usa miami floride soleil south beach everglades highway key west">
-        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Miami" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
-          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          </button>
-        </div>
-        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Amérique // USA // Floride</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Miami & Floride : Le Soleil</h2>
-            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">15 jours de South Beach aux marais des Everglades. Itinéraire magique sur l'Overseas Highway jusqu'au bout de Key West.</p>
-          </div>
-          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
-            <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
-            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
-              Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 5 : SAINT-TROPEZ -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="saint-tropez" data-continent="Europe" data-country="France" data-search="europe france saint tropez var douceur ponche ramatuelle vignobles">
-        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Saint-Tropez" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
-          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          </button>
-        </div>
-        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Saint-Tropez</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Saint-Tropez & Var</h2>
-            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine de douceur de vivre. Des ruelles de la Ponche aux sentiers côtiers de Ramatuelle et vignobles cachés du Var.</p>
-          </div>
-          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
-            <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
-            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
-              Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 6 : BORDEAUX -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="bordeaux" data-continent="Europe" data-country="France" data-search="europe france bordeaux vignobles immersion culturelle pierre cite du vin saint emilion">
-        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Bordeaux" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
-          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          </button>
-        </div>
-        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Bordeaux</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Bordeaux & Vignobles</h2>
-            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">7 jours d'immersion culturelle. Splendeurs architecturales de la ville de pierre, Cité du Vin et escapades à Saint-Émilion.</p>
-          </div>
-          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
-            <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
-            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
-              Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 7 : BASSIN D'ARCACHON -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="arcachon" data-continent="Europe" data-country="France" data-search="europe france arcachon bassin pilat huitres cabanes cap ferret">
-        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-5.JPG" alt="Le Bassin d'Arcachon" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
-          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          </button>
-        </div>
-        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Arcachon</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Le Bassin d'Arcachon</h2>
-            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine iodée. Ascension de la Dune du Pilat, dégustation d'huîtres dans les cabanes ostréicoles et Cap Ferret.</p>
-          </div>
-          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
-            <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
-            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
-              Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 8 : BIARRITZ -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="biarritz" data-continent="Europe" data-country="France" data-search="europe france biarritz pays basque ocean atlantique surf espelette">
-        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Biarritz" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
-          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer group/fav" aria-label="Ajouter aux favoris">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          </button>
-        </div>
-        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Biarritz</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Biarritz & Le Pays Basque</h2>
-            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">15 jours majeurs entre vagues de l'Océan Atlantique, sessions de surf, et immersion dans les villages d'Espelette.</p>
-          </div>
-          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
-            <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
-            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
-              Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
-            </div>
-          </div>
-        </div>
-      </article>
-      
-      <!-- CARD 9 : TOKYO -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="tokyo" data-continent="Asie" data-country="Japon" data-search="asie japon tokyo architecture shibuya shinjuku mont fuji temple">
-        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Tokyo" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
-          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          </button>
-        </div>
-        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Asie // Japon // Tokyo</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Tokyo : Immersion Urbaine</h2>
-            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine vibrante au cœur de la capitale nippone. Des passages piétons de Shibuya aux sanctuaires cachés d'Asakusa.</p>
-          </div>
-          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
-            <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
-            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
-              Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 10 : MOSCOU -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="moscou" data-continent="Europe" data-country="Russie" data-search="europe russie moscou kremlin place rouge architecture hiver">
-        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Moscou" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
-          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          </button>
-        </div>
-        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // Russie // Moscou</span>
-            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Moscou : Cœur Historique</h2>
-            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">7 jours à la découverte des secrets de la Place Rouge, de l'architecture impériale du Kremlin et des métros cathédrales.</p>
-          </div>
-          <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
-            <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
-            <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
-              Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
+        </article>
+      ))}
     </div>
 
     <!-- MODULE SLIDER COMPASS COMPACT RE-HAUSSÉ -->
@@ -449,11 +210,7 @@ import Layout from '../layouts/Layout.astro';
     <!-- COLONNE GAUCHE : PHOTO ENTIÈRE + TEXTE MANIFESTE ANIMÉ -->
     <div class="w-full lg:w-[48%] space-y-6 sm:space-y-8">
       <div class="w-full h-[260px] sm:h-[350px] md:h-[400px] overflow-hidden bg-neutral-100 rounded-sm shadow-2xs">
-        <img 
-          src="/images/drone/drone-albania-1.JPG" 
-          class="w-full h-full object-cover" 
-          alt="The Odyssey Exploration" 
-        />
+        <img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover" alt="The Odyssey Exploration" />
       </div>
 
       <!-- TITRE DE SECTION COMPRESSED ET ANIMATION DU TITRE SERIF -->
@@ -588,12 +345,12 @@ import Layout from '../layouts/Layout.astro';
           </div>
 
           <div id="astuces" class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 text-left font-mono text-[10px]">
-            <div class="border border-neutral-800 p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm">
+            <div class="border border-[#E0D9D0] p-6 bg-neutral-900/40 w-full rounded-sm">
               <p class="text-amber-500 uppercase tracking-wider font-bold">📱 Forfaits Internet eSIM</p>
               <p class="text-neutral-400 leading-relaxed">Activez vos données à l'étranger instantanément with Nomad. Idéal pour rester connecté sans frais d'itinérance et gérer son forfait directement depuis l'application.</p>
               <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block">Lien Privilège Nomad →</a>
             </div>
-            <div class="border border-neutral-800 p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm">
+            <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm">
               <p class="text-amber-500 uppercase tracking-wider font-bold">🏥 Assurance Voyage & Santé</p>
               <p class="text-neutral-400 leading-relaxed">Couverture médicale complète, rapatriement et annulation de vol pour explorer le globe en totale sérénité.</p>
               <a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block">Bénéficier des 5% Chapka →</a>
@@ -601,15 +358,109 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
       </section>
-
     </div>
   </div>
 </Layout>
 
 <!-- Astro compile désormais ce script en module JS autonome déporté. C'est 100% compatible CSP ("self"). -->
 <script>
+  // 1. Définition des types et interfaces
+  interface Lexicon {
+    aventure: string[];
+    plages: string[];
+    culture: string[];
+  }
+  interface ProfilLexicon {
+    couple: string[];
+    famille: string[];
+    solo: string[];
+    amis: string[];
+  }
+  interface Lexicons {
+    type: Lexicon;
+    profil: ProfilLexicon;
+  }
+
+  // 2. Définition des constantes et fonctions utilitaires au niveau GLOBAL du module de script
+  // Résout définitivement TOUTES les erreurs de portée "Cannot find name" de TypeScript et les race conditions [1.2.3, 2.1]
+
+  const romanNumerals = ["", "I", "II", "III", "IV", "V", "VI"];
+
+  // LEXIQUE AUTOMATIQUE DE CLASSIFICATION DES CARDS
+  const lexicons: Lexicons = {
+    type: {
+      aventure: ['trek', 'randonnée', 'randonnees', 'sentier', 'sentiers', 'montagne', 'montagnes', 'col', 'sommet', 'sommets', 'volcan', 'cirque', 'hiking', 'ascension', 'aiguilles', 'bavella', 'bergeries', 'villages'],
+      plages: ['plage', 'plages', 'lagon', 'lagons', 'snorkeling', 'sable', 'côte', 'côtes', 'riviera', 'baignade', 'turquoise', 'crique', 'criques', 'eau', 'ocean', 'vagues', 'surf', 'ksamil', 'côtières', 'mer'],
+      culture: ['architecture', 'musée', 'musées', 'patrimoine', 'historique', 'ville', 'villes', 'capitale', 'temple', 'temples', 'gratte-ciel', 'jazz', 'galerie', 'galeries', 'historique', 'chicago', 'bordeaux', 'tokyo', 'moscou', 'splendeurs', 'architecturales', 'cathédrales', 'métros', 'kremlin', 'shibuya', 'shinjuku', 'sanctuaires']
+    },
+    profil: {
+      couple: ['romantique', 'intime', 'escapade', 'escapades', 'duo', 'coucher', 'couchers', 'road-trip', 'douceur', 'bergeries', 'intimes', 'confidents', 'lune', 'vignobles', 'vignes', 'charme'],
+      famille: ['famille', 'familles', 'enfant', 'enfants', 'kids', 'accessible', 'baignade sécurisée', 'calme', 'parcs', 'parc', ' road-trip'],
+      solo: ['solo', 'sac', 'dos', 'liberté', 'immersion', 'vibrante', 'secrets', 'historique', 'road-trip', 'découvrir'],
+      amis: ['amis', 'groupe', 'club', 'festif', 'convivial', 'vagues', 'surf', 'jazz', 'bars', 'session', 'sessions', 'vignobles', 'road-trip']
+    }
+  };
+
+  function getFavorites(): string[] {
+    try {
+      const stored = localStorage.getItem('the_odyssey_favorites');
+      if (!stored) return [];
+      
+      const parsed = JSON.parse(stored);
+      if (!Array.isArray(parsed)) {
+        throw new Error('Données corrompues');
+      }
+      
+      const slugRegex = /^[a-z0-9\-]+$/;
+      const isValid = parsed.every(item => typeof item === 'string' && slugRegex.test(item));
+      
+      if (!isValid) {
+        throw new Error('Slugs invalides detectés');
+      }
+      
+      return parsed;
+    } catch (e) {
+      try {
+        localStorage.removeItem('the_odyssey_favorites');
+      } catch (err) {}
+      return [];
+    }
+  }
+
+  function sanitizeSearchInput(input: string): string {
+    if (typeof input !== 'string') return '';
+    
+    let cleaned = input.slice(0, 100).replace(/<[^>]*>/g, '');
+    
+    const escapeMap: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      "/": '&#x2F;',
+      '`': '&#x60;'
+    };
+    cleaned = cleaned.replace(/[&<>"'/`]/g, (match) => escapeMap[match]);
+
+    const sqlRegex = /\b(union|select|insert|delete|update|drop|alter|where|and|or|having|truncate)\b/gi;
+    cleaned = cleaned.replace(sqlRegex, '');
+    
+    return cleaned.trim();
+  }
+
+  function debounce(func: Function, delay: number) {
+    let timeoutId: any;
+    return (...args: any[]) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func.apply(null, args);
+      }, delay);
+    };
+  }
+
+  // 3. DOMContentLoaded pour la liaison stricte et différée des éléments réactifs [2.1]
   document.addEventListener('DOMContentLoaded', () => {
-    // 1. Déclarations et casting strict de tous les éléments du DOM
     const searchInput = document.getElementById('destination-search') as HTMLInputElement | null;
     const compactSelect = document.getElementById('compact-filter') as HTMLSelectElement | null;
     const needle = document.getElementById('compass-needle') as HTMLElement | null;
@@ -617,7 +468,7 @@ import Layout from '../layouts/Layout.astro';
     const prevCompass = document.getElementById('prev-compass') as HTMLButtonElement | null;
     const nextCompass = document.getElementById('next-compass') as HTMLButtonElement | null;
     const cards = document.querySelectorAll('.guide-card') as NodeListOf<HTMLElement>;
-    const favBtnMenu = document.getElementById('favorites-menu-btn');
+    const favBtnMenu = document.getElementById('favorites-menu-btn') as HTMLButtonElement | null;
 
     // NOUVEAUX ÉLÉMENTS DE FILTRAGE
     const typeButtons = document.querySelectorAll('.filter-btn-type') as NodeListOf<HTMLButtonElement>;
@@ -635,23 +486,6 @@ import Layout from '../layouts/Layout.astro';
     let cardsPerPage = 6; 
     let visibleCards: HTMLElement[] = [];
 
-    const romanNumerals = ["", "I", "II", "III", "IV", "V", "VI"];
-
-    // LEXIQUE AUTOMATIQUE DE CLASSIFICATION DES CARDS
-    const lexicons = {
-      type: {
-        aventure: ['trek', 'randonnée', 'randonnees', 'sentier', 'sentiers', 'montagne', 'montagnes', 'col', 'sommet', 'sommets', 'volcan', 'cirque', 'hiking', 'ascension', 'aiguilles', 'bavella', 'bergeries', 'villages'],
-        plages: ['plage', 'plages', 'lagon', 'lagons', 'snorkeling', 'sable', 'côte', 'côtes', 'riviera', 'baignade', 'turquoise', 'crique', 'criques', 'eau', 'ocean', 'vagues', 'surf', 'ksamil', 'côtières', 'mer'],
-        culture: ['architecture', 'musée', 'musées', 'patrimoine', 'historique', 'ville', 'villes', 'capitale', 'temple', 'temples', 'gratte-ciel', 'jazz', 'galerie', 'galeries', 'historique', 'chicago', 'bordeaux', 'tokyo', 'moscou', 'splendeurs', 'architecturales', 'cathédrales', 'métros', 'kremlin', 'shibuya', 'shinjuku', 'sanctuaires']
-      },
-      profil: {
-        couple: ['romantique', 'intime', 'escapade', 'escapades', 'duo', 'coucher', 'couchers', 'road-trip', 'douceur', 'bergeries', 'intimes', 'confidents', 'lune', 'vignobles', 'vignes', 'charme'],
-        famille: ['famille', 'familles', 'enfant', 'enfants', 'kids', 'accessible', 'baignade sécurisée', 'calme', 'parcs', 'parc', ' road-trip'],
-        solo: ['solo', 'sac', 'dos', 'liberté', 'immersion', 'vibrante', 'secrets', 'historique', 'road-trip', 'découvrir'],
-        amis: ['amis', 'groupe', 'club', 'festif', 'convivial', 'vagues', 'surf', 'jazz', 'bars', 'session', 'sessions', 'vignobles', 'road-trip']
-      }
-    };
-
     // SCAN & ATTRIBUTION DYNAMIQUE DES ATTRIBUTS DATA-TYPE & DATA-PROFIL
     function autoAttributeCards() {
       cards.forEach(card => {
@@ -663,8 +497,8 @@ import Layout from '../layouts/Layout.astro';
 
         // Attribution des ambiances (type)
         const matchedTypes: string[] = [];
-        Object.entries(lexicons.type).forEach(([type, keywords]) => {
-          if (keywords.some(kw => fullText.includes(kw))) {
+        (Object.entries(lexicons.type) as Array<[string, string[]]>).forEach(([type, keywords]) => {
+          if (keywords.some((kw: string) => fullText.includes(kw))) {
             matchedTypes.push(type);
           }
         });
@@ -680,8 +514,8 @@ import Layout from '../layouts/Layout.astro';
 
         // Attribution des profils voyageurs
         const matchedProfils: string[] = [];
-        Object.entries(lexicons.profil).forEach(([profil, keywords]) => {
-          if (keywords.some(kw => fullText.includes(kw))) {
+        (Object.entries(lexicons.profil) as Array<[string, string[]]>).forEach(([profil, keywords]) => {
+          if (keywords.some((kw: string) => fullText.includes(kw))) {
             matchedProfils.push(profil);
           }
         });
@@ -729,33 +563,6 @@ import Layout from '../layouts/Layout.astro';
       window.history.pushState({}, '', url.toString());
     }
 
-    // PROTECTION DOUBLE SÉCURISÉE DU LOCALSTORAGE CONTRE LES CRASHS D'IFRAMES & DONNÉES ALTÉRÉES
-    function getFavorites(): string[] {
-      try {
-        const stored = localStorage.getItem('the_odyssey_favorites');
-        if (!stored) return [];
-        
-        const parsed = JSON.parse(stored);
-        if (!Array.isArray(parsed)) {
-          throw new Error('Données corrompues');
-        }
-        
-        const slugRegex = /^[a-z0-9\-]+$/;
-        const isValid = parsed.every(item => typeof item === 'string' && slugRegex.test(item));
-        
-        if (!isValid) {
-          throw new Error('Slugs invalides detectés');
-        }
-        
-        return parsed;
-      } catch (e) {
-        try {
-          localStorage.removeItem('the_odyssey_favorites');
-        } catch (err) {}
-        return [];
-      }
-    }
-
     function toggleFavorite(cardId: string) {
       let favs = getFavorites();
       if (favs.includes(cardId)) {
@@ -785,12 +592,10 @@ import Layout from '../layouts/Layout.astro';
         const svg = btn ? btn.querySelector('svg') as SVGElement | null : null;
         if (btn && svg && cardId) {
           if (favs.includes(cardId)) {
-            // Contour blanc et remplissage ambré
             svg.classList.add('text-amber-500', 'fill-amber-500', 'stroke-white');
             svg.classList.remove('text-white/90');
             svg.setAttribute('stroke-width', '2.5'); // Bordure blanche plus grasse
           } else {
-            // Cœur vide transparent/argent au repos
             svg.classList.remove('text-amber-500', 'fill-amber-500', 'stroke-white');
             svg.classList.add('text-white/90');
             svg.setAttribute('stroke-width', '1.5');
@@ -799,8 +604,7 @@ import Layout from '../layouts/Layout.astro';
       });
 
       // 2. Cœur principal du menu supérieur avec bordure blanche grasse
-      const menuBtn = document.getElementById('favorites-menu-btn') as HTMLButtonElement | null;
-      const menuSvg = menuBtn ? menuBtn.querySelector('.fav-menu-svg') as SVGElement | null : null;
+      const menuSvg = favBtnMenu ? favBtnMenu.querySelector('.fav-menu-svg') as SVGElement | null : null;
       if (menuSvg) {
         if (favs.length > 0) {
           menuSvg.classList.add('text-amber-500', 'fill-amber-500', 'stroke-white');
@@ -826,62 +630,52 @@ import Layout from '../layouts/Layout.astro';
       }
     }
 
-    // SANITISATION CONTRE LES FAILLES XSS & BASES SQL INJECTIONS
-    function sanitizeSearchInput(input: string): string {
-      if (typeof input !== 'string') return '';
-      
-      let cleaned = input.slice(0, 100).replace(/<[^>]*>/g, '');
-      
-      const escapeMap: Record<string, string> = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#x27;',
-        "/": '&#x2F;',
-        '`': '&#x60;'
-      };
-      cleaned = cleaned.replace(/[&<>"'/`]/g, (match) => escapeMap[match]);
+    // RESTAURATION DE L'ÉTAT DE SESSION DEPUIS LA PAGE DESTINATION
+    function restoreSessionState() {
+      try {
+        const savedScroll = sessionStorage.getItem('odyssey_home_scroll');
+        const savedFilter = sessionStorage.getItem('odyssey_home_filter');
+        const savedType = sessionStorage.getItem('odyssey_home_type');
+        const savedProfil = sessionStorage.getItem('odyssey_home_profil');
+        const savedSearch = sessionStorage.getItem('odyssey_home_search');
 
-      const sqlRegex = /\b(union|select|insert|delete|update|drop|alter|where|and|or|having|truncate)\b/gi;
-      cleaned = cleaned.replace(sqlRegex, '');
-      
-      return cleaned.trim();
+        if (savedFilter) currentFilter = savedFilter;
+        if (savedType) currentFilterType = savedType;
+        if (savedProfil) currentFilterProfil = savedProfil;
+        if (savedSearch) {
+          searchQuery = savedSearch;
+          if (searchInput) searchInput.value = savedSearch;
+        }
+
+        if (compactSelect) {
+          compactSelect.value = currentFilter;
+        }
+
+        updateFilterUI();
+        updatePagination();
+
+        if (savedScroll) {
+          setTimeout(() => {
+            window.scrollTo({ top: parseInt(savedScroll), behavior: 'smooth' });
+            sessionStorage.removeItem('odyssey_home_scroll');
+          }, 400);
+        }
+      } catch (e) {}
     }
 
-    // DEBOUNCE ANTI-FLOOD (Correction NodeJS.Timeout en "any" pour environnement navigateur)
-    function debounce(func: Function, delay: number) {
-      let timeoutId: any;
-      return (...args: any[]) => {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-          func.apply(null, args);
-        }, delay);
-      };
-    }
-
-    function checkDeviceWidth() {
-      if (window.innerWidth < 1024) {
-        cardsPerPage = 3; 
-      } else {
-        cardsPerPage = 6; 
-      }
-    }
-    checkDeviceWidth();
-    window.addEventListener('resize', () => { checkDeviceWidth(); updatePagination(); });
-
-    const items = new Set<string>();
-    cards.forEach(card => {
-      if(card.dataset.continent) items.add(card.dataset.continent);
+    // ENREGISTREMENT DE L'ÉTAT DE SESSION AVANT LA NAVIGATION VERS UNE CARD
+    const destLinks = document.querySelectorAll('.dest-link') as NodeListOf<HTMLAnchorElement>;
+    destLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        try {
+          sessionStorage.setItem('odyssey_home_scroll', window.scrollY.toString());
+          sessionStorage.setItem('odyssey_home_filter', currentFilter);
+          sessionStorage.setItem('odyssey_home_type', currentFilterType);
+          sessionStorage.setItem('odyssey_home_profil', currentFilterProfil);
+          sessionStorage.setItem('odyssey_home_search', searchQuery);
+        } catch (e) {}
+      });
     });
-
-    let selectHTML = `<option value="all">Explorer le globe (Tous)</option>`;
-    selectHTML += `<option value="favorites">Mes Favoris ❤️</option>`; 
-    items.forEach(item => {
-      const slug = item.toLowerCase().replace(/[^a-z0-9]/g, '');
-      selectHTML += `<option value="${slug}">${item}</option>`;
-    });
-    if(compactSelect) compactSelect.innerHTML = selectHTML;
 
     // Assigne les clics favoris sur les cartes (Sans rafraîchir la grille globale pour supprimer le sursaut)
     cards.forEach(card => {
@@ -973,7 +767,7 @@ import Layout from '../layouts/Layout.astro';
       const totalPages = Math.ceil(visibleCards.length / cardsPerPage) || 1;
       if (currentPage > totalPages) currentPage = totalPages;
 
-      // 3. Affichage en une seule passe sans écroulement préalable de la hauteur (Anti-sursaut complet)
+      // 3. Affichage en une seule passe sans écroulement (Anti-sursaut complet)
       const start = (currentPage - 1) * cardsPerPage;
       const pageCards = visibleCards.slice(start, start + cardsPerPage);
 
@@ -982,7 +776,7 @@ import Layout from '../layouts/Layout.astro';
         if (shouldShow) {
           if (card.style.display !== 'flex') {
             card.style.display = 'flex';
-            void card.offsetHeight; // Force le reflow du navigateur pour rendre la transition fluide
+            void card.offsetHeight; 
           }
           card.style.opacity = '1';
           card.style.transform = 'scale(1)';
@@ -995,7 +789,6 @@ import Layout from '../layouts/Layout.astro';
         }
       });
 
-      // Affichage de l'état vide si aucune destination ne correspond
       const grid = document.getElementById('guides-grid') as HTMLElement | null;
       let emptyMessage = document.getElementById('empty-favorites-message') as HTMLElement | null;
       if (visibleCards.length === 0) {
@@ -1130,11 +923,25 @@ import Layout from '../layouts/Layout.astro';
       });
     }
 
-    // Initialisation globale et auto-classification
+    // Initialisation
+    const items = new Set<string>();
+    cards.forEach(card => {
+      if(card.dataset.continent) items.add(card.dataset.continent);
+    });
+
+    let selectHTML = `<option value="all">Explorer le globe (Tous)</option>`;
+    selectHTML += `<option value="favorites">Mes Favoris ❤️</option>`; 
+    items.forEach(item => {
+      const slug = item.toLowerCase().replace(/[^a-z0-9]/g, '');
+      selectHTML += `<option value="${slug}">${item}</option>`;
+    });
+    if(compactSelect) compactSelect.innerHTML = selectHTML;
+
+    // Initialisation globale, auto-classification et restauration éventuelle d'état
     autoAttributeCards();
     updateFilterUI();
     updateFavStates();
-    updatePagination();
+    restoreSessionState();
 
     const images = document.querySelectorAll('.slide-img') as NodeListOf<HTMLElement>;
     let currentIndex = 0;

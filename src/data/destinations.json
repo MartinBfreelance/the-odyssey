@@ -1,0 +1,282 @@
+[
+  {
+    "slug": "albanie",
+    "titre": "Albanie : Riviera & Parcs",
+    "sous_titre": "Un road-trip équilibré d'une semaine complète entre villages de pierre et criques cachées.",
+    "geo": "Europe // Balkans // Albanie",
+    "continent": "europe",
+    "image": "/images/drone/drone-albania-5.JPG",
+    "type": ["aventure", "plages"],
+    "profil": ["couple", "solo", "amis"],
+    "stats": {
+      "duree": "7 jours",
+      "etapes": "5 étapes",
+      "budget": "~650€",
+      "periode": "Mai – Sept."
+    },
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "14 mai 2026",
+      "lecture": "8 min"
+    },
+    "note": 4.7,
+    "nb_avis": 12,
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  },
+  {
+    "slug": "corse",
+    "titre": "Corse : L'Île de Beauté",
+    "sous_titre": "15 jours des calanques de Piana aux falaises de Bonifacio, entre aiguilles et eaux turquoises.",
+    "geo": "Europe // France // Corse",
+    "continent": "europe",
+    "image": "/images/drone/drone-albania-1.JPG",
+    "type": ["aventure", "plages"],
+    "profil": ["couple", "famille"],
+    "stats": {
+      "duree": "15 jours",
+      "etapes": "8 étapes",
+      "budget": "~1 200€",
+      "periode": "Juin – Oct."
+    },
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "2 mai 2026",
+      "lecture": "14 min"
+    },
+    "note": 4.9,
+    "nb_avis": 31,
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  },
+  {
+    "slug": "chicago",
+    "titre": "Chicago : Architecture",
+    "sous_titre": "Une semaine immersive le long du Michigan, à la découverte des gratte-ciels et des clubs de jazz.",
+    "geo": "Amérique // USA // Chicago",
+    "continent": "amerique",
+    "image": "/images/drone/drone-albania-2.JPG",
+    "type": ["culture"],
+    "profil": ["solo", "couple"],
+    "stats": {
+      "duree": "7 jours",
+      "etapes": "4 étapes",
+      "budget": "~1 600€",
+      "periode": "Mai – Sept."
+    },
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "24 avril 2026",
+      "lecture": "9 min"
+    },
+    "note": 4.6,
+    "nb_avis": 18,
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  },
+  {
+    "slug": "miami",
+    "titre": "Miami & Floride : Le Soleil",
+    "sous_titre": "15 jours de South Beach aux Everglades. Un itinéraire magique sur l'Overseas Highway.",
+    "geo": "Amérique // USA // Floride",
+    "continent": "amerique",
+    "image": "/images/drone/drone-albania-5.JPG",
+    "type": ["plages"],
+    "profil": ["famille", "amis"],
+    "stats": {
+      "duree": "15 jours",
+      "etapes": "6 étapes",
+      "budget": "~2 100€",
+      "periode": "Nov. – Avril"
+    },
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "10 avril 2026",
+      "lecture": "11 min"
+    },
+    "note": 4.5,
+    "nb_avis": 22,
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  },
+  {
+    "slug": "saint-tropez",
+    "titre": "Saint-Tropez & Var",
+    "sous_titre": "Une semaine de douceur de vivre, entre les ruelles de la Ponche, sentiers côtiers et vignobles cachés.",
+    "geo": "Europe // France // Saint-Tropez",
+    "continent": "europe",
+    "image": "/images/drone/drone-albania-1.JPG",
+    "type": ["plages", "culture"],
+    "profil": ["couple"],
+    "stats": {
+      "duree": "7 jours",
+      "etapes": "3 étapes",
+      "budget": "~950€",
+      "periode": "Mai – Oct."
+    },
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "15 mars 2026",
+      "lecture": "6 min"
+    },
+    "note": 4.4,
+    "nb_avis": 9,
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  },
+  {
+    "slug": "bordeaux",
+    "titre": "Bordeaux & Vignobles",
+    "sous_titre": "7 jours d'immersion culturelle, entre splendeurs de pierre, Cité du Vin et escapades à Saint-Émilion.",
+    "geo": "Europe // France // Bordeaux",
+    "continent": "europe",
+    "image": "/images/drone/drone-albania-2.JPG",
+    "type": ["culture"],
+    "profil": ["couple", "solo"],
+    "stats": {
+      "duree": "7 jours",
+      "etapes": "4 étapes",
+      "budget": "~800€",
+      "periode": "Avril – Oct."
+    },
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "1 mars 2026",
+      "lecture": "7 min"
+    },
+    "note": 4.8,
+    "nb_avis": 15,
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  },
+  {
+    "slug": "arcachon",
+    "titre": "Le Bassin d'Arcachon",
+    "sous_titre": "Une semaine iodée entre Dune du Pilat, cabanes ostréicoles et plages sauvages du Cap Ferret.",
+    "geo": "Europe // France // Arcachon",
+    "continent": "europe",
+    "image": "/images/drone/drone-albania-5.JPG",
+    "type": ["plages"],
+    "profil": ["famille", "couple"],
+    "stats": {
+      "duree": "7 jours",
+      "etapes": "3 étapes",
+      "budget": "~750€",
+      "periode": "Mai – Sept."
+    },
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "12 février 2026",
+      "lecture": "8 min"
+    },
+    "note": 4.7,
+    "nb_avis": 26,
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  },
+  {
+    "slug": "biarritz",
+    "titre": "Biarritz & Le Pays Basque",
+    "sous_titre": "15 jours majeurs entre vagues de l'Océan Atlantique, sessions de surf, et immersion dans les villages.",
+    "geo": "Europe // France // Biarritz",
+    "continent": "europe",
+    "image": "/images/drone/drone-albania-1.JPG",
+    "type": ["aventure", "plages"],
+    "profil": ["couple", "amis", "solo"],
+    "stats": {
+      "duree": "15 jours",
+      "etapes": "6 étapes",
+      "budget": "~1 350€",
+      "periode": "Juin – Oct."
+    },
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "24 janvier 2026",
+      "lecture": "12 min"
+    },
+    "note": 4.9,
+    "nb_avis": 38,
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  },
+  {
+    "slug": "tokyo",
+    "titre": "Tokyo : Immersion Urbaine",
+    "sous_titre": "Une semaine vibrante au cœur de la capitale nippone, entre Shibuya et sanctuaires historiques.",
+    "geo": "Asie // Japon // Tokyo",
+    "continent": "asie",
+    "image": "/images/drone/drone-albania-2.JPG",
+    "type": ["culture"],
+    "profil": ["solo", "amis"],
+    "stats": {
+      "duree": "7 jours",
+      "etapes": "5 étapes",
+      "budget": "~2 200€",
+      "periode": "Mars – Mai"
+    },
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "12 janvier 2026",
+      "lecture": "10 min"
+    },
+    "note": 4.8,
+    "nb_avis": 42,
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  },
+  {
+    "slug": "moscou",
+    "titre": "Moscou : Cœur Historique",
+    "sous_titre": "7 jours à la découverte de la Place Rouge, du Kremlin et de l'architecture impériale.",
+    "geo": "Europe // Russie // Moscou",
+    "continent": "europe",
+    "image": "/images/drone/drone-albania-5.JPG",
+    "type": ["culture"],
+    "profil": ["solo"],
+    "stats": {
+      "duree": "7 jours",
+      "etapes": "4 étapes",
+      "budget": "~1 100€",
+      "periode": "Mai – Sept."
+    },
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "5 janvier 2026",
+      "lecture": "9 min"
+    },
+    "note": 4.6,
+    "nb_avis": 14,
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  }
+]
