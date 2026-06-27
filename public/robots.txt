@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Desindexation des routes sensibles
+Disallow: /admin/
+Disallow: /api/
+Disallow: /wp-admin/

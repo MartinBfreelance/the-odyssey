@@ -4,7 +4,7 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="THE ODYSSEY | Slow Travel Journal & Guide">
   
-  <!-- HERO SLIDER PLEIN ÉCRAN TOTAL (H-SCREEN STYLE BOKO STUDIO) -->
+  <!-- HERO SLIDER PLEIN ÉCRAN -->
   <section class="relative h-screen w-full bg-neutral-950 flex items-center justify-center text-center px-4 sm:px-6 overflow-hidden">
     <div class="absolute inset-0 z-0 pointer-events-none select-none">
       <img 
@@ -23,56 +23,55 @@ import Layout from '../layouts/Layout.astro';
         class="slide-img absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out" 
       />
       
-      <!-- MASQUES ET FADES DE TRANSITION -->
       <div class="absolute inset-0 bg-gradient-to-b from-neutral-950/20 via-transparent to-neutral-950/30 z-10"></div>
       <div class="absolute bottom-0 left-0 right-0 h-[25vh] bg-gradient-to-b from-transparent to-[#FAF9F6] z-10"></div>
     </div>
 
-    <!-- ZONE DE TEXTE INTÉGRÉE MISE À JOUR AVEC TES NOUVEAUX TEXTES EDITORIAUX -->
+    <!-- ZONE DE TEXTE INTÉGRÉE (AVEC CONTRASTE BICOLORE) -->
     <div class="relative z-20 w-full max-w-4xl mx-auto text-white space-y-4 px-2">
-      <!-- 1. TEXTE DU HAUT : SLOW TRAVEL JOURNAL -->
       <span class="text-[10px] font-mono tracking-[0.5em] uppercase text-neutral-200 block drop-shadow-xs">Slow Travel Journal</span>
-      
-      <!-- 2. TITRE PRINCIPAL COMMENCANT EN ANGLAIS -->
       <h1 class="text-3xl sm:text-5xl md:text-7xl font-serif font-light tracking-tight leading-[1.2] drop-shadow-md">
-        Take the time to<br/><span class="italic font-normal text-neutral-100">discover the world.</span>
+        Take the time to<br/><span class="italic font-normal text-amber-500">discover the world.</span>
       </h1>
-      
-      <!-- 3. SOUS-TITRE COMPLET INTÉGRÉ D'UN EXPLORATEUR À D'AUTRES -->
       <p class="text-neutral-200/90 max-w-md mx-auto text-[9px] sm:text-[10px] font-mono tracking-widest uppercase pt-2 sm:pt-4 drop-shadow-xs">
         Complete guides from one explorer to another
       </p>
     </div>
   </section>
 
-  <!-- SECTION DESTINATIONS SÉCURISÉE CONTRE LE ZOOM -->
-  <section id="destinations" class="w-full max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 py-16 sm:py-20 border-t border-neutral-200/60 scroll-mt-20 overflow-hidden">
+  <!-- SECTION DESTINATIONS (AVEC OVERFLOW-HIDDEN SUR ARTICLE MAIS OVERFLOW-VISIBLE ICI) -->
+  <section id="destinations" class="w-full max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 py-16 sm:py-20 border-t border-neutral-200/60 scroll-mt-20 overflow-visible">
     
-    <!-- EN-TÊTE ULTRA-RESPONSIVE COMPATIBLE SAFARI ET CHROME MOBILE -->
+    <!-- EN-TÊTE ULTRA-RESPONSIVE -->
     <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12 border-b border-neutral-200/40 pb-8">
       
-      <!-- TITRE DE SECTION AVEC ICONE SIGNATURE BOUSSOLE INTERACTIVE -->
+      <!-- TITRE DE SECTION COMPASS NOIR AJUSTÉ EN TAILLE -->
       <div class="flex items-center space-x-3 group/section-title cursor-default text-center sm:text-left">
-        <div class="w-4 h-4 text-amber-600 group-hover/section-title:rotate-45 group-hover/section-title:text-amber-500 transition-all duration-500 ease-out shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+        <div class="w-5 h-5 text-neutral-400 group-hover/section-title:rotate-45 group-hover/section-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
             <circle cx="12" cy="12" r="10"></circle>
-            <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="2"></path>
-            <path fill="currentColor" d="M12 7l1.5 3.5L12 12l-1.5-1.5zM12 17l1.5-3.5L12 12l-1.5 1.5z"></path>
+            <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+            <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+            <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
           </svg>
         </div>
-        <span class="text-[10px] font-mono tracking-[0.4em] uppercase text-neutral-400 group-hover/section-title:text-amber-700 transition-colors duration-300">
+        <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/section-title:text-amber-800 transition-colors duration-300">
           Nos Itinéraires au Long Cours
+          <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/section-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
         </span>
       </div>
 
-      <!-- FILTRES RESPONSIVES ALIGNÉS SANS CHEVAUCHEMENT -->
+      <!-- FILTRES RESPONSIVES -->
       <div class="flex flex-col xs:flex-row items-center gap-3 w-full sm:w-auto justify-end">
-        <!-- Input Recherche -->
+        <!-- Input Recherche (Sécurisé : autocomplete off, longueur max 100) -->
         <div class="relative w-full xs:w-48 sm:w-56">
           <input 
             type="text" 
             id="destination-search" 
             placeholder="Rechercher..." 
+            autocomplete="off"
+            maxlength="100"
             class="w-full bg-[#FFFFFF] border border-neutral-200/80 px-3 py-2 pl-8 text-[11px] font-mono uppercase tracking-wider text-neutral-800 placeholder-neutral-400 focus:outline-hidden focus:border-amber-600 rounded-xs transition-colors shadow-2xs"
           />
           <span class="absolute left-2.5 top-2.5 text-neutral-400 text-[10px]">🔍</span>
@@ -90,22 +89,28 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
     
-    <!-- CONTENEUR GRILLE BLINDÉ -->
-    <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 sm:gap-x-8 sm:gap-y-16 transition-all duration-500">
+    <!-- CONTENEUR GRILLE RE-DESIGNÉ (3 COLONNES MAX TYPE VOYAGE PRIVÉ) -->
+    <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 transition-all duration-500">
       
       <!-- CARD 1 : ALBANIE -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="Albanie" data-search="europe balkans albanie riviera parcs tirana ksamil">
-        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Itinéraire Albanie" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="albanie" data-continent="Europe" data-country="Albanie" data-search="europe balkans albanie riviera parcs tirana ksamil">
+        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
+          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Itinéraire Albanie" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <!-- Bouton Cœur positionné en haut à droite (top-3/right-3) avec fond glassmorphism discret -->
+          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </button>
         </div>
-        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // Balkans // Albanie</span>
             <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Albanie : Riviera & Parcs</h2>
             <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">De Tirana aux plages sauvages de Ksamil. Un road-trip équilibré d'une semaine complète entre villages de pierre et criques cachées.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Logements conseillés</a>
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
             <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
               Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
@@ -115,18 +120,23 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 2 : LA CORSE -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="France" data-search="europe france corse ile beaute piana bonifacio bavella">
-        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Corse" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="corse" data-continent="Europe" data-country="Corse" data-search="europe france corse ile beaute piana bonifacio bavella">
+        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
+          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Corse" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </button>
         </div>
-        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Corse</span>
             <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Corse : L'Île de Beauté</h2>
-            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">15 jours des calanques de Piana aux falaises de Bonifacio. Les plus belles aiguilles de Bavella et criques d'eau turquoise.</p>
+            <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">15 jours des calanques de piana aux falaises de Bonifacio. Les plus belles aiguilles de Bavella et criques d'eau turquoise.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Réserver ses bergeries</a>
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
             <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
               Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
@@ -136,18 +146,23 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 3 : CHICAGO -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Amérique" data-country="USA" data-search="amerique usa chicago architecture michigan gratte ciel millenium park jazz">
-        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Chicago" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="chicago" data-continent="Amérique" data-country="USA" data-search="amerique usa chicago architecture michigan gratte ciel millenium park jazz">
+        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
+          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Chicago" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </button>
         </div>
-        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Amérique // USA // Chicago</span>
             <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Chicago : Architecture</h2>
             <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine immersive le long du Michigan. Exploration des gratte-ciels cultes, du Millenium Park et des clubs de jazz historiques.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Downtown Chicago</a>
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
             <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
               Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
@@ -157,18 +172,23 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 4 : MIAMI -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Amérique" data-country="USA" data-search="amerique usa miami floride soleil south beach everglades highway key west">
-        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Miami" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="miami" data-continent="Amérique" data-country="USA" data-search="amerique usa miami floride soleil south beach everglades highway key west">
+        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
+          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Miami" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </button>
         </div>
-        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Amérique // USA // Floride</span>
             <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Miami & Floride : Le Soleil</h2>
             <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">15 jours de South Beach aux marais des Everglades. Itinéraire magique sur l'Overseas Highway jusqu'au bout de Key West.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Boutiques hôtels Miami</a>
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
             <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
               Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
@@ -178,18 +198,23 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 5 : SAINT-TROPEZ -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="France" data-search="europe france saint tropez var douceur ponche ramatuelle vignobles">
-        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Saint-Tropez" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="saint-tropez" data-continent="Europe" data-country="France" data-search="europe france saint tropez var douceur ponche ramatuelle vignobles">
+        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
+          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Saint-Tropez" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </button>
         </div>
-        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Saint-Tropez</span>
             <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Saint-Tropez & Var</h2>
             <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine de douceur de vivre. Des ruelles de la Ponche aux sentiers côtiers de Ramatuelle et vignobles cachés du Var.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Logements de charme</a>
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
             <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
               Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
@@ -199,18 +224,23 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 6 : BORDEAUX -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="France" data-search="europe france bordeaux vignobles immersion culturelle pierre cite du vin saint emilion">
-        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Bordeaux" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="bordeaux" data-continent="Europe" data-country="France" data-search="europe france bordeaux vignobles immersion culturelle pierre cite du vin saint emilion">
+        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
+          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Bordeaux" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </button>
         </div>
-        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Bordeaux</span>
             <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Bordeaux & Vignobles</h2>
             <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">7 jours d'immersion culturelle. Splendeurs architecturales de la ville de pierre, Cité du Vin et escapades à Saint-Émilion.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Centre Historique</a>
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
             <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
               Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
@@ -220,18 +250,23 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 7 : BASSIN D'ARCACHON -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="France" data-search="europe france arcachon bassin pilat huitres cabanes cap ferret">
-        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-5.JPG" alt="Le Bassin d'Arcachon" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="arcachon" data-continent="Europe" data-country="France" data-search="europe france arcachon bassin pilat huitres cabanes cap ferret">
+        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
+          <img src="/images/drone/drone-albania-5.JPG" alt="Le Bassin d'Arcachon" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </button>
         </div>
-        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Arcachon</span>
             <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Le Bassin d'Arcachon</h2>
             <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine iodée. Ascension de la Dune du Pilat, dégustation d'huîtres dans les cabanes ostréicoles et Cap Ferret.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Réserver ses cabanes</a>
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
             <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
               Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
@@ -241,18 +276,23 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 8 : BIARRITZ -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="France" data-search="europe france biarritz pays basque ocean atlantique surf espelette">
-        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Biarritz" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="biarritz" data-continent="Europe" data-country="France" data-search="europe france biarritz pays basque ocean atlantique surf espelette">
+        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
+          <img src="/images/drone/drone-albania-1.JPG" alt="Guide Biarritz" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </button>
         </div>
-        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // France // Biarritz</span>
             <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Biarritz & Le Pays Basque</h2>
             <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">15 jours majeurs entre vagues de l'Océan Atlantique, sessions de surf, et immersion dans les villages d'Espelette.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Côte Basque</a>
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
             <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
               Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
@@ -262,18 +302,23 @@ import Layout from '../layouts/Layout.astro';
       </article>
       
       <!-- CARD 9 : TOKYO -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Asie" data-country="Japon" data-search="asie japon tokyo architecture shibuya shinjuku mont fuji temple">
-        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Tokyo" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="tokyo" data-continent="Asie" data-country="Japon" data-search="asie japon tokyo architecture shibuya shinjuku mont fuji temple">
+        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
+          <img src="/images/drone/drone-albania-2.JPG" alt="Guide Tokyo" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </button>
         </div>
-        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Asie // Japon // Tokyo</span>
-            <h2 class="text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Tokyo : Immersion Urbaine</h2>
+            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Tokyo : Immersion Urbaine</h2>
             <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">Une semaine vibrante au cœur de la capitale nippone. Des passages piétons de Shibuya aux sanctuaires cachés d'Asakusa.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Ryokan Tokyo</a>
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
             <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
               Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
@@ -283,18 +328,23 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 10 : MOSCOU -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 overflow-hidden shadow-2xs hover:shadow-xs transition-shadow w-full mx-auto" data-continent="Europe" data-country="Russie" data-search="europe russie moscou kremlin place rouge architecture hiver">
-        <div class="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
-          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Moscou" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-1000 ease-out" />
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="moscou" data-continent="Europe" data-country="Russie" data-search="europe russie moscou kremlin place rouge architecture hiver">
+        <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
+          <img src="/images/drone/drone-albania-5.JPG" alt="Guide Moscou" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
+          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </button>
         </div>
-        <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <span class="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block font-medium">Europe // Russie // Moscou</span>
-            <h2 class="text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Moscou : Cœur Historique</h2>
+            <h2 class="text-base sm:text-lg font-serif font-light text-neutral-900 leading-snug group-hover:text-amber-800 transition-colors">Moscou : Cœur Historique</h2>
             <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">7 jours à la découverte des secrets de la Place Rouge, de l'architecture impériale du Kremlin et des métros cathédrales.</p>
           </div>
           <div class="pt-4 border-t border-neutral-100 space-y-2 text-[10px] font-mono">
-            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Hôtels Moscou Centre</a>
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block text-amber-700 hover:underline font-bold">🏢 Trouver son logement</a>
             <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 hover:text-amber-700 transition-colors">📱 Activer son eSIM Nomad</a>
             <div class="pt-2 text-neutral-900 font-medium uppercase tracking-widest border-b border-neutral-900 w-max pb-0.5 group-hover:text-amber-700 group-hover:border-amber-700 transition-colors cursor-pointer flex items-center gap-1.5">
               Découvrir <span class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5">→</span>
@@ -309,25 +359,25 @@ import Layout from '../layouts/Layout.astro';
     <div class="w-full flex flex-col items-center justify-center mt-12 select-none overflow-hidden px-4">
       <div class="flex items-center space-x-10 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.3em] text-neutral-400">
         
-        <!-- Bouton West Fixe -->
-        <button id="prev-compass" class="flex items-center space-x-2.5 hover:text-amber-700 transition-colors cursor-pointer group/prev disabled:opacity-25 disabled:cursor-not-allowed shrink-0">
+        <!-- Bouton West Fixe (Surlignage Ambre interactif) -->
+        <button id="prev-compass" class="flex items-center space-x-2.5 hover:text-amber-600 transition-colors duration-300 cursor-pointer group/prev disabled:opacity-25 disabled:cursor-not-allowed shrink-0 font-bold tracking-[0.4em]">
           <span class="transform group-hover/prev:-translate-x-1 transition-transform duration-300">↼</span>
           <span class="inline">West</span>
         </button>
 
         <!-- LOGO SLIDER COMPASS -->
-        <div id="compass-needle" class="w-14 h-14 text-neutral-800 transition-transform duration-500 ease-out flex items-center justify-center shrink-0">
+        <div id="compass-needle" class="w-14 h-14 text-neutral-800 transition-all duration-500 ease-out flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-            <circle cx="12" cy="12" r="10"></circle>
-            <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-            <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+            <circle cx="12" cy="12" r="10" stroke="currentColor"></circle>
+            <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5" stroke="currentColor"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
             <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
             <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
           </svg>
         </div>
 
-        <!-- Bouton East Fixe -->
-        <button id="next-compass" class="flex items-center space-x-2.5 hover:text-amber-700 transition-colors cursor-pointer group/next disabled:opacity-25 disabled:cursor-not-allowed shrink-0">
+        <!-- Bouton East Fixe (Surlignage Ambre interactif) -->
+        <button id="next-compass" class="flex items-center space-x-2.5 hover:text-amber-600 transition-colors duration-300 cursor-pointer group/next disabled:opacity-25 disabled:cursor-not-allowed shrink-0 font-bold tracking-[0.4em]">
           <span class="inline">East</span>
           <span class="transform group-hover/next:translate-x-1 transition-transform duration-300">⇁</span>
         </button>
@@ -338,10 +388,11 @@ import Layout from '../layouts/Layout.astro';
     </div>
 
   </section>
+
   <!-- SECTION PRÉSENTATION ADAPTÉE À L'ENSEMBLE DES ÉCRANS -->
   <section class="w-full max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 py-20 border-t border-neutral-200/60 flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-16 overflow-hidden">
     
-    <!-- COLONNE GAUCHE : PHOTO ENTIÈRE + TEXTE MANIFESTE -->
+    <!-- COLONNE GAUCHE : PHOTO ENTIÈRE + TEXTE MANIFESTE ANIMÉ -->
     <div class="w-full lg:w-[48%] space-y-6 sm:space-y-8">
       <div class="w-full h-[260px] sm:h-[350px] md:h-[400px] overflow-hidden bg-neutral-100 rounded-sm shadow-2xs">
         <img 
@@ -351,49 +402,88 @@ import Layout from '../layouts/Layout.astro';
         />
       </div>
 
-      <div class="space-y-6">
-        <div class="space-y-2 group/manifesto-title cursor-default">
-          <div class="flex items-center space-x-3 justify-center lg:justify-start">
-            <div class="w-4 h-4 text-amber-600 group-hover/manifesto-title:rotate-45 group-hover/manifesto-title:text-amber-500 transition-all duration-500 ease-out">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+      <!-- TITRE DE SECTION COMPRESSED ET ANIMATION DU TITRE SERIF -->
+      <div class="space-y-6 group/manifesto-heading cursor-default">
+        <div class="space-y-2">
+          <div class="flex items-center space-x-3 justify-center lg:justify-start group/manifesto-title cursor-default">
+            <!-- Boussole d'origine verticalisée pointant vers le haut, animée en rotation et ambre au survol -->
+            <div class="w-5 h-5 text-neutral-400 group-hover/manifesto-title:rotate-45 group-hover/manifesto-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
                 <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="2"></path>
-                <path fill="currentColor" d="M12 7l1.5 3.5L12 12l-1.5-1.5zM12 17l1.5-3.5L12 12l-1.5 1.5z"></path>
+                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
               </svg>
             </div>
-            <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-400 group-hover/manifesto-title:text-amber-700 transition-colors duration-300">
+            <!-- Titre en noir absolu text-neutral-950 et taille reduite text-[9px] -->
+            <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/manifesto-title:text-amber-800 transition-colors duration-300">
               Notre Manifeste
+              <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/manifesto-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
             </span>
           </div>
-          <!-- PRÉSENTATION EN COUPLE : THE ODYSSEY - MARTIN & FLO -->
-          <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-light text-neutral-900 tracking-tight leading-tight text-center lg:text-left">The Odyssey — Martin & Flo</h2>
-          <!-- REMPLACEMENT ÉDITORIAL MOINS "MARKETING" -->
-          <p class="text-[10px] font-mono text-amber-700 uppercase tracking-widest italic text-center lg:text-left">Carnets de route & Récits photographiques</p>
+          
+          <!-- Titre principal qui s'anime au survol -->
+          <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-light text-neutral-900 tracking-tight leading-tight text-center lg:text-left transition-all duration-700 ease-out group-hover/manifesto-heading:text-amber-700 group-hover/manifesto-heading:translate-x-1.5">
+            The Odyssey — Martin & Flo
+          </h2>
+          <p class="text-[10px] font-mono text-amber-700 uppercase tracking-widest italic text-center lg:text-left transition-all duration-700 ease-out group-hover/manifesto-heading:tracking-[0.25em]">
+            Carnets de route & Récits photographiques
+          </p>
         </div>
         
-        <!-- NOUVEAU MANIFESTE TYPE GUIDE DU ROUTARD SINCÈRE ET AUTHENTIQUE -->
         <p class="text-xs text-neutral-500 font-light leading-relaxed text-center lg:text-left">
           Bonjour ! Nous sommes Martin et Florence. Nous avons imaginé le slow journal **The Odyssey** pour qu'il devienne votre compagnon de route, à la manière d'un guide de voyage indépendant, libre et sincère.
         </p>
         <p class="text-xs text-neutral-500 font-light leading-relaxed text-center lg:text-left">
-          Ici, pas de survol rapide ou de recommandations sponsorisées. Chaque tracé fait l'objet d'une immersion vécue, de guesthouses confidentielles dénichées pas à pas et de clichés pris sur le vif. Pour financer notre travail en toute transparence, nous recommandons uniquement des services que nous utilisons nous-mêmes sur le terrain (comme Nomad ou Chapka). Notre but est de vous donner les clés pour explorer le monde à votre propre rythme. L'aventure continue au jour le jour avec notre communauté sur Instagram ❤️
+          Ici, pas de survol rapide ou de recommandations sponsorisées. Chaque tracé fait l'objet d'une immersion vécue, de guesthouses confidentielles dénichées pas à pas et de clichés pris sur le vif. Pour financer notre travail en toute transparence, nous recommandons uniquement des services que nous utilisons nous-mêmes sur le terrain (comme Nomad ou Chapka). Notre but est de vous donner les clés pour explore le monde à votre propre rythme. L'aventure continue au jour le jour avec notre communauté sur Instagram ❤️
         </p>
       </div>
     </div>
 
-    <!-- COLONNE DROITE : LE FLUX INSTAGRAM GRAND SPECTACLE -->
+    <!-- COLONNE DROITE : LE FLUX INSTAGRAM -->
     <div class="w-full lg:w-[46%] bg-[#FFFFFF] border border-neutral-200/50 p-6 sm:p-10 rounded-sm shadow-2xs space-y-6 text-center">
-      <div class="space-y-4">
-        <div class="flex items-center justify-center space-x-3">
-          <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 via-red-500 to-purple-600 p-[2px]">
-            <div class="w-full h-full bg-[#FFFFFF] rounded-full flex items-center justify-center text-xs">📸</div>
+      
+      <!-- Titre de section boussole animée pour Instagram en noir absolu -->
+      <div class="flex items-center justify-center space-x-3 group/insta-title cursor-default mt-6 mb-8">
+        <div class="w-5 h-5 text-neutral-400 group-hover/insta-title:rotate-45 group-hover/insta-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+            <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+            <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+          </svg>
+        </div>
+        <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/insta-title:text-amber-800 transition-colors duration-300">
+          Notre Communauté
+          <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/insta-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+        </span>
+      </div>
+
+      <!-- BANDEAU HORIZONTAL INSTAGRAM ALIGNÉ -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-neutral-100 pb-6 text-left">
+        <!-- Identifiant + VRAI Logo Instagram (à gauche) -->
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 via-red-500 to-purple-600 p-[2px] shrink-0 flex items-center justify-center">
+            <div class="w-full h-full bg-[#FFFFFF] rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-neutral-800">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </div>
           </div>
-          <!-- MISE À JOUR IDENTIFIANT INSTAGRAM -->
           <span class="text-xs font-bold text-neutral-900 tracking-wide">@the_odyssey_travel_journal</span>
         </div>
 
-        <!-- MISE À JOUR LIEN INSTAGRAM -->
-        <a href="https://instagram.com/the_odyssey_travel_journal" target="_blank" rel="noopener noreferrer" class="inline-block text-[10px] font-mono uppercase tracking-[0.25em] bg-sky-500 text-white font-bold px-8 py-3 rounded-md hover:bg-neutral-900 transition-colors shadow-2xs w-full sm:w-auto">
+        <!-- Bouton Follow (à droite) -->
+        <a 
+          href="https://instagram.com/the_odyssey_travel_journal" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.15em] bg-sky-500 hover:bg-neutral-900 text-white font-bold px-6 py-2.5 rounded-md transition-colors shadow-2xs shrink-0 whitespace-nowrap text-center w-full sm:w-auto"
+        >
           Follow on Instagram
         </a>
       </div>
@@ -412,37 +502,41 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
   
-  <!-- BLOC DE FUSION PROGRESSIF ALLONGÉ (400PX) ET CALÉ STRICTEMENT AU-DESSUS DE TA LIGNE NOIRE -->
-  <div class="w-full bg-gradient-to-b from-transparent to-[#0A0A0A] h-[400px] mt-24 pointer-events-none -mb-[1px]"></div>
+  <!-- BLOC DE FUSION PROGRESSIF MOINS LONG ET PLUS SERRÉ (DIVISÉ PAR DEUX) -->
+  <div class="w-full bg-gradient-to-b from-transparent to-[#0A0A0A] h-[180px] mt-12 pointer-events-none -mb-[1px]"></div>
 
-  <!-- ZONE DE CONCIERGERIE AVEC GRAND PADDING HAUT (PT-12 AU LIEU DE PT-60) ET PB-12 POUR ASSURER UNE FUSION SEAMLESS AVEC LE FOOTER -->
+  <!-- ZONE DE CONCIERGERIE -->
   <div class="w-full bg-[#0A0A0A] text-white pb-12 relative z-10">
-    <div class="max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 pt-12 sm:pt-16">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 pt-6 sm:pt-10">
       
+      <!-- SECTIONS CONCIERGERIE COORDONNÉE -->
       <section id="bons-plans" class="w-full">
         <div class="space-y-12">
           
-          <!-- TITRE DE SECTION AVEC ICONE SIGNATURE BOUSSOLE INTERACTIVE -->
           <div class="space-y-3 text-center sm:text-left">
-            <div class="flex items-center space-x-3 justify-center sm:justify-start group/manifesto-title cursor-default mb-2">
-              <div class="w-4 h-4 text-amber-600 group-hover/manifesto-title:rotate-45 group-hover/manifesto-title:text-amber-500 transition-all duration-500 ease-out">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+            <div class="flex items-center space-x-3 justify-center sm:justify-start group/bons-plans-title cursor-default mb-2">
+              <div class="w-5 h-5 text-neutral-400 group-hover/bons-plans-title:rotate-45 group-hover/bons-plans-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
                   <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="2"></path>
-                  <path fill="currentColor" d="M12 7l1.5 3.5L12 12l-1.5-1.5zM12 17l1.5-3.5L12 12l-1.5 1.5z"></path>
+                  <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                  <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+                  <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                  <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
                 </svg>
               </div>
-              <p class="text-amber-600 font-mono text-[9px] uppercase tracking-[0.3em] group-hover/manifesto-title:text-amber-500 transition-colors">Conciergerie & Partenaires</p>
+              <p class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-200 font-bold group-hover/bons-plans-title:text-amber-500 transition-colors">
+                Conciergerie & Partenaires
+                <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/bons-plans-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+              </p>
             </div>
             <h2 class="text-xl sm:text-2xl font-serif font-light tracking-tight">Les Réductions du Voyageur Privilégié</h2>
-            <p class="text-neutral-400 text-xs font-light leading-relaxed max-w-2xl">Nous sélectionnons nos partenaires avec soin. En passant par nos invitations, vous économisez sur vos réservations tout en soutenant notre travail indépendant.</p>
+            <p class="text-neutral-400 text-xs font-light leading-relaxed max-w-2xl">Nous sélectionnons nos partenaires with soin. En passant par nos invitations, vous économisez sur vos réservations tout en soutenant notre travail indépendant.</p>
           </div>
 
           <div id="astuces" class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 text-left font-mono text-[10px]">
             <div class="border border-neutral-800 p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm">
               <p class="text-amber-500 uppercase tracking-wider font-bold">📱 Forfaits Internet eSIM</p>
-              <p class="text-neutral-400 leading-relaxed">Activez vos données à l'étranger instantanément avec Nomad. Idéal pour rester connecté sans frais d'itinérance et gérer son forfait directement depuis l'application.</p>
-              <!-- MISE À JOUR DU LIEN ET DU TEXTE PRIVILÈGE NOMAD -->
+              <p class="text-neutral-400 leading-relaxed">Activez vos données à l'étranger instantanément with Nomad. Idéal pour rester connecté sans frais d'itinérance et gérer son forfait directement depuis l'application.</p>
               <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block">Lien Privilège Nomad →</a>
             </div>
             <div class="border border-neutral-800 p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm">
@@ -458,53 +552,208 @@ import Layout from '../layouts/Layout.astro';
   </div>
 </Layout>
 
-<script type="text/javascript">
+<!-- Astro compile désormais ce script en module JS autonome déporté. C'est 100% compatible CSP ("self"). -->
+<script>
   document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.getElementById('destination-search');
-    const compactSelect = document.getElementById('compact-filter');
-    const needle = document.getElementById('compass-needle');
-    const pageDisplay = document.getElementById('page-display');
-    const prevCompass = document.getElementById('prev-compass');
-    const nextCompass = document.getElementById('next-compass');
-    const cards = document.querySelectorAll('.guide-card');
+    // 1. Déclarations et casting strict de tous les éléments du DOM
+    const searchInput = document.getElementById('destination-search') as HTMLInputElement | null;
+    const compactSelect = document.getElementById('compact-filter') as HTMLSelectElement | null;
+    const needle = document.getElementById('compass-needle') as HTMLElement | null;
+    const pageDisplay = document.getElementById('page-display') as HTMLElement | null;
+    const prevCompass = document.getElementById('prev-compass') as HTMLButtonElement | null;
+    const nextCompass = document.getElementById('next-compass') as HTMLButtonElement | null;
+    const cards = document.querySelectorAll('.guide-card') as NodeListOf<HTMLElement>;
+    const favBtnMenu = document.getElementById('favorites-menu-btn');
 
     let currentFilter = 'all';
     let searchQuery = '';
     let currentPage = 1;
-    let cardsPerPage = 8;
-    let visibleCards = [];
+    let cardsPerPage = 6; 
+    let visibleCards: HTMLElement[] = [];
 
-    const romanNumerals = ["", "I", "II", "III", "IV"];
+    const romanNumerals = ["", "I", "II", "III", "IV", "V", "VI"];
+
+    // PROTECTION DOUBLE SÉCURISÉE DU LOCALSTORAGE CONTRE LES CRASHS D'IFRAMES & DONNÉES ALTÉRÉES
+    function getFavorites(): string[] {
+      try {
+        const stored = localStorage.getItem('the_odyssey_favorites');
+        if (!stored) return [];
+        
+        const parsed = JSON.parse(stored);
+        if (!Array.isArray(parsed)) {
+          throw new Error('Données corrompues');
+        }
+        
+        const slugRegex = /^[a-z0-9\-]+$/;
+        const isValid = parsed.every(item => typeof item === 'string' && slugRegex.test(item));
+        
+        if (!isValid) {
+          throw new Error('Slugs invalides detectés');
+        }
+        
+        return parsed;
+      } catch (e) {
+        try {
+          localStorage.removeItem('the_odyssey_favorites');
+        } catch (err) {}
+        return [];
+      }
+    }
+
+    function toggleFavorite(cardId: string) {
+      let favs = getFavorites();
+      if (favs.includes(cardId)) {
+        favs = favs.filter(id => id !== cardId);
+      } else {
+        favs.push(cardId);
+      }
+      try {
+        localStorage.setItem('the_odyssey_favorites', JSON.stringify(favs));
+      } catch (e) {}
+      updateFavStates();
+    }
+
+    // GESTION SYNCHRONISÉE DES CŒURS (CARDS + MENU AVEC BORDURE BLANCHE RENFORCÉE)
+    function updateFavStates() {
+      const favs = getFavorites();
+      
+      // 1. Cœurs des fiches : Remplissage ambré et contour blanc plus épais au clic
+      cards.forEach(card => {
+        const cardId = card.dataset.id;
+        const btn = card.querySelector('.fav-btn') as HTMLButtonElement | null;
+        const svg = btn ? btn.querySelector('svg') as SVGElement | null : null;
+        if (btn && svg && cardId) {
+          if (favs.includes(cardId)) {
+            // Contour blanc et remplissage ambré
+            svg.classList.add('text-amber-500', 'fill-amber-500', 'stroke-white');
+            svg.classList.remove('text-white/90');
+            svg.setAttribute('stroke-width', '2.5'); // Bordure blanche plus grasse
+          } else {
+            // Cœur vide transparent/argent au repos
+            svg.classList.remove('text-amber-500', 'fill-amber-500', 'stroke-white');
+            svg.classList.add('text-white/90');
+            svg.setAttribute('stroke-width', '1.5');
+          }
+        }
+      });
+
+      // 2. Cœur principal du menu supérieur avec bordure blanche grasse
+      const menuBtn = document.getElementById('favorites-menu-btn') as HTMLButtonElement | null;
+      const menuSvg = menuBtn ? menuBtn.querySelector('.fav-menu-svg') as SVGElement | null : null;
+      if (menuSvg) {
+        if (favs.length > 0) {
+          menuSvg.classList.add('text-amber-500', 'fill-amber-500', 'stroke-white');
+          menuSvg.classList.remove('text-white');
+          menuSvg.setAttribute('stroke-width', '2.5'); // Bordure blanche plus grasse
+        } else {
+          menuSvg.classList.remove('text-amber-500', 'fill-amber-500', 'stroke-white');
+          menuSvg.classList.add('text-white');
+          menuSvg.setAttribute('stroke-width', '1.8'); // Rétablissement de la finesse initiale
+        }
+      }
+
+      // 3. Point de notification discret
+      const dot = document.getElementById('favorites-dot') as HTMLElement | null;
+      if (dot) {
+        if (favs.length > 0) {
+          dot.classList.add('scale-100', 'opacity-100');
+          dot.classList.remove('scale-0', 'opacity-0');
+        } else {
+          dot.classList.add('scale-0', 'opacity-0');
+          dot.classList.remove('scale-100', 'opacity-100');
+        }
+      }
+    }
+
+    // SANITISATION CONTRE LES FAILLES XSS & BASES SQL INJECTIONS
+    function sanitizeSearchInput(input: string): string {
+      if (typeof input !== 'string') return '';
+      
+      let cleaned = input.slice(0, 100).replace(/<[^>]*>/g, '');
+      
+      const escapeMap: Record<string, string> = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;',
+        "/": '&#x2F;',
+        '`': '&#x60;'
+      };
+      cleaned = cleaned.replace(/[&<>"'/`]/g, (match) => escapeMap[match]);
+
+      const sqlRegex = /\b(union|select|insert|delete|update|drop|alter|where|and|or|having|truncate)\b/gi;
+      cleaned = cleaned.replace(sqlRegex, '');
+      
+      return cleaned.trim();
+    }
+
+    // DEBOUNCE ANTI-FLOOD (Correction NodeJS.Timeout en "any" pour environnement navigateur)
+    function debounce(func: Function, delay: number) {
+      let timeoutId: any;
+      return (...args: any[]) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          func.apply(null, args);
+        }, delay);
+      };
+    }
 
     function checkDeviceWidth() {
-      if (window.innerWidth < 640) {
-        cardsPerPage = 4;
+      if (window.innerWidth < 1024) {
+        cardsPerPage = 3; 
       } else {
-        cardsPerPage = 8;
+        cardsPerPage = 6; 
       }
     }
     checkDeviceWidth();
     window.addEventListener('resize', () => { checkDeviceWidth(); updatePagination(); });
 
-    const items = new Set();
+    const items = new Set<string>();
     cards.forEach(card => {
       if(card.dataset.continent) items.add(card.dataset.continent);
       if(card.dataset.country === "Russie" || card.dataset.country === "Japon") items.add(card.dataset.country);
     });
 
     let selectHTML = `<option value="all">Explorer le globe (Tous)</option>`;
+    selectHTML += `<option value="favorites">Mes Favoris ❤️</option>`; 
     items.forEach(item => {
       const slug = item.toLowerCase().replace(/[^a-z0-9]/g, '');
       selectHTML += `<option value="${slug}">${item}</option>`;
     });
     if(compactSelect) compactSelect.innerHTML = selectHTML;
 
+    // Assigne les clics favoris sur les cartes
+    cards.forEach(card => {
+      const cardId = card.dataset.id;
+      const btn = card.querySelector('.fav-btn') as HTMLButtonElement | null;
+      if (btn && cardId) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleFavorite(cardId);
+          updatePagination();
+        });
+      }
+    });
+
     function updatePagination() {
+      const favs = getFavorites();
+
       visibleCards = Array.from(cards).filter(card => {
-        const continentSlug = card.dataset.continent.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const continentSlug = card.dataset.continent ? card.dataset.continent.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
         const countrySlug = card.dataset.country ? card.dataset.country.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
-        const matchesSelect = (currentFilter === 'all' || continentSlug === currentFilter || countrySlug === currentFilter);
-        const matchesSearch = card.dataset.search.includes(searchQuery);
+        
+        let matchesSelect = false;
+        if (currentFilter === 'all') {
+          matchesSelect = true;
+        } else if (currentFilter === 'favorites') {
+          matchesSelect = card.dataset.id ? favs.includes(card.dataset.id) : false;
+        } else {
+          matchesSelect = (continentSlug === currentFilter || countrySlug === currentFilter);
+        }
+
+        const matchesSearch = card.dataset.search ? card.dataset.search.includes(searchQuery) : false;
         return matchesSelect && matchesSearch;
       });
 
@@ -518,55 +767,146 @@ import Layout from '../layouts/Layout.astro';
         setTimeout(() => card.style.opacity = '1', 50);
       });
 
+      // Affichage de l'état vide
+      const grid = document.getElementById('guides-grid') as HTMLElement | null;
+      let emptyMessage = document.getElementById('empty-favorites-message') as HTMLElement | null;
+      if (currentFilter === 'favorites' && visibleCards.length === 0) {
+        if (!emptyMessage && grid) {
+          emptyMessage = document.createElement('div');
+          emptyMessage.id = 'empty-favorites-message';
+          emptyMessage.className = 'col-span-full py-16 text-center text-neutral-500 font-mono text-[11px] uppercase tracking-wider bg-white rounded-2xl border border-neutral-200/40 p-8 shadow-2xs';
+          emptyMessage.innerHTML = `<span class="block text-2xl mb-3">❤️</span> Aucun favori pour le moment. Cliquez sur le cœur de vos destinations préférées pour les ajouter ici.`;
+          grid.appendChild(emptyMessage);
+        } else if (emptyMessage) {
+          emptyMessage.style.display = 'block';
+        }
+      } else if (emptyMessage) {
+        emptyMessage.style.display = 'none';
+      }
+
       const roman = romanNumerals[currentPage] || currentPage;
       if(pageDisplay) pageDisplay.innerText = `THE ODYSSEY // PAGE ${roman}`;
 
       if(totalPages === 1) {
-        prevCompass.style.opacity = '0.25'; prevCompass.style.pointerEvents = 'none';
-        nextCompass.style.opacity = '0.25'; nextCompass.style.pointerEvents = 'none';
-        needle.style.transform = 'rotate(0deg)';
+        if (prevCompass) { prevCompass.style.opacity = '0.25'; prevCompass.style.pointerEvents = 'none'; }
+        if (nextCompass) { nextCompass.style.opacity = '0.25'; nextCompass.style.pointerEvents = 'none'; }
+        if (needle) needle.style.transform = 'rotate(0deg)';
       } else {
-        prevCompass.style.opacity = currentPage === 1 ? '0.25' : '1';
-        prevCompass.style.pointerEvents = currentPage === 1 ? 'none' : 'auto';
-        nextCompass.style.opacity = currentPage === totalPages ? '0.25' : '1';
-        nextCompass.style.pointerEvents = currentPage === totalPages ? 'none' : 'auto';
+        if (prevCompass) {
+          prevCompass.style.opacity = currentPage === 1 ? '0.25' : '1';
+          prevCompass.style.pointerEvents = currentPage === 1 ? 'none' : 'auto';
+        }
+        if (nextCompass) {
+          nextCompass.style.opacity = currentPage === totalPages ? '0.25' : '1';
+          nextCompass.style.pointerEvents = currentPage === totalPages ? 'none' : 'auto';
+        }
       }
     }
 
+    // CLIC MENU SUPÉRIEUR FAVORIS
+    if (favBtnMenu) {
+      favBtnMenu.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentFilter = 'favorites';
+        if (compactSelect) compactSelect.value = 'favorites';
+        currentPage = 1;
+        updatePagination();
+        document.getElementById('destinations')?.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
+    // GESTION COMPASS INTERACTIVE WEST / EAST
     if(prevCompass && nextCompass && needle) {
-      prevCompass.addEventListener('mouseenter', () => { if(currentPage > 1) needle.style.transform = 'rotate(-30deg)'; });
-      prevCompass.addEventListener('mouseleave', () => needle.style.transform = 'rotate(0deg)');
-      nextCompass.addEventListener('mouseenter', () => { if(currentPage < Math.ceil(visibleCards.length / cardsPerPage)) needle.style.transform = 'rotate(30deg)'; });
-      nextCompass.addEventListener('mouseleave', () => needle.style.transform = 'rotate(0deg)');
+      prevCompass.addEventListener('mouseenter', () => { 
+        if(currentPage > 1) {
+          needle.style.transform = 'rotate(-30deg) scale(1.08)'; 
+          needle.classList.remove('text-neutral-800');
+          needle.classList.add('text-amber-600');
+        }
+      });
+      prevCompass.addEventListener('mouseleave', () => { 
+        needle.style.transform = 'rotate(0deg) scale(1)'; 
+        needle.classList.add('text-neutral-800');
+        needle.classList.remove('text-amber-600');
+      });
+      
+      nextCompass.addEventListener('mouseenter', () => { 
+        if(currentPage < Math.ceil(visibleCards.length / cardsPerPage)) {
+          needle.style.transform = 'rotate(30deg) scale(1.08)'; 
+          needle.classList.remove('text-neutral-800');
+          needle.classList.add('text-amber-600');
+        }
+      });
+      nextCompass.addEventListener('mouseleave', () => { 
+        needle.style.transform = 'rotate(0deg) scale(1)'; 
+        needle.classList.add('text-neutral-800');
+        needle.classList.remove('text-amber-600');
+      });
       
       prevCompass.addEventListener('click', () => { 
         if (currentPage > 1) { 
           currentPage--; 
           updatePagination(); 
-          // Scroll fluide automatique et calé sous le header fixe
           document.getElementById('destinations')?.scrollIntoView({ behavior: 'smooth' });
-          needle.style.transform = 'rotate(-60deg)'; 
-          setTimeout(() => needle.style.transform = 'rotate(0deg)', 250); 
+          needle.style.transform = 'rotate(-60deg) scale(1.08)'; 
+          setTimeout(() => needle.style.transform = 'rotate(0deg) scale(1)', 250); 
         } 
       });
       nextCompass.addEventListener('click', () => { 
         if (currentPage < Math.ceil(visibleCards.length / cardsPerPage)) { 
           currentPage++; 
           updatePagination(); 
-          // Scroll fluide automatique et calé sous le header fixe
           document.getElementById('destinations')?.scrollIntoView({ behavior: 'smooth' });
-          needle.style.transform = 'rotate(60deg)'; 
-          setTimeout(() => needle.style.transform = 'rotate(0deg)', 250); 
+          needle.style.transform = 'rotate(60deg) scale(1.08)'; 
+          setTimeout(() => needle.style.transform = 'rotate(0deg) scale(1)', 250); 
         } 
       });
     }
 
-    if(searchInput) searchInput.addEventListener('input', (e) => { searchQuery = e.target.value.toLowerCase().trim(); currentPage = 1; updatePagination(); });
-    if(compactSelect) compactSelect.addEventListener('change', (e) => { currentFilter = e.target.value; currentPage = 1; updatePagination(); });
+    // FILTRE DEPUIS LE FOOTER
+    const footerContinentLinks = document.querySelectorAll('[data-continent-trigger]') as NodeListOf<HTMLElement>;
+    footerContinentLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const continentValue = link.getAttribute('data-continent-trigger');
+        if (continentValue) {
+          currentFilter = continentValue;
+          if (compactSelect) {
+            compactSelect.value = continentValue;
+          }
+          currentPage = 1;
+          updatePagination();
+        }
+      });
+    });
 
+    // ÉCOUTE ET SÉCURISATION DU CHAMP DE RECHERCHE (Sanitisation + Debounce 300ms)
+    if (searchInput) {
+      searchInput.addEventListener('input', debounce((e: Event) => {
+        const target = e.target as HTMLInputElement | null;
+        if (target) {
+          searchQuery = sanitizeSearchInput(target.value);
+          currentPage = 1;
+          updatePagination();
+        }
+      }, 300));
+    }
+
+    if(compactSelect) {
+      compactSelect.addEventListener('change', (e) => { 
+        const target = e.target as HTMLSelectElement | null;
+        if (target) {
+          currentFilter = target.value; 
+          currentPage = 1; 
+          updatePagination(); 
+        }
+      });
+    }
+
+    // Initialisation globale
+    updateFavStates();
     updatePagination();
 
-    const images = document.querySelectorAll('.slide-img');
+    const images = document.querySelectorAll('.slide-img') as NodeListOf<HTMLElement>;
     let currentIndex = 0;
     if(images.length > 0) {
       setInterval(() => {
