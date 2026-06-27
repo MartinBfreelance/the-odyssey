@@ -13,13 +13,11 @@ export async function getStaticPaths() {
 const { dest } = Astro.props;
 
 // 1. SÉCURISATION & EN-TÊTE [5]
-// Validation du format du slug par regex strict (minuscules, chiffres, tirets)
 const slugRegex = /^[a-z0-9\-]+$/;
 if (!slugRegex.test(dest.slug)) {
   return Astro.redirect('/404');
 }
 
-// Validation des liens d'affiliation par liste blanche
 const allowedDomains = ["booking.com", "nomadesim.com", "chapkadirect.fr"];
 const validateLink = (urlStr: string) => {
   try {
@@ -33,12 +31,11 @@ const validateLink = (urlStr: string) => {
 const bookingLink = validateLink(dest.liens.booking) ? dest.liens.booking : "https://booking.com";
 const esimLink = validateLink(dest.liens.esim) ? dest.liens.esim : "https://www.nomadesim.com/";
 
-// Extraction dynamique des données géographiques d'Ariane
 const country = dest.geo.split(' // ').pop() || 'Exploration';
-const zone = dest.geo.split(' // ')[1] || 'Zone';
 const continent = dest.geo.split(' // ')[0] || 'Continent';
 
-// Calcul des 3 destinations similaires partageant au moins une ambiance ou un profil commun
+const ratingStars = "★".repeat(Math.round(dest.note)) + "☆".repeat(5 - Math.round(dest.note));
+
 const similarDestinations = destinationsData
   .filter((d) => d.slug !== dest.slug && (d.type.some(t => dest.type.includes(t)) || d.profil.some(p => dest.profil.includes(p))))
   .slice(0, 3);
@@ -46,292 +43,336 @@ const similarDestinations = destinationsData
 
 <Layout title={`${dest.titre} | The Odyssey`}>
   
-  <!-- HERO IMAGE FULL-WIDTH -->
-  <section class="relative w-full h-[65vh] bg-[#2C3E50] overflow-hidden flex items-end select-none">
-    <div class="absolute inset-0 z-0">
-      <img src={dest.image} alt={dest.titre} class="w-full h-full object-cover opacity-60" />
-      <div class="absolute inset-0 bg-gradient-to-r from-neutral-950/80 via-neutral-950/20 to-transparent z-10"></div>
-    </div>
-
-    <!-- ÉLÉMENTS DE CONTEXTE GAUCHE (Bouton retour & Fil d'Ariane) -->
-    <div class="absolute top-24 left-8 sm:left-12 z-20 flex flex-col gap-4 font-mono text-[9px] tracking-widest uppercase">
-      <!-- Bouton retour préservant l'état exact de l'utilisateur (filtres, scroll) -->
-      <a 
-        href="/#destinations" 
-        id="back-to-home-btn"
-        class="flex items-center space-x-2 text-white bg-black/40 hover:bg-black/60 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/10 transition-all duration-300 scale-100 hover:scale-102 cursor-pointer shadow-sm w-max"
-      >
-        <span>← Retour</span>
-      </a>
-
-      <!-- Fil d'Ariane -->
-      <span class="text-neutral-300/80 mt-2 select-none">
-        Home // Destinations // <span class="text-white">{continent}</span> // <span class="text-amber-500">{country}</span>
-      </span>
-    </div>
-
-    <!-- Cœur favori en haut à droite, synchronisé avec la Home -->
-    <button 
-      id="dest-fav-btn" 
-      data-id={dest.slug}
-      class="absolute top-24 right-8 sm:right-12 z-20 p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer"
-      aria-label="Ajouter aux favoris"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-      </svg>
-    </button>
-
-    <!-- TEXTE PRINCIPAL HERO (Georgia serif, Ambiance & Profil pills) -->
-    <div class="relative z-20 max-w-4xl mx-auto w-full px-8 sm:px-12 pb-12 text-white space-y-3">
-      <span class="text-[10px] font-mono tracking-[0.4em] uppercase text-amber-500">{dest.geo}</span>
-      <h1 class="text-3xl sm:text-5xl md:text-6xl font-serif font-light leading-tight drop-shadow-md">{dest.titre}</h1>
-      <p class="text-neutral-200/90 max-w-xl text-xs sm:text-sm font-light italic leading-relaxed">{dest.sous_titre}</p>
-
-      <!-- Tags Pills -->
-      <div class="flex flex-wrap gap-2 pt-4">
-        {dest.type.map((t) => (
-          <span class="text-[9px] font-mono tracking-widest uppercase bg-white/10 backdrop-blur-sm border border-white/15 px-3 py-1.5 rounded-full">
-            {t === 'aventure' ? '🥾 Aventure & Trek' : t === 'plages' ? '🏖️ Plage & Farniente' : '🏛️ Villes & Culture'}
-          </span>
-        ))}
-        {dest.profil.map((p) => (
-          <span class="text-[9px] font-mono tracking-widest uppercase bg-white/10 backdrop-blur-sm border border-white/15 px-3 py-1.5 rounded-full">
-            {p === 'couple' ? '👫 Couple' : p === 'famille' ? '👨‍👩‍👧 Famille' : p === 'solo' ? '🧍 Solo' : '👥 Amis'}
-          </span>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- BARRE AUTEUR -->
-  <div class="w-full bg-white border-b border-[#E0D9D0] py-4 px-8 sm:px-12 relative z-20 font-mono text-[9px] tracking-widest text-[#5a5248]">
-    <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div class="flex items-center space-x-3">
-        <div class="w-8 h-8 rounded-full bg-[#2C3E50] text-white flex items-center justify-center font-bold text-xs select-none">
-          {dest.auteur.initiale}
-        </div>
-        <div>
-          <span class="font-bold text-[#2a2520]">{dest.auteur.nom}</span>
-          <span class="mx-2 text-neutral-300">|</span>
-          <span>Publié le {dest.auteur.date}</span>
-          <span class="mx-2 text-neutral-300">|</span>
-          <span>Lecture : {dest.auteur.lecture}</span>
-        </div>
-      </div>
-      <!-- Système de notation étoiles ambrées -->
-      <div class="flex items-center space-x-1 select-none">
-        <span class="text-amber-500 text-xs">★ ★ ★ ★ ★</span>
-        <span class="font-bold text-[#2a2520] pl-1">{dest.note.toFixed(1)}</span>
-        <span class="text-neutral-400">({dest.nb_avis} avis)</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONTENU PRINCIPAL + DISPOSITIF STICKY VAN (Palette #F5F2ED) -->
-  <div class="w-full bg-[#F5F2ED] py-16 sm:py-20 relative z-10 text-[#2a2520]">
-    <div class="max-w-[1600px] mx-auto px-8 sm:px-12 grid grid-cols-1 xl:grid-cols-12 gap-12 items-start relative overflow-visible">
+  <div class="dest-page-wrapper">
+    
+    <!-- HERO PLEINE LARGEUR — IMAGE PURE ET TEXTE CENTRÉ (D'APRÈS VOTRE MAQUETTE) -->
+    <section class="hero select-none relative h-[520px]">
+      <img src={dest.image} alt={dest.titre} class="absolute inset-0 w-full h-full object-cover opacity-90 z-0" />
+      <div class="hero-overlay z-10"></div>
       
-      <!-- CONTENU GAUCHE (9 COLONNES) -->
-      <div class="xl:col-span-9 space-y-16">
+      <!-- Bouton de retour contextualisé (Avec surlignage ambré progressif au survol) -->
+      <div id="back-to-home-btn" class="hero-back z-20 group/back">
+        ← Retour aux destinations
+        <span class="absolute bottom-1 left-3 w-0 h-[3px] bg-amber-500/35 transition-all duration-300 group-hover/back:w-[82%] -z-10 rounded-xs"></span>
+      </div>
+      
+      <!-- Cœur favori en haut à droite -->
+      <button id="dest-fav-btn" data-id={dest.slug} class="hero-fav z-20" aria-label="Ajouter aux favoris">
+        <svg viewBox="0 0 24 24" class="transition-all duration-300"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      
+      <div class="hero-content z-20">
+        <div class="hero-geo">{dest.geo}</div>
+        <h1 class="hero-title font-serif">{dest.titre}</h1>
         
-        <!-- BLOC NOTRE COUP DE COEUR -->
-        <section class="space-y-4 text-left">
-          <div class="flex items-center space-x-3">
-            <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-amber-600 font-bold">Notre coup de cœur</span>
-            <div class="h-[1px] bg-[#E0D9D0] flex-grow"></div>
-          </div>
-          <p class="font-serif italic text-lg sm:text-xl md:text-2xl text-[#2C3E50] leading-relaxed">
-            « Nous avons été profondément saisis par la sincérité de ces paysages. Loin des sentiers balisés, chaque virage nous offrait une nouvelle rencontre, une ruelle pavée de pierres centenaires ou une vue plongeante sur l'azur infini. C'est l'essence même du voyage lent que nous chérissons tant. »
-          </p>
-        </section>
+        <div class="hero-tags">
+          {dest.type.map((t) => (
+            <span class="hero-tag">
+              {t === 'aventure' ? '🥾 Aventure' : t === 'plages' ? '🏖️ Plages' : '🏛️ Culture'}
+            </span>
+          ))}
+          {dest.profil.map((p) => (
+            <span class="hero-tag">
+              {p === 'couple' ? '👫 Couple' : p === 'famille' ? '👨‍👩‍👧 Famille' : p === 'solo' ? '🧍 Solo' : '👥 Amis'}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
 
-        <!-- BLOC STATS ESSENTIEL EN 4 COLONNES RIGIDES -->
-        <section class="space-y-4">
-          <div class="flex items-center space-x-3">
-            <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-900 font-bold">L'Essentiel en un clin d'œil</span>
-            <div class="h-[1px] bg-[#E0D9D0] flex-grow"></div>
-          </div>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 font-mono text-[9px] tracking-wider text-left">
-            <div class="border border-[#E0D9D0] p-5 bg-white rounded-xl space-y-1.5 shadow-2xs">
-              <p class="text-neutral-400 font-bold uppercase">Durée du séjour</p>
-              <p class="text-xs sm:text-sm text-[#2C3E50] font-bold">{dest.stats.duree}</p>
-            </div>
-            <div class="border border-[#E0D9D0] p-5 bg-white rounded-xl space-y-1.5 shadow-2xs">
-              <p class="text-neutral-400 font-bold uppercase">Itinéraire</p>
-              <p class="text-xs sm:text-sm text-[#2C3E50] font-bold">{dest.stats.etapes}</p>
-            </div>
-            <div class="border border-[#E0D9D0] p-5 bg-white rounded-xl space-y-1.5 shadow-2xs">
-              <p class="text-neutral-400 font-bold uppercase">Budget Indicatif</p>
-              <p class="text-xs sm:text-sm text-[#2C3E50] font-bold">{dest.stats.budget} / pers.</p>
-            </div>
-            <div class="border border-[#E0D9D0] p-5 bg-white rounded-xl space-y-1.5 shadow-2xs">
-              <p class="text-neutral-400 font-bold uppercase">Meilleure période</p>
-              <p class="text-xs sm:text-sm text-[#2C3E50] font-bold">{dest.stats.periode}</p>
-            </div>
-          </div>
-        </section>
+    <!-- BLOC AUTEUR & STATS FUSIONNÉS AVEC ICÔNES DÉDIÉES -->
+    <div class="author-stats border-b border-[#E0D9D0]">
+      <div class="author-part select-none">
+        <div class="author-avatar">{dest.auteur.initiale}</div>
+        <div>
+          <div class="author-name">Récit de {dest.auteur.nom}</div>
+          <div class="author-year">{dest.auteur.date.split(' ').pop()}</div>
+        </div>
+      </div>
+      
+      <div class="sep-v"></div>
+      <div class="stat-inline select-none"><span class="text-base block mb-0.5">📅</span><div class="stat-inline-val font-serif font-bold">{dest.stats.duree}</div><div class="stat-inline-lbl">Notre séjour</div></div>
+      <div class="sep-v"></div>
+      <div class="stat-inline select-none"><span class="text-base block mb-0.5">🗺️</span><div class="stat-inline-val font-serif font-bold">{dest.stats.etapes}</div><div class="stat-inline-lbl">Itinéraire</div></div>
+      <div class="sep-v"></div>
+      <div class="stat-inline select-none"><span class="text-base block mb-0.5">💶</span><div class="stat-inline-val font-serif font-bold">{dest.stats.budget}</div><div class="stat-inline-lbl">Budget / pers.</div></div>
+      <div class="sep-v"></div>
+      <div class="stat-inline select-none"><span class="text-base block mb-0.5">🌤️</span><div class="stat-inline-val font-serif font-bold">{dest.stats.periode}</div><div class="stat-inline-lbl">Meilleure période</div></div>
+      
+      <div class="sep-v"></div>
+      <div class="rating-part select-none">
+        <span class="stars">{ratingStars}</span>
+        <span class="rating-count">{dest.note.toFixed(1)} · {dest.nb_avis} avis</span>
+      </div>
+    </div>
 
-        <!-- BLOC ITINÉRAIRE (Étapes numérotées) -->
-        <section class="space-y-8 text-left">
-          <div class="flex items-center space-x-3">
-            <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-900 font-bold">Le tracé de notre exploration</span>
-            <div class="h-[1px] bg-[#E0D9D0] flex-grow"></div>
-          </div>
-          
-          <div class="space-y-12">
-            <!-- Étape 1 -->
-            <div class="flex items-start space-x-6">
-              <div class="w-8 h-8 rounded-full bg-[#2C3E50] text-white flex items-center justify-center font-bold text-xs shrink-0 select-none">1</div>
-              <div class="space-y-3">
-                <h3 class="font-serif text-base sm:text-lg text-neutral-900 font-bold leading-none">Premier contact & immersion locale</h3>
-                <p class="text-xs text-[#5a5248] font-light leading-relaxed font-sans">
-                  Notre voyage débute dans la douceur de l'aube. Nous aimons prendre le temps de nous imprégner du climat, d'écouter les bruits de la place principale et de boire un premier café en observant la vie locale s'éveiller. C'est l'étape essentielle pour caler ses pas sur le rythme de la destination.
-                </p>
-              </div>
-            </div>
+    <!-- AGENCEMENT DE LA PAGE (CONTENU À GAUCHE & TRAJET DU VAN STICKY À DROITE) -->
+    <div class="page max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 relative overflow-visible">
+      
+      <!-- TRAJET DU VAN EN SVG MINIMALISTE POINTILLÉ (STICKY À DROITE) [4] -->
+      <div class="trail-right hidden lg:block">
+        <div class="trail-sticky">
+          <svg width="44" height="520" viewBox="0 0 44 520" xmlns="http://www.w3.org/2000/svg" class="overflow-visible">
+            <!-- Chemin pointillé zigzag [4] -->
+            <path id="travel-path" d="M22 50 C34 90, 10 130, 22 170 C34 210, 10 250, 22 290 C34 330, 10 370, 22 410 C34 450, 10 490, 22 520"
+              fill="none" stroke="#D6CFC4" stroke-width="1.5" stroke-dasharray="4 7" stroke-linecap="round"/>
+            
+            <!-- Points de passage cardinaux [4] -->
+            <circle cx="22" cy="170" r="3.5" fill="#C8813A" opacity="0.6"/>
+            <circle cx="22" cy="290" r="3.5" fill="#C8813A" opacity="0.6"/>
+            <circle cx="22" cy="410" r="3.5" fill="#C8813A" opacity="0.6"/>
+            
+            <!-- Le Van de voyage minimaliste en SVG [4] -->
+            <g id="scrolling-van" transform="translate(4, 14)">
+              <!-- Carrosserie [4] -->
+              <rect x="0" y="12" width="34" height="16" rx="3" fill="#2C3E50"/>
+              <!-- Cabine [4] -->
+              <rect x="3" y="4" width="24" height="12" rx="2" fill="#2C3E50"/>
+              <!-- Fenêtres cabine [4] -->
+              <rect x="5" y="6" width="9" height="7" rx="1" fill="#F5F2ED" opacity="0.55"/>
+              <rect x="16" y="6" width="9" height="7" rx="1" fill="#F5F2ED" opacity="0.55"/>
+              <!-- Pare-brise [4] -->
+              <rect x="27" y="5" width="5" height="9" rx="1" fill="#C8813A" opacity="0.7"/>
+              <!-- Roues [4] -->
+              <circle cx="8" cy="29" r="4.5" fill="#1a2a38"/>
+              <circle cx="8" cy="29" r="2" fill="#D6CFC4"/>
+              <circle cx="26" cy="29" r="4.5" fill="#1a2a38"/>
+              <circle cx="26" cy="29" r="2" fill="#D6CFC4"/>
+              <!-- Galerie de toit [4] -->
+              <rect x="3" y="2" width="24" height="2.5" rx="1" fill="#C8813A" opacity="0.85"/>
+              <!-- Phares [4] -->
+              <rect x="32" y="14" width="2.5" height="4" rx="0.5" fill="#C8813A" opacity="0.95"/>
+              <rect x="32" y="19" width="2.5" height="4" rx="0.5" fill="#C8813A" opacity="0.4"/>
+            </g>
+          </svg>
+        </div>
+      </div>
 
-            <!-- Étape 2 -->
-            <div class="flex items-start space-x-6">
-              <div class="w-8 h-8 rounded-full bg-[#2C3E50] text-white flex items-center justify-center font-bold text-xs shrink-0 select-none">2</div>
-              <div class="space-y-3">
-                <h3 class="font-serif text-base sm:text-lg text-neutral-900 font-bold leading-none">Les sentiers secrets & panoramas sauvages</h3>
-                <p class="text-xs text-[#5a5248] font-light leading-relaxed font-sans">
-                  Nous nous écartons des axes principaux pour emprunter des sentiers côtiers ou de montagne. Le silence n'est rompu que par la nature, et chaque point de vue sur l'horizon devient une récompense méritée pour l'effort fourni.
-                </p>
-              </div>
+      <!-- CONTENU ÉDITORIAL (À GAUCHE) -->
+      <div class="content w-full lg:w-[calc(100%-44px)]">
+        
+        <!-- NOTRE COUP DE COEUR (Avec boussole de marque originale et surlignage) -->
+        <div class="section text-left">
+          <div class="section-header group/sec-title">
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
             </div>
+            <span class="section-label-text">Notre coup de cœur</span>
+            <div class="section-line"></div>
           </div>
-        </section>
+          <div class="section-title">L'île qui résume tout ce qu'on aime dans le voyage</div>
+          <div class="section-text font-sans">
+            On ne s'attendait pas à tomber aussi fort pour cette destination. Entre la nature brute qui s'exprime à chaque kilomètre et le lagon turquoise qui appelle au calme, c'est une terre qui réunit tout ce qui nous fait voyager — la force sauvage, l'effort récompensé, et la douceur infinie de l'après.
+          </div>
+        </div>
 
-        <!-- BLOC TROUVAILLES LOCALES (Grille 3 Colonnes de cartes blanches) -->
-        <section class="space-y-6 text-left">
-          <div class="flex items-center space-x-3">
-            <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-900 font-bold">Nos adresses de confiance</span>
-            <div class="h-[1px] bg-[#E0D9D0] flex-grow"></div>
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-[9px] tracking-wider">
-            <div class="border border-[#E0D9D0] p-6 bg-white rounded-xl space-y-3 shadow-2xs">
-              <p class="text-amber-600 uppercase font-bold">🍽️ Le bistrot secret</p>
-              <p class="text-[#5a5248] font-light leading-relaxed tracking-normal text-[11px] font-sans">Une table de trois couverts sur une terrasse ombragée, gérée par une famille passionnée.</p>
+        <!-- NOTRE ITINÉRAIRE (Épuré, sans citations pré-définies, avec fiches photos plus GRANDES) [3] -->
+        <div class="section text-left">
+          <div class="section-header group/sec-title">
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
             </div>
-            <div class="border border-[#E0D9D0] p-6 bg-white rounded-xl space-y-3 shadow-2xs">
-              <p class="text-amber-600 uppercase font-bold">🌄 Le spot coucher de soleil</p>
-              <p class="text-[#5a5248] font-light leading-relaxed tracking-normal text-[11px] font-sans">Une falaise discrète accessible après 20 minutes de marche à l'écart de la foule.</p>
-            </div>
-            <div class="border border-[#E0D9D0] p-6 bg-white rounded-xl space-y-3 shadow-2xs">
-              <p class="text-amber-600 uppercase font-bold">🏡 La guesthouse confit</p>
-              <p class="text-[#5a5248] font-light leading-relaxed tracking-normal text-[11px] font-sans">Une demeure en pierres de taille offrant un accueil sincère et des petits déjeuners maison.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- BLOC PARTENAIRES AFFILIÉS SÉCURISÉ [5] -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-[9px] tracking-wider text-left">
-          <!-- Logement -->
-          <div class="border border-[#E0D9D0] p-6 bg-white rounded-xl space-y-4 shadow-2xs flex flex-col justify-between">
-            <div class="space-y-2">
-              <p class="text-amber-600 uppercase font-bold">🏢 Où dormir</p>
-              <h3 class="font-serif text-sm text-[#2C3E50] font-light">Notre Sélection d'Hôtels de Charme</h3>
-              <p class="text-neutral-500 leading-relaxed font-sans text-xs tracking-normal">Réservez vos hébergements de charme via notre sélection d'adresses approuvées sur le terrain.</p>
-            </div>
-            <a href={bookingLink} target="_blank" rel="noopener noreferrer" class="text-neutral-900 font-bold uppercase tracking-widest border-b border-neutral-950 pb-0.5 hover:text-amber-600 hover:border-amber-600 transition-all inline-block w-max">Trouver son logement →</a>
+            <span class="section-label-text">Notre itinéraire</span>
+            <div class="section-line"></div>
           </div>
 
-          <!-- eSIM -->
-          <div class="border border-[#E0D9D0] p-6 bg-white rounded-xl space-y-4 shadow-2xs flex flex-col justify-between">
-            <div class="space-y-2">
-              <p class="text-amber-600 uppercase font-bold">📶 Activer son eSIM</p>
-              <h3 class="font-serif text-sm text-[#2C3E50] font-light">Forfait international local</h3>
-              <p class="text-neutral-500 leading-relaxed font-sans text-xs tracking-normal">Activez instantanément votre connexion internet locale dès votre arrivée pour voyager sereinement.</p>
-            </div>
-            <a href={esimLink} target="_blank" rel="noopener noreferrer" class="text-neutral-900 font-bold uppercase tracking-widest border-b border-neutral-950 pb-0.5 hover:text-amber-600 hover:border-amber-600 transition-all inline-block w-max">Activer son eSIM Nomad →</a>
-          </div>
-        </section>
-
-        <!-- BLOC INFOS PRATIQUES (Grille 2 Colonnes) -->
-        <section class="space-y-6 text-left">
-          <div class="flex items-center space-x-3">
-            <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-900 font-bold">Informations Pratiques</span>
-            <div class="h-[1px] bg-[#E0D9D0] flex-grow"></div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono text-[9px] tracking-wider">
-            <div class="space-y-2">
-              <p class="text-amber-600 font-bold uppercase">🛂 Visa & Formalités</p>
-              <p class="text-xs text-[#5a5248] font-sans font-light leading-relaxed">Passeport en cours de validité requis pour les ressortissants de l'Union Européenne. Aucun visa nécessaire pour les séjours de moins de 90 jours.</p>
-            </div>
-            <div class="space-y-2">
-              <p class="text-amber-600 font-bold uppercase">🚊 Se Déplacer</p>
-              <p class="text-xs text-[#5a5248] font-sans font-light leading-relaxed">La location d'un véhicule léger reste le moyen le plus adapté pour explorer les parcs et villages à votre rythme.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- BLOC DESTINATIONS SIMILAIRES -->
-        <section class="space-y-6 text-left">
-          <div class="flex items-center space-x-3">
-            <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-900 font-bold">Poursuivre l'Exploration</span>
-            <div class="h-[1px] bg-[#E0D9D0] flex-grow"></div>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {similarDestinations.map((sim) => (
-              <a href={`/destinations/${sim.slug}`} class="group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow">
-                <div class="aspect-[16/10] overflow-hidden bg-neutral-100">
-                  <img src={sim.image} alt={sim.titre} class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-500" />
+          <!-- Étape 1 (Visuel grand format 16/10 à droite) -->
+          <div class="etape pb-6 border-b border-[#E0D9D0]/60 last:border-b-0 last:pb-0">
+            <div class="etape-header flex flex-col md:flex-row md:items-center justify-between gap-8 w-full">
+              <div class="flex items-start gap-3 flex-grow">
+                <div class="etape-num">1</div>
+                <div class="space-y-3">
+                  <div class="etape-title font-serif font-bold text-neutral-900 text-base">Premier contact & immersion locale — Jours 1 à 3</div>
+                  <div class="etape-text font-sans max-w-xl">
+                    Notre voyage débute dans la douceur de l'aube. Nous aimons prendre le temps de nous imprégner du climat, d'écouter les bruits de la place principale et de boire un premier café en observant la vie locale s'éveiller. C'est l'étape essentielle pour caler ses pas sur le rythme de la destination.
+                  </div>
                 </div>
-                <div class="p-4 space-y-2">
-                  <span class="text-[7px] font-mono text-neutral-400 uppercase tracking-widest block">{sim.geo}</span>
-                  <h4 class="text-xs font-serif font-light text-neutral-900 group-hover:text-amber-800 transition-colors">{sim.titre}</h4>
+              </div>
+              <div class="w-full md:w-[320px] shrink-0 aspect-[16/10] overflow-hidden rounded-xl border border-[#E0D9D0] shadow-2xs">
+                <img src={dest.image} alt="Itinéraire Étape 1" class="w-full h-full object-cover" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Étape 2 (Visuel grand format 16/10 à gauche) -->
+          <div class="etape pb-6 border-b border-[#E0D9D0]/60 last:border-b-0 last:pb-0">
+            <div class="etape-header flex flex-col md:flex-row md:items-center justify-between gap-8 w-full">
+              <!-- Visuel à gauche de l'étape -->
+              <div class="w-full md:w-[320px] shrink-0 aspect-[16/10] overflow-hidden rounded-xl border border-[#E0D9D0] shadow-2xs">
+                <div class="w-full h-full img-ph-1 rounded-xl"></div>
+              </div>
+              <div class="flex-grow flex items-start gap-3">
+                <div class="etape-num">2</div>
+                <div class="space-y-3">
+                  <div class="etape-title font-serif font-bold text-neutral-900 text-base">Les sentiers secrets & panoramas sauvages — Jours 4 à 6</div>
+                  <div class="etape-text font-sans max-w-xl">
+                    Le seul itinéraire accessible uniquement à pied. Plusieurs jours de marche complète, accueil chaleureux chez l'habitant, repas traditionnels et couchers de soleil spectaculaires depuis les sommets — on en parle encore.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOS TROUVAILLES -->
+        <div class="section text-left">
+          <div class="section-header group/sec-title">
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="section-label-text">Nos trouvailles</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="trouvailles-grid font-mono">
+            <div class="trouvaille-card">
+              <div class="trouvaille-icon">🍽️</div>
+              <div class="trouvaille-title font-serif font-bold">Le bistrot secret</div>
+              <div class="trouvaille-text font-sans">Petit resto authentique face à la mer, sans carte. Rougail traditionnel à tomber.</div>
+            </div>
+            <div class="trouvaille-card">
+              <div class="trouvaille-icon">🏄</div>
+              <div class="trouvaille-title font-serif font-bold">Le lagon sauvage</div>
+              <div class="trouvaille-text font-sans">Arriver très tôt le matin. L'eau est d'un calme irréel, idéale pour le snorkeling.</div>
+            </div>
+            <div class="trouvaille-card">
+              <div class="trouvaille-icon">🏡</div>
+              <div class="trouvaille-title font-serif font-bold">La guesthouse confit</div>
+              <div class="trouvaille-text font-sans">Une demeure en pierres de taille offrant un accueil sincère et des petits déjeuners maison.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOS PARTENAIRES -->
+        <div class="section text-left">
+          <div class="section-header group/sec-title">
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="section-label-text">Nos partenaires</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="partner-block">
+            <div class="partner-icon">🏡</div>
+            <div style="flex:1">
+              <div class="partner-label">Où dormir</div>
+              <div class="partner-title font-serif">Trouver son logement à Booking</div>
+              <div class="partner-text font-sans">De la case créole au gîte de montagne — notre sélection approuvée sur le terrain.</div>
+            </div>
+            <a href={bookingLink} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Voir les hébergements</a>
+          </div>
+          <div class="partner-block">
+            <div class="partner-icon">📱</div>
+            <div style="flex:1">
+              <div class="partner-label">Rester connecté</div>
+              <div class="partner-title font-serif">Activer son eSIM locale</div>
+              <div class="partner-text font-sans">Couverture correcte sur le littoral, limitée dans les cirques. On recommande Nomad.</div>
+            </div>
+            <a href={esimLink} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Activer mon eSIM</a>
+          </div>
+        </div>
+
+        <!-- INFOS PRATIQUES -->
+        <div class="section text-left">
+          <div class="section-header group/sec-title">
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="section-label-text">Infos pratiques</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="pratique-grid font-sans text-left">
+            <div class="pratique-item">
+              <div class="pratique-icon">🛂</div>
+              <div>
+                <div class="pratique-label">Visa</div>
+                <div class="pratique-text">Passeport en cours de validité requis pour les ressortissants UE. Pas de visa requis.</div>
+              </div>
+            </div>
+            <div class="pratique-item">
+              <div class="pratique-icon">✈️</div>
+              <div>
+                <div class="pratique-label">Comment y aller</div>
+                <div class="pratique-text">Vols directs réguliers depuis Paris (~11h). Compagnie nationale recommandée.</div>
+              </div>
+            </div>
+            <div class="pratique-item">
+              <div class="pratique-icon">🚗</div>
+              <div>
+                <div class="pratique-label">Se déplacer</div>
+                <div class="pratique-text">Location de voiture indispensable sur place. Réseau de bus très limité en montagne.</div>
+              </div>
+            </div>
+            <div class="pratique-item">
+              <div class="pratique-icon">💶</div>
+              <div>
+                <div class="pratique-label">Monnaie</div>
+                <div class="pratique-text">Euro. Budget moyen quotidien de 150€ pour deux en séjour très confortable.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIMILAIRES -->
+        <div class="section text-left">
+          <div class="section-header group/sec-title">
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="section-label-text">Ces destinations pourraient vous plaire</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="similaires-grid select-none">
+            {similarDestinations.map((sim) => (
+              <a href={`/destinations/${sim.slug}`} class="sim-card dest-link shadow-2xs hover:shadow-xs transition-shadow block">
+                <div class="sim-img relative overflow-hidden bg-neutral-200">
+                  <img src={sim.image} alt={sim.titre} class="w-full h-full object-cover transition-transform duration-500 hover:scale-102" />
+                </div>
+                <div class="sim-body">
+                  <div class="sim-region">{sim.geo}</div>
+                  <div class="sim-title font-serif font-bold">{sim.titre}</div>
                 </div>
               </a>
             ))}
           </div>
-        </section>
+        </div>
 
       </div>
-
-      <!-- COLONNE DROITE (Van SVG Minimaliste sur tracé zigzag pointillé) [4] -->
-      <aside class="lg:col-span-3 hidden lg:block sticky top-28 h-[80vh] flex flex-col items-center justify-between select-none">
-        <div class="relative w-full h-full flex flex-col items-center justify-center">
-          
-          <!-- Ligne de trajet pointillée en zigzag vertical -->
-          <svg class="absolute inset-x-0 top-0 h-full w-full pointer-events-none" viewBox="0 0 120 600" fill="none">
-            <path id="travel-path" d="M60,10 C20,120 100,240 60,350 C20,460 100,530 60,590" stroke="#D6CFC4" stroke-width="1.5" stroke-dasharray="4 6" />
-            <!-- Nœuds de transition -->
-            <circle cx="60" cy="10" r="4" fill="#C8813A" />
-            <circle cx="38" cy="120" r="3" fill="#C8813A" class="opacity-60" />
-            <circle cx="82" cy="240" r="3" fill="#C8813A" class="opacity-60" />
-            <circle cx="60" cy="350" r="4" fill="#C8813A" />
-            <circle cx="60" cy="590" r="4" fill="#C8813A" />
-          </svg>
-
-          <!-- Le Van de Voyage Dessiné en SVG Minimaliste -->
-          <div id="scrolling-van" class="absolute w-12 h-12 flex items-center justify-center transition-transform duration-100 ease-out" style="left: calc(50% - 24px); top: 0px;">
-            <svg viewBox="0 0 24 24" fill="none" class="w-full h-full">
-              <!-- Galerie de toit (Ambre #C8813A) -->
-              <path d="M6 5.5h12M8 4.5h8" stroke="#C8813A" stroke-width="1" stroke-linecap="round"/>
-              <!-- Carrosserie (Ardoise #2C3E50) -->
-              <rect x="4" y="6" width="16" height="11" rx="3" fill="#2C3E50" stroke="#2C3E50" stroke-width="1" />
-              <!-- Pare-brise et fenêtres (Alabaster #F5F2ED semi-trans) -->
-              <rect x="6" y="8" width="5" height="3" rx="1" fill="#F5F2ED" fill-opacity="0.7" />
-              <rect x="13" y="8" width="5" height="3" rx="1" fill="#F5F2ED" fill-opacity="0.7" />
-              <!-- Phares (Ambre #C8813A) -->
-              <circle cx="6" cy="14" r="1" fill="#C8813A" />
-              <circle cx="18" cy="14" r="1" fill="#C8813A" />
-              <!-- Pare-chocs (Gris #E0D9D0) -->
-              <rect x="3" y="16.5" width="18" height="1" rx="0.5" fill="#E0D9D0" />
-              <!-- Roues -->
-              <circle cx="7" cy="18" r="2" fill="#171717" />
-              <circle cx="17" cy="18" r="2" fill="#171717" />
-            </svg>
-          </div>
-
-          <div class="absolute bottom-4 text-center font-mono text-[8px] uppercase tracking-[0.3em] text-[#5a5248]">
-            En route...
-          </div>
-        </div>
-      </aside>
 
     </div>
   </div>
@@ -346,33 +387,228 @@ const similarDestinations = destinationsData
   </div>
 </Layout>
 
-<script>
-  // Initialisation et gestion dynamique du scroll-van et des favoris
-  document.addEventListener('DOMContentLoaded', () => {
-    const van = document.getElementById('scrolling-van');
-    const path = document.getElementById('travel-path') as SVGPathElement | null;
-    const destFavBtn = document.getElementById('dest-fav-btn');
+<!-- FEUILLE DE STYLE LOCALE STRICTE MAQUETTE -->
+<style>
+  .dest-page-wrapper {
+    background-color: #F5F2ED;
+    color: #2a2520;
+    font-family: 'Playfair Display', Georgia, serif;
+  }
 
-    // 1. ANIMATION DU VAN SVG AU SCROLL (Progression géométrique le long de la courbe) [4]
-    if (van && path) {
+  .hero {
+    position: relative;
+    height: 480px; 
+    overflow: hidden;
+  }
+  .hero-back {
+    position: absolute; top: 20px; left: 32px;
+    display: flex; align-items: center; gap: 6px;
+    color: rgba(255,255,255,0.9); font-family: 'Inter', sans-serif; font-size: 9px;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+    background: rgba(0,0,0,0.2); padding: 6px 14px; border-radius: 20px;
+    backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.15);
+    transition: background 0.2s;
+  }
+  .hero-back:hover { background: rgba(0,0,0,0.4); }
+  .hero-fav {
+    position: absolute; top: 20px; right: 32px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.2); display: flex; align-items: center;
+    justify-content: center; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(4px);
+    transition: transform 0.2s;
+  }
+  .hero-fav:hover { transform: scale(1.1); }
+  .hero-fav svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 1.8; }
+  
+  .hero-content {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 0 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.25) 0%, transparent 50%);
+  }
+  .hero-geo {
+    font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 3px;
+    color: #C8813A; text-transform: uppercase; margin-bottom: 12px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    font-weight: 700;
+  }
+  .hero-title {
+    font-size: 38px; color: #fff; line-height: 1.15; margin-bottom: 14px;
+    font-weight: normal; text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    max-width: 700px;
+  }
+  .hero-tags { display: flex; gap: 8px; justify-content: center; }
+  .hero-tag {
+    font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 1px;
+    padding: 4px 12px; border-radius: 12px;
+    background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.9);
+    text-transform: uppercase; backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* BLOC AUTEUR + STATS FUSIONNÉS (D'APRÈS VOTRE MAQUETTE) */
+  .author-stats {
+    background: #fff; border-bottom: 1px solid #E0D9D0;
+    padding: 16px 40px; display: flex; align-items: center;
+    gap: 0; flex-wrap: wrap;
+  }
+  .author-part { display: flex; align-items: center; gap: 10px; padding-right: 24px; }
+  .author-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #C8813A, #8a5a2a);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 14px; flex-shrink: 0;
+  }
+  .author-name { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 1px; color: #2C3E50; text-transform: uppercase; font-weight: 600; }
+  .author-year { font-family: 'Inter', sans-serif; font-size: 9px; color: #b0a898; margin-top: 2px; }
+  .sep-v { width: 1px; height: 32px; background: #E0D9D0; margin: 0 20px; flex-shrink: 0; }
+  .stat-inline { display: flex; flex-direction: column; align-items: center; padding: 0 16px; }
+  .stat-inline-val { font-size: 13px; color: #2C3E50; font-weight: 700; }
+  .stat-inline-lbl { font-family: 'Inter', sans-serif; font-size: 7.5px; letter-spacing: 1px; color: #b0a898; text-transform: uppercase; margin-top: 2px; }
+  .rating-part { display: flex; align-items: center; gap: 5px; margin-left: auto; }
+  .stars { color: #C8813A; font-size: 13px; letter-spacing: 1px; }
+  .rating-count { font-family: 'Inter', sans-serif; font-size: 9px; color: #9a9088; }
+
+  /* PAGE LAYOUT */
+  .page { display: flex; position: relative; padding: 40px 0; }
+
+  /* VAN CÔTÉ DROIT */
+  .trail-right { position: absolute; right: 8px; top: 0; bottom: 0; width: 44px; pointer-events: none; z-index: 10; }
+  .trail-sticky { position: sticky; top: 120px; } 
+
+  /* CONTENT */
+  .content { flex: 1; padding: 28px 64px 0 40px; }
+  @media (max-width: 1024px) {
+    .content { padding: 28px 32px 0 32px; }
+  }
+
+  /* SECTION TITLES */
+  .section-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px; cursor: default;
+  }
+  .compass {
+    width: 22px; height: 22px; flex-shrink: 0;
+    transition: transform 0.6s ease;
+  }
+  .section-header:hover .compass { transform: rotate(180deg); }
+  .section-label-text {
+    font-family: 'Inter', sans-serif; font-size: 9.5px; letter-spacing: 2.5px;
+    color: #C8813A; text-transform: uppercase; font-weight: 600;
+    position: relative; padding-bottom: 2px;
+  }
+  .section-label-text::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1.5px; background: #C8813A;
+    transition: width 0.3s ease;
+  }
+  .section-header:hover .section-label-text::after { width: 100%; }
+  .section-line { flex: 1; height: 1px; background: #E0D9D0; }
+  
+  .section { margin-bottom: 28px; }
+  .section-title { font-size: 19px; color: #2a2520; margin-bottom: 8px; font-weight: normal; line-height: 1.3; }
+  .section-text { font-family: 'Inter', sans-serif; font-size: 11px; color: #5a5248; line-height: 1.8; }
+
+  /* ÉTAPES */
+  .etape { margin-bottom: 22px; }
+  .etape-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+  .etape-num {
+    width: 26px; height: 26px; border-radius: 50%; background: #2C3E50;
+    color: #fff; font-family: 'Inter', sans-serif; font-size: 10px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+  }
+  .etape-title { font-size: 14px; color: #2a2520; margin-bottom: 4px; }
+  .etape-text { font-family: 'Inter', sans-serif; font-size: 10.5px; color: #5a5248; line-height: 1.7; }
+  
+  .etape-media {
+    display: grid; gap: 14px; margin-top: 12px; margin-left: 38px;
+  }
+  .etape-media.media-left { grid-template-columns: 320px 1fr; }
+  .etape-media.media-right { grid-template-columns: 1fr 320px; }
+  .etape-media.media-none { display: none; }
+  
+  .media-img { border-radius: 10px; overflow: hidden; border: 1px solid #E0D9D0; }
+  .media-img-ph { height: 180px; border-radius: 10px; } /* Agrandissement des visuels */
+  .ph-1 { background: linear-gradient(135deg, #4a7c59, #1a3d2a); }
+  .ph-2 { background: linear-gradient(135deg, #7a5a3a, #3a2a1a); }
+  .media-caption { font-family: 'Inter', sans-serif; font-size: 9px; color: #9a9088; margin-top: 5px; font-style: italic; text-align: center; }
+  .etape-text-block { display: flex; flex-direction: column; justify-content: center; }
+
+  /* TROUVAILLES */
+  .trouvailles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .trouvaille-card { background: #fff; border: 1px solid #E0D9D0; border-radius: 12px; padding: 14px; transition: box-shadow 0.2s; }
+  .trouvaille-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+  .trouvaille-icon { font-size: 20px; margin-bottom: 7px; }
+  .trouvaille-title { font-size: 12px; color: #2a2520; margin-bottom: 4px; }
+  .trouvaille-text { font-family: 'Inter', sans-serif; font-size: 9.5px; color: #7a7060; line-height: 1.6; }
+
+  /* PARTENAIRES */
+  .partner-block { background: #fff; border: 1px solid #E0D9D0; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 10px; transition: box-shadow 0.2s; }
+  .partner-block:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+  .partner-icon { font-size: 26px; flex-shrink: 0; }
+  .partner-label { font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 1.5px; color: #C8813A; text-transform: uppercase; margin-bottom: 3px; }
+  .partner-title { font-size: 13px; color: #2a2520; margin-bottom: 3px; }
+  .partner-text { font-family: 'Inter', sans-serif; font-size: 9.5px; color: #7a7060; line-height: 1.5; }
+  .partner-cta { background: #C8813A; color: #fff; font-family: 'Inter', sans-serif; font-size: 8.5px; letter-spacing: 1.5px; text-transform: uppercase; border: none; border-radius: 20px; padding: 8px 14px; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.2s; text-decoration: none; }
+  .partner-cta:hover { background: #2C3E50; }
+
+  /* PRATIQUE */
+  .pratique-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .pratique-item { background: #fff; border: 1px solid #E0D9D0; border-radius: 10px; padding: 12px; display: flex; gap: 8px; }
+  .pratique-icon { font-size: 15px; flex-shrink: 0; }
+  .pratique-label { font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 1px; color: #C8813A; text-transform: uppercase; margin-bottom: 2px; }
+  .pratique-text { font-family: 'Inter', sans-serif; font-size: 10px; color: #5a5248; line-height: 1.5; }
+
+  /* SIMILAIRES */
+  .similaires-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .sim-card { background: #fff; border: 1px solid #E0D9D0; border-radius: 10px; overflow: hidden; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; }
+  .sim-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  .sim-img { height: 100px; }
+  .sim-body { padding: 10px; }
+  .sim-region { font-family: 'Inter', sans-serif; font-size: 7.5px; letter-spacing: 1px; color: #C8813A; text-transform: uppercase; margin-bottom: 3px; }
+  .sim-title { font-size: 11px; color: #2a2520; }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const pageEl = document.querySelector('.page') as HTMLElement | null;
+    const van = document.getElementById('scrolling-van') as SVGGraphicsElement | null;
+    const path = document.getElementById('travel-path') as SVGPathElement | null;
+    const destFavBtn = document.getElementById('dest-fav-btn') as HTMLButtonElement | null;
+    const backBtn = document.getElementById('back-to-home-btn') as HTMLDivElement | null;
+
+    // 1. ANIMATION DU VAN SVG AU SCROLL (Calé au pixel près dès le premier scroll) [4]
+    if (pageEl && van && path) {
       const pathLength = path.getTotalLength();
       
       const animateVan = () => {
+        const scrollY = window.scrollY;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = Math.min(Math.max(window.scrollY / (docHeight || 1), 0), 1);
         
-        // Calcul du point x et y précis sur la courbe de Bézier du tracé pointillé
+        let scrollPercent = scrollY / (docHeight || 1);
+        scrollPercent = Math.min(Math.max(scrollPercent, 0), 1);
+        
         const point = path.getPointAtLength(scrollPercent * pathLength);
         
-        // Repositionne le van selon les coordonnées du SVG [4]
-        van.style.transform = `translate(${point.x - 50}px, ${point.y - 120}px)`;
+        // Centre l'icône du van sur la courbe de Bézier [4]
+        van.setAttribute('transform', `translate(${point.x - 17}, ${point.y - 15})`);
       };
 
       window.addEventListener('scroll', animateVan, { passive: true });
-      animateVan(); // Premier calcul
+      animateVan(); // Alignement initial avec la barre d'étoiles
     }
 
-    // 2. SYNCHRONISATION DU BOUTON FAVORIS LOCAL DE LA CARD
+    // 2. RETOUR CONTEXTUALISÉ ET RESTAURATION DE SESSION [2]
+    if (backBtn) {
+      backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = '/#destinations';
+      });
+    }
+
+    // 3. SYNCHRONISATION DU BOUTON FAVORIS LOCAL DE LA CARD
     if (destFavBtn) {
       const cardId = destFavBtn.getAttribute('data-id');
 
