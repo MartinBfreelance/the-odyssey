@@ -34,6 +34,14 @@ const esimLink = validateLink(dest.liens.esim) ? dest.liens.esim : "https://www.
 const country = dest.geo.split(' // ').pop() || 'Exploration';
 const continent = dest.geo.split(' // ')[0] || 'Continent';
 
+// Séparation du titre de la carte en deux parties pour l'accentuation ambrée éditoriale (sans double point)
+const titleParts = dest.titre.split(':');
+const titleMain = titleParts[0].trim();
+const titleSub = titleParts[1] ? titleParts[1].trim() : '';
+
+// Séparation de la géo-localisation pour styliser le pays en orange ambré
+const geoPartsList = dest.geo.split(' // ');
+
 const ratingStars = "★".repeat(Math.round(dest.note)) + "☆".repeat(5 - Math.round(dest.note));
 
 const similarDestinations = destinationsData
@@ -45,25 +53,41 @@ const similarDestinations = destinationsData
   
   <div class="dest-page-wrapper">
     
-    <!-- HERO PLEINE LARGEUR — IMAGE PURE ET TEXTE CENTRÉ (D'APRÈS VOTRE MAQUETTE) -->
+    <!-- HERO PLEINE LARGEUR — IMAGE PURE ET TEXTE CENTRÉ -->
     <section class="hero select-none relative h-[520px]">
       <img src={dest.image} alt={dest.titre} class="absolute inset-0 w-full h-full object-cover opacity-90 z-0" />
       <div class="hero-overlay z-10"></div>
       
-      <!-- Bouton de retour contextualisé (Avec surlignage ambré progressif au survol) -->
-      <div id="back-to-home-btn" class="hero-back z-20 group/back">
+      <!-- Bouton de retour discret et élégant positionné sous l'en-tête de navigation -->
+      <div id="back-to-home-btn" class="hero-back z-30 group/back">
         ← Retour aux destinations
         <span class="absolute bottom-1 left-3 w-0 h-[3px] bg-amber-500/35 transition-all duration-300 group-hover/back:w-[82%] -z-10 rounded-xs"></span>
       </div>
       
-      <!-- Cœur favori en haut à droite -->
-      <button id="dest-fav-btn" data-id={dest.slug} class="hero-fav z-20" aria-label="Ajouter aux favoris">
+      <!-- Cœur favori interactif synchronisé, rehaussé en z-30 pour être cliquable en premier plan -->
+      <button id="dest-fav-btn" data-id={dest.slug} class="hero-fav z-30" aria-label="Ajouter aux favoris">
         <svg viewBox="0 0 24 24" class="transition-all duration-300"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </button>
       
       <div class="hero-content z-20">
-        <div class="hero-geo">{dest.geo}</div>
-        <h1 class="hero-title font-serif">{dest.titre}</h1>
+        <!-- Localisation géo stylisée (le pays ressort en orange ambré fluide) -->
+        <span class="hero-geo uppercase">
+          {geoPartsList.map((part, idx) => (
+            <>
+              {idx > 0 && <span class="geo-sep"> // </span>}
+              <span class={idx === geoPartsList.length - 1 ? "geo-country" : "geo-parent"}>{part}</span>
+            </>
+          ))}
+        </span>
+
+        <!-- Titre principal : Avec l'accentuation de thème sur une nouvelle ligne en italique ambré fluide -->
+        <h1 class="hero-title">
+          {titleMain}
+          {titleSub && <span class="hero-title-accent block mt-1.5 sm:mt-2">{titleSub}</span>}
+        </h1>
+
+        <!-- Sous-titre automatique en blanc doux pour une visibilité irréprochable -->
+        <h2 class="hero-subtitle">{dest.sous_titre}</h2>
         
         <div class="hero-tags">
           {dest.type.map((t) => (
@@ -80,67 +104,55 @@ const similarDestinations = destinationsData
       </div>
     </section>
 
-    <!-- BLOC AUTEUR & STATS FUSIONNÉS AVEC ICÔNES DÉDIÉES -->
+    <!-- BLOC AUTEUR & STATS AVEC ÉTOILES À GAUCHE ET STATS À DROITE -->
     <div class="author-stats border-b border-[#E0D9D0]">
+      <!-- Gauche : Auteur & Avis / Étoiles (L'année a disparu) -->
       <div class="author-part select-none">
         <div class="author-avatar">{dest.auteur.initiale}</div>
         <div>
           <div class="author-name">Récit de {dest.auteur.nom}</div>
-          <div class="author-year">{dest.auteur.date.split(' ').pop()}</div>
+          <div class="rating-inline">
+            <span class="stars">{ratingStars}</span>
+            <span class="rating-count">{dest.note.toFixed(1)} · {dest.nb_avis} avis</span>
+          </div>
         </div>
       </div>
       
-      <div class="sep-v"></div>
-      <div class="stat-inline select-none"><span class="text-base block mb-0.5">📅</span><div class="stat-inline-val font-serif font-bold">{dest.stats.duree}</div><div class="stat-inline-lbl">Notre séjour</div></div>
-      <div class="sep-v"></div>
-      <div class="stat-inline select-none"><span class="text-base block mb-0.5">🗺️</span><div class="stat-inline-val font-serif font-bold">{dest.stats.etapes}</div><div class="stat-inline-lbl">Itinéraire</div></div>
-      <div class="sep-v"></div>
-      <div class="stat-inline select-none"><span class="text-base block mb-0.5">💶</span><div class="stat-inline-val font-serif font-bold">{dest.stats.budget}</div><div class="stat-inline-lbl">Budget / pers.</div></div>
-      <div class="sep-v"></div>
-      <div class="stat-inline select-none"><span class="text-base block mb-0.5">🌤️</span><div class="stat-inline-val font-serif font-bold">{dest.stats.periode}</div><div class="stat-inline-lbl">Meilleure période</div></div>
-      
-      <div class="sep-v"></div>
-      <div class="rating-part select-none">
-        <span class="stars">{ratingStars}</span>
-        <span class="rating-count">{dest.note.toFixed(1)} · {dest.nb_avis} avis</span>
+      <!-- Droite : Stats du séjour -->
+      <div class="stats-right select-none">
+        <div class="stat-inline"><span class="text-base block mb-0.5">📅</span><div class="stat-inline-val font-serif font-bold">{dest.stats.duree}</div><div class="stat-inline-lbl">Notre séjour</div></div>
+        <div class="sep-v"></div>
+        <div class="stat-inline"><span class="text-base block mb-0.5">🗺️</span><div class="stat-inline-val font-serif font-bold">{dest.stats.etapes}</div><div class="stat-inline-lbl">Itinéraire</div></div>
+        <div class="sep-v"></div>
+        <div class="stat-inline"><span class="text-base block mb-0.5">💶</span><div class="stat-inline-val font-serif font-bold">{dest.stats.budget}</div><div class="stat-inline-lbl">Budget / pers.</div></div>
+        <div class="sep-v"></div>
+        <div class="stat-inline"><span class="text-base block mb-0.5">🌤️</span><div class="stat-inline-val font-serif font-bold">{dest.stats.periode}</div><div class="stat-inline-lbl">Meilleure période</div></div>
       </div>
     </div>
 
-    <!-- AGENCEMENT DE LA PAGE (CONTENU À GAUCHE & TRAJET DU VAN STICKY À DROITE) -->
+    <!-- AGENCEMENT DE LA PAGE -->
     <div class="page max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 relative overflow-visible">
       
-      <!-- TRAJET DU VAN EN SVG MINIMALISTE POINTILLÉ (STICKY À DROITE) [4] -->
+      <!-- TRAJET DU VAN EN SVG MINIMALISTE POINTILLÉ (STICKY À DROITE) -->
       <div class="trail-right hidden lg:block">
         <div class="trail-sticky">
           <svg width="44" height="520" viewBox="0 0 44 520" xmlns="http://www.w3.org/2000/svg" class="overflow-visible">
-            <!-- Chemin pointillé zigzag [4] -->
             <path id="travel-path" d="M22 50 C34 90, 10 130, 22 170 C34 210, 10 250, 22 290 C34 330, 10 370, 22 410 C34 450, 10 490, 22 520"
               fill="none" stroke="#D6CFC4" stroke-width="1.5" stroke-dasharray="4 7" stroke-linecap="round"/>
-            
-            <!-- Points de passage cardinaux [4] -->
             <circle cx="22" cy="170" r="3.5" fill="#C8813A" opacity="0.6"/>
             <circle cx="22" cy="290" r="3.5" fill="#C8813A" opacity="0.6"/>
             <circle cx="22" cy="410" r="3.5" fill="#C8813A" opacity="0.6"/>
-            
-            <!-- Le Van de voyage minimaliste en SVG [4] -->
             <g id="scrolling-van" transform="translate(4, 14)">
-              <!-- Carrosserie [4] -->
               <rect x="0" y="12" width="34" height="16" rx="3" fill="#2C3E50"/>
-              <!-- Cabine [4] -->
               <rect x="3" y="4" width="24" height="12" rx="2" fill="#2C3E50"/>
-              <!-- Fenêtres cabine [4] -->
               <rect x="5" y="6" width="9" height="7" rx="1" fill="#F5F2ED" opacity="0.55"/>
               <rect x="16" y="6" width="9" height="7" rx="1" fill="#F5F2ED" opacity="0.55"/>
-              <!-- Pare-brise [4] -->
               <rect x="27" y="5" width="5" height="9" rx="1" fill="#C8813A" opacity="0.7"/>
-              <!-- Roues [4] -->
               <circle cx="8" cy="29" r="4.5" fill="#1a2a38"/>
               <circle cx="8" cy="29" r="2" fill="#D6CFC4"/>
               <circle cx="26" cy="29" r="4.5" fill="#1a2a38"/>
               <circle cx="26" cy="29" r="2" fill="#D6CFC4"/>
-              <!-- Galerie de toit [4] -->
               <rect x="3" y="2" width="24" height="2.5" rx="1" fill="#C8813A" opacity="0.85"/>
-              <!-- Phares [4] -->
               <rect x="32" y="14" width="2.5" height="4" rx="0.5" fill="#C8813A" opacity="0.95"/>
               <rect x="32" y="19" width="2.5" height="4" rx="0.5" fill="#C8813A" opacity="0.4"/>
             </g>
@@ -151,7 +163,7 @@ const similarDestinations = destinationsData
       <!-- CONTENU ÉDITORIAL (À GAUCHE) -->
       <div class="content w-full lg:w-[calc(100%-44px)]">
         
-        <!-- NOTRE COUP DE COEUR (Avec boussole de marque originale et surlignage) -->
+        <!-- NOTRE COUP DE COEUR (Contenu éditorial indépendant) -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -172,7 +184,7 @@ const similarDestinations = destinationsData
           </div>
         </div>
 
-        <!-- NOTRE ITINÉRAIRE (Épuré, sans citations pré-définies, avec fiches photos plus GRANDES) [3] -->
+        <!-- NOTRE ITINÉRAIRE (Rapproché du texte et visuels x3 plus grands) -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -188,9 +200,9 @@ const similarDestinations = destinationsData
             <div class="section-line"></div>
           </div>
 
-          <!-- Étape 1 (Visuel grand format 16/10 à droite) -->
+          <!-- Étape 1 (Visuel grand format à droite) -->
           <div class="etape pb-6 border-b border-[#E0D9D0]/60 last:border-b-0 last:pb-0">
-            <div class="etape-header flex flex-col md:flex-row md:items-center justify-between gap-8 w-full">
+            <div class="etape-header flex flex-col md:flex-row md:items-center justify-between gap-5 md:gap-6 w-full">
               <div class="flex items-start gap-3 flex-grow">
                 <div class="etape-num">1</div>
                 <div class="space-y-3">
@@ -200,20 +212,16 @@ const similarDestinations = destinationsData
                   </div>
                 </div>
               </div>
-              <div class="w-full md:w-[320px] shrink-0 aspect-[16/10] overflow-hidden rounded-xl border border-[#E0D9D0] shadow-2xs">
+              <div class="w-full md:w-[550px] shrink-0 aspect-[16/10] overflow-hidden rounded-xl border border-[#E0D9D0] shadow-2xs">
                 <img src={dest.image} alt="Itinéraire Étape 1" class="w-full h-full object-cover" />
               </div>
             </div>
           </div>
 
-          <!-- Étape 2 (Visuel grand format 16/10 à gauche) -->
+          <!-- Étape 2 (Visuel grand format également à droite pour l'unité visuelle) -->
           <div class="etape pb-6 border-b border-[#E0D9D0]/60 last:border-b-0 last:pb-0">
-            <div class="etape-header flex flex-col md:flex-row md:items-center justify-between gap-8 w-full">
-              <!-- Visuel à gauche de l'étape -->
-              <div class="w-full md:w-[320px] shrink-0 aspect-[16/10] overflow-hidden rounded-xl border border-[#E0D9D0] shadow-2xs">
-                <div class="w-full h-full img-ph-1 rounded-xl"></div>
-              </div>
-              <div class="flex-grow flex items-start gap-3">
+            <div class="etape-header flex flex-col md:flex-row md:items-center justify-between gap-5 md:gap-6 w-full">
+              <div class="flex items-start gap-3 flex-grow">
                 <div class="etape-num">2</div>
                 <div class="space-y-3">
                   <div class="etape-title font-serif font-bold text-neutral-900 text-base">Les sentiers secrets & panoramas sauvages — Jours 4 à 6</div>
@@ -221,6 +229,9 @@ const similarDestinations = destinationsData
                     Le seul itinéraire accessible uniquement à pied. Plusieurs jours de marche complète, accueil chaleureux chez l'habitant, repas traditionnels et couchers de soleil spectaculaires depuis les sommets — on en parle encore.
                   </div>
                 </div>
+              </div>
+              <div class="w-full md:w-[550px] shrink-0 aspect-[16/10] overflow-hidden rounded-xl border border-[#E0D9D0] shadow-2xs">
+                <div class="w-full h-full img-ph-1 rounded-xl"></div>
               </div>
             </div>
           </div>
@@ -400,45 +411,144 @@ const similarDestinations = destinationsData
     height: 480px; 
     overflow: hidden;
   }
+  
+  /* Filtre d'arrière-plan progressif à 3 points pour un contraste optimal */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.4) 0%,     /* Assombrit le haut sous le header fixe */
+      rgba(0, 0, 0, 0.25) 45%,   /* Assombrit légèrement le milieu pour détacher les textes */
+      rgba(0, 0, 0, 0.5) 100%    /* Assombrit le bas */
+    );
+    z-index: 10;
+  }
+  
+  /* Bouton retour épuré, élégant et non imposant */
   .hero-back {
-    position: absolute; top: 20px; left: 32px;
-    display: flex; align-items: center; gap: 6px;
-    color: rgba(255,255,255,0.9); font-family: 'Inter', sans-serif; font-size: 9px;
-    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
-    background: rgba(0,0,0,0.2); padding: 6px 14px; border-radius: 20px;
-    backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.15);
-    transition: background 0.2s;
+    position: absolute; 
+    top: 105px; /* Décalé sous l'en-tête de navigation h-20 (80px) */
+    left: 32px;
+    display: flex; 
+    align-items: center; 
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.85); 
+    font-family: 'Inter', sans-serif; 
+    font-size: 9px; 
+    letter-spacing: 0.12em; 
+    text-transform: uppercase; 
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.15); 
+    padding: 6px 14px; 
+    border-radius: 20px;
+    backdrop-filter: blur(4px); 
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
   }
-  .hero-back:hover { background: rgba(0,0,0,0.4); }
+  .hero-back:hover { 
+    background: rgba(255, 255, 255, 0.25); 
+    color: #ffffff; 
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-1.5px);
+  }
+  
+  /* Style de base pour le cœur favori rehaussé en z-index */
   .hero-fav {
-    position: absolute; top: 20px; right: 32px;
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(255,255,255,0.2); display: flex; align-items: center;
-    justify-content: center; cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(4px);
-    transition: transform 0.2s;
+    position: absolute; 
+    top: 105px; /* Aligné avec le bouton retour sous le header */
+    right: 32px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
   }
-  .hero-fav:hover { transform: scale(1.1); }
-  .hero-fav svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 1.8; }
+  .hero-fav:hover { 
+    transform: scale(1.1); 
+    background: rgba(255, 255, 255, 0.3);
+  }
+  .hero-fav svg { 
+    width: 18px; 
+    height: 18px; 
+    fill: none; 
+    stroke: rgba(255, 255, 255, 0.9); 
+    stroke-width: 1.8; 
+    transition: all 0.3s ease; 
+  }
+  
+  /* Style actif du cœur quand l'itinéraire est dans les favoris */
+  .hero-fav.is-active svg {
+    fill: #e2b173 !important; /* Remplissage ambre doré fluide assorti */
+    stroke: #ffffff !important; /* Contour blanc net */
+    stroke-width: 2.2px;
+  }
   
   .hero-content {
     position: absolute; inset: 0;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     text-align: center; padding: 0 40px;
-    background: linear-gradient(to top, rgba(0,0,0,0.25) 0%, transparent 50%);
   }
+  
+  /* Géolocalisation avec séparateurs discrets et pays mis en avant en orange ambré fluide */
   .hero-geo {
-    font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 3px;
-    color: #C8813A; text-transform: uppercase; margin-bottom: 12px;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-    font-weight: 700;
+    font-family: 'Inter', sans-serif; 
+    font-size: 10px; 
+    letter-spacing: 0.5em; 
+    color: rgba(255, 255, 255, 0.85); 
+    text-transform: uppercase; 
+    margin-bottom: 16px;
+    font-weight: 500;
+    display: block;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   }
+  .geo-parent {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .geo-sep {
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .geo-country {
+    color: #e2b173; /* Ambre doré fluide et soyeux (moins lourd) */
+    font-weight: 600;
+  }
+  
+  /* Titre principal : Style serif blanc léger et accentuation ambrée fluide (sans le double point) */
   .hero-title {
-    font-size: 38px; color: #fff; line-height: 1.15; margin-bottom: 14px;
-    font-weight: normal; text-shadow: 0 2px 12px rgba(0,0,0,0.35);
-    max-width: 700px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 64px; color: #fff; line-height: 1.15; margin-bottom: 12px;
+    font-weight: 300; /* font-light */
+    letter-spacing: -0.025em; /* tracking-tight */
+    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.6), 0 1px 4px rgba(0, 0, 0, 0.4);
+    max-width: 900px;
   }
+  .hero-title-accent {
+    color: #e2b173; /* Ambre champagne soyeux (visuel haut de gamme et fluide) */
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Sous-titre automatique en blanc doux et en italique (Style serif) */
+  .hero-subtitle {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.95); 
+    font-style: italic; /* Italique */
+    font-weight: 400; /* font-normal */
+    line-height: 1.35;
+    margin-bottom: 24px;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.4);
+    max-width: 800px;
+  }
+
   .hero-tags { display: flex; gap: 8px; justify-content: center; }
   .hero-tag {
     font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 1px;
@@ -448,13 +558,13 @@ const similarDestinations = destinationsData
     border: 1px solid rgba(255,255,255,0.2);
   }
 
-  /* BLOC AUTEUR + STATS FUSIONNÉS (D'APRÈS VOTRE MAQUETTE) */
+  /* BARRE FUSIONNÉE : ÉTOILES À GAUCHE, DETAILS À DROITE */
   .author-stats {
     background: #fff; border-bottom: 1px solid #E0D9D0;
     padding: 16px 40px; display: flex; align-items: center;
-    gap: 0; flex-wrap: wrap;
+    justify-content: space-between; gap: 20px; flex-wrap: wrap;
   }
-  .author-part { display: flex; align-items: center; gap: 10px; padding-right: 24px; }
+  .author-part { display: flex; align-items: center; gap: 10px; }
   .author-avatar {
     width: 36px; height: 36px; border-radius: 50%;
     background: linear-gradient(135deg, #C8813A, #8a5a2a);
@@ -462,14 +572,18 @@ const similarDestinations = destinationsData
     color: #fff; font-size: 14px; flex-shrink: 0;
   }
   .author-name { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 1px; color: #2C3E50; text-transform: uppercase; font-weight: 600; }
-  .author-year { font-family: 'Inter', sans-serif; font-size: 9px; color: #b0a898; margin-top: 2px; }
-  .sep-v { width: 1px; height: 32px; background: #E0D9D0; margin: 0 20px; flex-shrink: 0; }
-  .stat-inline { display: flex; flex-direction: column; align-items: center; padding: 0 16px; }
+  
+  /* Intégration des avis à la place de l'année */
+  .rating-inline { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+  .stars { color: #C8813A; font-size: 11px; letter-spacing: 1px; }
+  .rating-count { font-family: 'Inter', sans-serif; font-size: 9px; color: #9a9088; }
+
+  /* Regroupement des stats à droite */
+  .stats-right { display: flex; align-items: center; flex-wrap: wrap; }
+  .sep-v { width: 1px; height: 32px; background: #E0D9D0; margin: 0 18px; flex-shrink: 0; }
+  .stat-inline { display: flex; flex-direction: column; align-items: center; padding: 0 12px; }
   .stat-inline-val { font-size: 13px; color: #2C3E50; font-weight: 700; }
   .stat-inline-lbl { font-family: 'Inter', sans-serif; font-size: 7.5px; letter-spacing: 1px; color: #b0a898; text-transform: uppercase; margin-top: 2px; }
-  .rating-part { display: flex; align-items: center; gap: 5px; margin-left: auto; }
-  .stars { color: #C8813A; font-size: 13px; letter-spacing: 1px; }
-  .rating-count { font-family: 'Inter', sans-serif; font-size: 9px; color: #9a9088; }
 
   /* PAGE LAYOUT */
   .page { display: flex; position: relative; padding: 40px 0; }
@@ -530,7 +644,7 @@ const similarDestinations = destinationsData
   .etape-media.media-none { display: none; }
   
   .media-img { border-radius: 10px; overflow: hidden; border: 1px solid #E0D9D0; }
-  .media-img-ph { height: 180px; border-radius: 10px; } /* Agrandissement des visuels */
+  .media-img-ph { height: 180px; border-radius: 10px; }
   .ph-1 { background: linear-gradient(135deg, #4a7c59, #1a3d2a); }
   .ph-2 { background: linear-gradient(135deg, #7a5a3a, #3a2a1a); }
   .media-caption { font-family: 'Inter', sans-serif; font-size: 9px; color: #9a9088; margin-top: 5px; font-style: italic; text-align: center; }
@@ -568,7 +682,38 @@ const similarDestinations = destinationsData
   .sim-img { height: 100px; }
   .sim-body { padding: 10px; }
   .sim-region { font-family: 'Inter', sans-serif; font-size: 7.5px; letter-spacing: 1px; color: #C8813A; text-transform: uppercase; margin-bottom: 3px; }
-  .sim-title { font-size: 11px; color: #2a2520; }
+  .sim-title { font-family: 'Playfair Display', Georgia, serif; font-size: 11px; color: #2a2520; }
+
+  /* RESPONSIVE AJUSTEMENTS BARRES ET TITRES */
+  @media (max-width: 1024px) {
+    .author-stats {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+    }
+    .stats-right {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+  @media (max-width: 640px) {
+    .hero-title {
+      font-size: 44px;
+    }
+    .hero-subtitle {
+      font-size: 18px;
+    }
+    .stats-right {
+      gap: 10px;
+    }
+    .sep-v {
+      display: none;
+    }
+    .stat-inline {
+      padding: 0 6px;
+    }
+  }
 </style>
 
 <script>
@@ -579,7 +724,7 @@ const similarDestinations = destinationsData
     const destFavBtn = document.getElementById('dest-fav-btn') as HTMLButtonElement | null;
     const backBtn = document.getElementById('back-to-home-btn') as HTMLDivElement | null;
 
-    // 1. ANIMATION DU VAN SVG AU SCROLL (Calé au pixel près dès le premier scroll) [4]
+    // 1. ANIMATION DU VAN SVG AU SCROLL
     if (pageEl && van && path) {
       const pathLength = path.getTotalLength();
       
@@ -592,15 +737,15 @@ const similarDestinations = destinationsData
         
         const point = path.getPointAtLength(scrollPercent * pathLength);
         
-        // Centre l'icône du van sur la courbe de Bézier [4]
+        // Centre l'icône du van sur la courbe de Bézier
         van.setAttribute('transform', `translate(${point.x - 17}, ${point.y - 15})`);
       };
 
       window.addEventListener('scroll', animateVan, { passive: true });
-      animateVan(); // Alignement initial avec la barre d'étoiles
+      animateVan();
     }
 
-    // 2. RETOUR CONTEXTUALISÉ ET RESTAURATION DE SESSION [2]
+    // 2. RETOUR CONTEXTUALISÉ ET RESTAURATION DE SESSION
     if (backBtn) {
       backBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -608,7 +753,7 @@ const similarDestinations = destinationsData
       });
     }
 
-    // 3. SYNCHRONISATION DU BOUTON FAVORIS LOCAL DE LA CARD
+    // 3. SYNCHRONISATION DU BOUTON FAVORIS LOCAL DE LA CARD ET DU MENU SUPERIEUR
     if (destFavBtn) {
       const cardId = destFavBtn.getAttribute('data-id');
 
@@ -623,14 +768,43 @@ const similarDestinations = destinationsData
 
       const updateFavButtonUI = () => {
         if (!cardId) return;
+        
+        const favs = getFavorites();
         const svg = destFavBtn.querySelector('svg');
         if (svg) {
           if (isFavorite(cardId)) {
-            svg.classList.add('text-amber-500', 'fill-amber-500', 'stroke-white');
-            svg.classList.remove('text-white/90');
+            destFavBtn.classList.add('is-active');
+            svg.setAttribute('stroke-width', '2.2'); // Même valeur que le CSS
           } else {
-            svg.classList.remove('text-amber-500', 'fill-amber-500', 'stroke-white');
-            svg.classList.add('text-white/90');
+            destFavBtn.classList.remove('is-active');
+            svg.setAttribute('stroke-width', '1.8');
+          }
+        }
+
+        // Mettre à jour également le cœur et le point rouge du menu de navigation fixe tout en haut
+        const menuBtn = document.getElementById('favorites-menu-btn');
+        const menuSvg = menuBtn ? menuBtn.querySelector('svg') : null;
+        const dot = document.getElementById('favorites-dot');
+        
+        if (menuSvg) {
+          if (favs.length > 0) {
+            menuSvg.classList.add('text-amber-500', 'fill-amber-500', 'stroke-white');
+            menuSvg.classList.remove('text-white');
+            menuSvg.setAttribute('stroke-width', '2.5');
+          } else {
+            menuSvg.classList.remove('text-amber-500', 'fill-amber-500', 'stroke-white');
+            menuSvg.classList.add('text-white');
+            menuSvg.setAttribute('stroke-width', '1.8');
+          }
+        }
+
+        if (dot) {
+          if (favs.length > 0) {
+            dot.classList.add('scale-100', 'opacity-100');
+            dot.classList.remove('scale-0', 'opacity-0');
+          } else {
+            dot.classList.add('scale-0', 'opacity-0');
+            dot.classList.remove('scale-100', 'opacity-100');
           }
         }
       };
@@ -646,6 +820,18 @@ const similarDestinations = destinationsData
         localStorage.setItem('the_odyssey_favorites', JSON.stringify(favs));
         updateFavButtonUI();
       });
+
+      // Permettre au clic sur le bouton de favoris du menu supérieur de rediriger vers la home filtrée
+      const menuBtn = document.getElementById('favorites-menu-btn');
+      if (menuBtn) {
+        menuBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          try {
+            sessionStorage.setItem('odyssey_home_filter', 'favorites');
+          } catch (err) {}
+          window.location.href = '/#destinations';
+        });
+      }
 
       updateFavButtonUI();
     }
