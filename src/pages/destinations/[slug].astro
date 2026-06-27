@@ -47,6 +47,29 @@ const ratingStars = "★".repeat(Math.round(dest.note)) + "☆".repeat(5 - Math.
 const similarDestinations = destinationsData
   .filter((d) => d.slug !== dest.slug && (d.type.some(t => dest.type.includes(t)) || d.profil.some(p => dest.profil.includes(p))))
   .slice(0, 3);
+
+// 2. LOGIQUE D'AUTOMATISATION DES INFOS PRATIQUES (BELGIQUE-CENTRIC)
+let docPratique = "Passeport ou carte d'identité en cours de validité (UE). Aucun visa requis.";
+let volPratique = "Vols directs ou avec escale depuis la Belgique.";
+let deplacerPratique = "Location de voiture recommandée sur place. Réseau de bus limité.";
+let monnaiePratique = "Euro (€) fortement conseillé.";
+
+if (dest.slug === 'albanie') {
+  docPratique = "Carte d'identité ou passeport en cours de validité pour les ressortissants belges. Aucun visa requis.";
+  volPratique = "Environ 2h30 de vol direct depuis l'aéroport de Bruxelles (BRU) ou Charleroi (CRL).";
+  deplacerPratique = "Location de voiture indispensable sur place pour explorer l'arrière-pays. Réseau de bus limité.";
+  monnaiePratique = "Lek albanais (ALL). L'Euro (€) est également très largement accepté partout sur place.";
+} else if (dest.slug === 'corse') {
+  docPratique = "Carte d'identité ou passeport en cours de validité. Aucune formalité douanière.";
+  volPratique = "Environ 1h45 de vol direct depuis Bruxelles (BRU) ou Charleroi (CRL) vers Bastia/Ajaccio.";
+  deplacerPratique = "Location de véhicule (voiture ou scooter) indispensable pour arpenter les routes de montagne.";
+  monnaiePratique = "Euro (€). Les cartes bancaires sont acceptées partout, prévoyez un peu de cash.";
+} else if (dest.slug === 'chicago') {
+  docPratique = "Passeport biométrique valide + autorisation électronique ESTA obligatoire avant l'embarquement.";
+  volPratique = "Environ 8h30 de vol direct depuis Bruxelles (BRU) vers Chicago O'Hare (ORD).";
+  deplacerPratique = "Réseau de métro (L-Train) et marche à pied recommandés. Voiture déconseillée en ville.";
+  monnaiePratique = "Dollar américain (USD). Paiement par carte de crédit ultra-généralisé.";
+}
 ---
 
 <Layout title={`${dest.titre} | The Odyssey`}>
@@ -161,7 +184,7 @@ const similarDestinations = destinationsData
       </div>
 
       <!-- CONTENU ÉDITORIAL (À GAUCHE) -->
-      <div class="content w-full lg:w-[calc(100%-44px)] text-left">
+      <div class="content w-full lg:w-[calc(100%-44px)]">
         
         <!-- NOTRE COUP DE COEUR (Contenu éditorial indépendant) -->
         <div class="section text-left">
@@ -271,7 +294,7 @@ const similarDestinations = destinationsData
           </div>
         </div>
 
-        <!-- NOS PARTENAIRES -->
+        <!-- NOS PARTENAIRES (Ajout de l'aérien et de la location auto pour anticiper les partenariats) -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -304,9 +327,29 @@ const similarDestinations = destinationsData
             </div>
             <a href={esimLink} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Activer mon eSIM</a>
           </div>
+          <!-- Partenaire d'anticipation : Vol Aérien -->
+          <div class="partner-block">
+            <div class="partner-icon">✈️</div>
+            <div style="flex:1">
+              <div class="partner-label">Comment y aller</div>
+              <div class="partner-title font-serif">Trouver un vol avantageux</div>
+              <div class="partner-text font-sans">Comparez les meilleurs tarifs de vols directs ou avec escales depuis la Belgique.</div>
+            </div>
+            <a href="https://booking.com/flights" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Rechercher un vol</a>
+          </div>
+          <!-- Partenaire d'anticipation : Location de Voiture -->
+          <div class="partner-block">
+            <div class="partner-icon">🚗</div>
+            <div style="flex:1">
+              <div class="partner-label">Se déplacer</div>
+              <div class="partner-title font-serif">Louer un véhicule sur place</div>
+              <div class="partner-text font-sans">Explorez l'itinéraire en toute liberté avec notre sélection d'agences fiables.</div>
+            </div>
+            <a href="https://booking.com/carrental" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Louer un véhicule</a>
+          </div>
         </div>
 
-        <!-- INFOS PRATIQUES -->
+        <!-- INFOS PRATIQUES (Belgique-Centric, adaptées et corrigées du bug d'icône monnaie) -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -325,66 +368,37 @@ const similarDestinations = destinationsData
             <div class="pratique-item">
               <div class="pratique-icon">🛂</div>
               <div>
-                <div class="pratique-label">Visa</div>
-                <div class="pratique-text">Passeport en cours de validité requis pour les ressortissants UE. Pas de visa requis.</div>
+                <div class="pratique-label">Documents nécessaires</div>
+                <div class="pratique-text">{docPratique}</div>
               </div>
             </div>
             <div class="pratique-item">
               <div class="pratique-icon">✈️</div>
               <div>
-                <div class="pratique-label">Comment y aller</div>
-                <div class="pratique-text">Vols directs réguliers depuis Paris (~11h). Compagnie nationale recommandée.</div>
+                <div class="pratique-label">Temps de vol depuis la Belgique</div>
+                <div class="pratique-text">{volPratique}</div>
               </div>
             </div>
             <div class="pratique-item">
               <div class="pratique-icon">🚗</div>
               <div>
                 <div class="pratique-label">Se déplacer</div>
-                <div class="pratique-text">Location de voiture indispensable sur place. Réseau de bus très limité en montagne.</div>
+                <div class="pratique-text">{deplacerPratique}</div>
               </div>
             </div>
+            <!-- Correction du bug de l'icône de monnaie -->
             <div class="pratique-item">
               <div class="pratique-icon">💶</div>
               <div>
-                <div class="pratique-label">Monnaie</div>
-                <div class="pratique-text">Euro. Budget moyen quotidien de 150€ pour deux en séjour très confortable.</div>
+                <div class="pratique-label">Monnaie locale</div>
+                <div class="pratique-text">{monnaiePratique}</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- SIMILAIRES -->
+        <!-- BLOC D'AVIS INTERACTIF ET LIGNE VERS INSTAGRAM (Déplacé ici, sous Infos Pratiques et avant les Similaires, sans marge manuelle pour un espacement 100% régulier) -->
         <div class="section text-left">
-          <div class="section-header group/sec-title">
-            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
-                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
-                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
-              </svg>
-            </div>
-            <span class="section-label-text">Ces destinations pourraient vous plaire</span>
-            <div class="section-line"></div>
-          </div>
-          <div class="similaires-grid select-none">
-            {similarDestinations.map((sim) => (
-              <a href={`/destinations/${sim.slug}`} class="sim-card dest-link shadow-2xs hover:shadow-xs transition-shadow block">
-                <div class="sim-img relative overflow-hidden bg-neutral-200">
-                  <img src={sim.image} alt={sim.titre} class="w-full h-full object-cover transition-transform duration-500 hover:scale-102" />
-                </div>
-                <div class="sim-body">
-                  <div class="sim-region">{sim.geo}</div>
-                  <div class="sim-title font-serif font-bold">{sim.titre}</div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-
-        <!-- BLOC D'AVIS INTERACTIF ET LIGNE VERS INSTAGRAM (Espacement MT-8 resserré) -->
-        <div class="section text-left mt-8 pb-12">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
@@ -432,6 +446,36 @@ const similarDestinations = destinationsData
           </div>
         </div>
 
+        <!-- SIMILAIRES (Placé en dernier, sous "Votre avis compte", sans marge manuelle pour un espacement 100% régulier) -->
+        <div class="section text-left">
+          <div class="section-header group/sec-title">
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="section-label-text">Ces destinations pourraient vous plaire</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="similaires-grid select-none">
+            {similarDestinations.map((sim) => (
+              <a href={`/destinations/${sim.slug}`} class="sim-card dest-link shadow-2xs hover:shadow-xs transition-shadow block">
+                <div class="sim-img relative overflow-hidden bg-neutral-200">
+                  <img src={sim.image} alt={sim.titre} class="w-full h-full object-cover transition-transform duration-500 hover:scale-102" />
+                </div>
+                <div class="sim-body">
+                  <div class="sim-region">{sim.geo}</div>
+                  <div class="sim-title font-serif font-bold">{sim.titre}</div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -455,7 +499,7 @@ const similarDestinations = destinationsData
     font-family: 'Playfair Display', Georgia, serif;
   }
 
-  /* Hauteur augmentée à 560px pour faire respirer l'image */
+  /* Hauteur de 560px pour faire respirer l'image */
   .hero {
     position: relative;
     height: 560px; 
@@ -676,6 +720,7 @@ const similarDestinations = destinationsData
   .section-header:hover .section-label-text::after { width: 100%; }
   .section-line { flex: 1; height: 1px; background: #E0D9D0; }
   
+  /* Espacement global régulier appliqué à chaque bloc de section de la page d'un Onepager */
   .section { margin-bottom: 28px; }
   .section-title { font-size: 19px; color: #2a2520; margin-bottom: 8px; font-weight: normal; line-height: 1.3; }
   .section-text { font-family: 'Inter', sans-serif; font-size: 11px; color: #5a5248; line-height: 1.8; }
@@ -734,7 +779,7 @@ const similarDestinations = destinationsData
   .similaires-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .sim-card { background: #fff; border: 1px solid #E0D9D0; border-radius: 10px; overflow: hidden; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; }
   .sim-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-  .sim-img { height: 160px; } /* Augmenté de 100px à 160px */
+  .sim-img { height: 160px; } /* Augmenté de 100px à 160px pour une visibilité accrue des photos */
   .sim-body { padding: 10px; }
   .sim-region { font-family: 'Inter', sans-serif; font-size: 7.5px; letter-spacing: 1px; color: #C8813A; text-transform: uppercase; margin-bottom: 3px; }
   .sim-title { font-family: 'Playfair Display', Georgia, serif; font-size: 11px; color: #2a2520; }
