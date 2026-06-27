@@ -91,7 +91,7 @@ if (budgetMatch) {
   autoBudget = `${extractedVal}€`.replace(/\s+/g, ' ');
 }
 
-// D) Automatisation "Meilleure période" (Dictionnaire de données géographiques / climatiques)
+// D) Automatisation "Meilleure période" (Dictionnaire de données climatiques)
 let autoPeriode = dest.stats.periode; // Repli par défaut sur le JSON
 const countryKey = country.toLowerCase().trim();
 
@@ -535,6 +535,13 @@ if (dest.slug === 'albanie') {
                 </div>
               </a>
             ))}
+          </div>
+          
+          <!-- NOUVEAU BOUTON : Voir tous les guides de voyages (Style partner-cta et aligné à gauche) -->
+          <div class="text-left mt-6">
+            <a href="/#destinations" id="see-all-routes-btn" class="partner-cta inline-block select-none">
+              Voir tous les guides de voyages →
+            </a>
           </div>
         </div>
 
@@ -1105,6 +1112,17 @@ if (dest.slug === 'albanie') {
       };
 
       initRatingSystem();
+    }
+
+    // 5. GESTION DU RETOUR DU BOUTON SOUS LES SIMILAIRES
+    const seeAllBtn = document.getElementById('see-all-routes-btn');
+    if (seeAllBtn) {
+      seeAllBtn.addEventListener('click', () => {
+        try {
+          sessionStorage.removeItem('odyssey_home_scroll');
+          sessionStorage.removeItem('odyssey_home_filter');
+        } catch(err) {}
+      });
     }
   });
 </script>
