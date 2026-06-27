@@ -63,10 +63,10 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
 
-    <!-- BANDEAU RE-DESIGNÉ EN GRILLE RIGIDE 12 COLONNES (ÉVITE TOUT DÉCALAGE ET SURSAUT) -->
+    <!-- BANDEAU GÉOMÉTRIQUE RIGIDE 12 COLONNES (ZÉRO DÉCALAGE DE PIXEL) -->
     <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center mb-10 p-5 sm:p-6 bg-white border border-neutral-200/50 rounded-3xl shadow-2xs font-mono text-[9px] tracking-wider select-none relative z-20">
       
-      <!-- Colonnes 1 à 6 (50%) : Boutons d'Ambiance et de Profil (à gauche, alignement vertical parfait) -->
+      <!-- Colonnes 1 à 6 (50% de la largeur) : Boutons d'Ambiance et de Profil (à gauche) -->
       <div class="lg:col-span-6 flex flex-col gap-4">
         <!-- Ambiance -->
         <div id="filter-group-type" class="flex items-center gap-1.5 sm:gap-2 w-full">
@@ -106,7 +106,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
 
-      <!-- Colonnes 7 à 10 (33.3%) : Recherche et Menu déroulant (délimités par des bordures rigides) -->
+      <!-- Colonnes 7 à 10 (33.3% de la largeur) : Recherche et Menu déroulant délimités par des séparateurs rigides -->
       <div class="lg:col-span-4 flex flex-col sm:flex-row gap-3 items-center w-full lg:border-l lg:border-r lg:border-neutral-200/80 lg:px-6">
         <!-- Input Recherche -->
         <div class="relative w-full">
@@ -132,10 +132,13 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
 
-      <!-- Colonnes 11 à 12 (16.6%) : Nombre de destinations (étanche aux décalages de chiffres) -->
+      <!-- Colonnes 11 à 12 (16.6% de la largeur) : Nombre de destinations (bloqué horizontalement) -->
       <div class="lg:col-span-2 text-right w-full lg:pl-6 shrink-0">
         <div class="text-neutral-500 font-medium whitespace-nowrap text-center lg:text-left">
-          <span id="results-count" class="font-bold text-neutral-900 text-xs sm:text-sm">0</span> destinations
+          <!-- Le conteneur "inline-block w-5" verrouille la largeur du chiffre pour empêcher tout décalage -->
+          <span class="inline-block w-5 text-center font-bold text-neutral-900 text-xs sm:text-sm">
+            <span id="results-count">0</span>
+          </span> destinations
         </div>
       </div>
     </div>
@@ -606,7 +609,7 @@ import Layout from '../layouts/Layout.astro';
 <!-- Astro compile désormais ce script en module JS autonome déporté. C'est 100% compatible CSP ("self"). -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // 1. Déclarations et casting de tous les éléments du DOM
+    // 1. Déclarations et casting strict de tous les éléments du DOM
     const searchInput = document.getElementById('destination-search') as HTMLInputElement | null;
     const compactSelect = document.getElementById('compact-filter') as HTMLSelectElement | null;
     const needle = document.getElementById('compass-needle') as HTMLElement | null;
@@ -870,7 +873,6 @@ import Layout from '../layouts/Layout.astro';
     const items = new Set<string>();
     cards.forEach(card => {
       if(card.dataset.continent) items.add(card.dataset.continent);
-      if(card.dataset.country === "Russie" || card.dataset.country === "Japon") items.add(card.dataset.country);
     });
 
     let selectHTML = `<option value="all">Explorer le globe (Tous)</option>`;
@@ -971,7 +973,7 @@ import Layout from '../layouts/Layout.astro';
       const totalPages = Math.ceil(visibleCards.length / cardsPerPage) || 1;
       if (currentPage > totalPages) currentPage = totalPages;
 
-      // 3. Affichage en une seule passe pour supprimer définitivement l'effet de sursaut (Layout Shift)
+      // 3. Affichage en une seule passe sans écroulement préalable de la hauteur (Anti-sursaut complet)
       const start = (currentPage - 1) * cardsPerPage;
       const pageCards = visibleCards.slice(start, start + cardsPerPage);
 
