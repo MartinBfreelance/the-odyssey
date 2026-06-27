@@ -48,7 +48,69 @@ const similarDestinations = destinationsData
   .filter((d) => d.slug !== dest.slug && (d.type.some(t => dest.type.includes(t)) || d.profil.some(p => dest.profil.includes(p))))
   .slice(0, 3);
 
-// 2. LOGIQUE D'AUTOMATISATION DES INFOS PRATIQUES (BELGIQUE-CENTRIC)
+// ==========================================================================
+// 2. ALGORITHME DE SCAN & EXTRACTION AUTOMATIQUE DU BANDEAU D'INFOS (NLP/REGEX)
+// ==========================================================================
+
+// Fusion de l'ensemble des textes existants pour analyse de détection (Sans dest.description pour éviter l'erreur TypeScript)
+const bodyToScan = `${dest.titre} ${dest.sous_titre} ${dest.stats.duree || ''} ${dest.stats.etapes || ''} ${dest.stats.budget || ''}`.toLowerCase();
+
+// A) Automatisation "Notre séjour" (Durée)
+let autoDuree = dest.stats.duree; // Repli par défaut sur le JSON
+const dureeRegex = /(\d+)\s*(jours|jours\b|j\b)/g;
+const dureeMatch = dureeRegex.exec(bodyToScan);
+
+if (dureeMatch) {
+  autoDuree = `${dureeMatch[1]} jours`;
+} else if (bodyToScan.includes("semaine")) {
+  // Traduction automatique d'expressions courantes
+  autoDuree = "7 jours";
+}
+
+// B) Automatisation "Itinéraire" (Étapes)
+let autoEtapes = dest.stats.etapes; // Repli par défaut sur le JSON
+const etapesRegex = /(\d+)\s*(étapes|étape|haltes|arrêts)/g;
+const etapesMatch = etapesRegex.exec(bodyToScan);
+
+if (etapesMatch) {
+  autoEtapes = `${etapesMatch[1]} étapes`;
+}
+
+// C) Automatisation "Budget"
+let autoBudget = dest.stats.budget; // Repli par défaut sur le JSON
+const budgetRegex = /(~?\s*\d+[\s\d]*)\s*(€|euros)/g;
+const budgetMatch = budgetRegex.exec(bodyToScan);
+
+if (budgetMatch) {
+  let extractedVal = budgetMatch[1].trim();
+  // Standardisation esthétique de l'approximation (tildé)
+  if (!extractedVal.startsWith('~') && (bodyToScan.includes('environ') || bodyToScan.includes('budget moyen'))) {
+    extractedVal = `~${extractedVal}`;
+  }
+  // Resserre l'espace dans les grands nombres (ex: 2 100€ -> 2100€ ou 2 100€)
+  autoBudget = `${extractedVal}€`.replace(/\s+/g, ' ');
+}
+
+// D) Automatisation "Meilleure période" (Dictionnaire de données géographiques / climatiques)
+let autoPeriode = dest.stats.periode; // Repli par défaut sur le JSON
+const countryKey = country.toLowerCase().trim();
+
+const climateDatabase: Record<string, string> = {
+  'albanie': 'Mai – Sept.',
+  'corse': 'Mai – Oct.',
+  'chicago': 'Mai – Sept.',
+  'usa': 'Mai – Sept.',
+  'france': 'Mai – Oct.',
+  'italie': 'Avril – Oct.',
+  'maroc': 'Oct. – Avril',
+  'espagne': 'Mai – Oct.'
+};
+
+if (climateDatabase[countryKey]) {
+  autoPeriode = climateDatabase[countryKey];
+}
+
+// E) LOGIQUE D'AUTOMATISATION DES INFOS PRATIQUES (BELGIQUE-CENTRIC)
 let docPratique = "Passeport ou carte d'identité en cours de validité (UE). Aucun visa requis.";
 let volPratique = "Vols directs ou avec escale depuis la Belgique.";
 let deplacerPratique = "Location de voiture recommandée sur place. Réseau de bus limité.";
@@ -127,9 +189,9 @@ if (dest.slug === 'albanie') {
       </div>
     </section>
 
-    <!-- BLOC AUTEUR & STATS AVEC ÉTOILES À GAUCHE ET STATS À DROITE -->
+    <!-- BLOC AUTEUR & STATS AVEC ÉTOILES À GAUCHE ET STATS DYNAMIQUES À DROITE -->
     <div class="author-stats border-b border-[#E0D9D0]">
-      <!-- Gauche : Auteur & Avis / Étoiles (L'année a disparu) -->
+      <!-- Gauche : Auteur & Avis / Étoiles -->
       <div class="author-part select-none">
         <div class="author-avatar">{dest.auteur.initiale}</div>
         <div>
@@ -141,15 +203,15 @@ if (dest.slug === 'albanie') {
         </div>
       </div>
       
-      <!-- Droite : Stats du séjour -->
+      <!-- Droite : Stats du séjour (Désormais dynamiques et automatisées) -->
       <div class="stats-right select-none">
-        <div class="stat-inline"><span class="text-base block mb-0.5">📅</span><div class="stat-inline-val font-serif font-bold">{dest.stats.duree}</div><div class="stat-inline-lbl">Notre séjour</div></div>
+        <div class="stat-inline"><span class="text-base block mb-0.5">📅</span><div class="stat-inline-val font-serif font-bold">{autoDuree}</div><div class="stat-inline-lbl">Notre séjour</div></div>
         <div class="sep-v"></div>
-        <div class="stat-inline"><span class="text-base block mb-0.5">🗺️</span><div class="stat-inline-val font-serif font-bold">{dest.stats.etapes}</div><div class="stat-inline-lbl">Itinéraire</div></div>
+        <div class="stat-inline"><span class="text-base block mb-0.5">🗺️</span><div class="stat-inline-val font-serif font-bold">{autoEtapes}</div><div class="stat-inline-lbl">Itinéraire</div></div>
         <div class="sep-v"></div>
-        <div class="stat-inline"><span class="text-base block mb-0.5">💶</span><div class="stat-inline-val font-serif font-bold">{dest.stats.budget}</div><div class="stat-inline-lbl">Budget / pers.</div></div>
+        <div class="stat-inline"><span class="text-base block mb-0.5">💶</span><div class="stat-inline-val font-serif font-bold">{autoBudget}</div><div class="stat-inline-lbl">Budget / pers.</div></div>
         <div class="sep-v"></div>
-        <div class="stat-inline"><span class="text-base block mb-0.5">🌤️</span><div class="stat-inline-val font-serif font-bold">{dest.stats.periode}</div><div class="stat-inline-lbl">Meilleure période</div></div>
+        <div class="stat-inline"><span class="text-base block mb-0.5">🌤️</span><div class="stat-inline-val font-serif font-bold">{autoPeriode}</div><div class="stat-inline-lbl">Meilleure période</div></div>
       </div>
     </div>
 
@@ -294,7 +356,7 @@ if (dest.slug === 'albanie') {
           </div>
         </div>
 
-        <!-- NOS PARTENAIRES (Ajout de l'aérien et de la location auto pour anticiper les partenariats) -->
+        <!-- NOS PARTENAIRES -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -397,7 +459,7 @@ if (dest.slug === 'albanie') {
           </div>
         </div>
 
-        <!-- BLOC D'AVIS INTERACTIF ET LIGNE VERS INSTAGRAM (Déplacé ici, sous Infos Pratiques et avant les Similaires, sans marge manuelle pour un espacement 100% régulier) -->
+        <!-- BLOC D'AVIS INTERACTIF ET LIGNE VERS INSTAGRAM (Déplacé sous Infos Pratiques et avant les Similaires, sans marge manuelle pour un espacement 100% régulier) -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -446,7 +508,7 @@ if (dest.slug === 'albanie') {
           </div>
         </div>
 
-        <!-- SIMILAIRES (Placé en dernier, sous "Votre avis compte", sans marge manuelle pour un espacement 100% régulier) -->
+        <!-- SIMILAIRES (Placé en dernier, sous "Votre avis compte", pour clore la page) -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
