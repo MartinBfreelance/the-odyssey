@@ -42,15 +42,15 @@ import Layout from '../layouts/Layout.astro';
   <!-- SECTION DESTINATIONS (AVEC OVERFLOW-HIDDEN SUR ARTICLE MAIS OVERFLOW-VISIBLE ICI) -->
   <section id="destinations" class="w-full max-w-[1600px] mx-auto px-4 sm:px-8 md:px-12 py-16 sm:py-20 border-t border-neutral-200/60 scroll-mt-20 overflow-visible">
     
-    <!-- EN-TÊTE ULTRA-RESPONSIVE -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12 border-b border-neutral-200/40 pb-8">
+    <!-- EN-TÊTE ULTRA-RESPONSIVE (TITRE SEUL) -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8 border-b border-neutral-200/40 pb-8">
       
       <!-- TITRE DE SECTION COMPASS NOIR AJUSTÉ EN TAILLE -->
       <div class="flex items-center space-x-3 group/section-title cursor-default text-center sm:text-left">
         <div class="w-5 h-5 text-neutral-400 group-hover/section-title:rotate-45 group-hover/section-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
             <circle cx="12" cy="12" r="10"></circle>
-            <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+            <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5" stroke="currentColor"></circle>
             <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
             <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
             <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
@@ -61,30 +61,81 @@ import Layout from '../layouts/Layout.astro';
           <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/section-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
         </span>
       </div>
+    </div>
 
-      <!-- FILTRES RESPONSIVES -->
-      <div class="flex flex-col xs:flex-row items-center gap-3 w-full sm:w-auto justify-end">
-        <!-- Input Recherche (Sécurisé : autocomplete off, longueur max 100) -->
-        <div class="relative w-full xs:w-48 sm:w-56">
+    <!-- BANDEAU RE-DESIGNÉ EN GRILLE RIGIDE 12 COLONNES (ÉVITE TOUT DÉCALAGE ET SURSAUT) -->
+    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center mb-10 p-5 sm:p-6 bg-white border border-neutral-200/50 rounded-3xl shadow-2xs font-mono text-[9px] tracking-wider select-none relative z-20">
+      
+      <!-- Colonnes 1 à 6 (50%) : Boutons d'Ambiance et de Profil (à gauche, alignement vertical parfait) -->
+      <div class="lg:col-span-6 flex flex-col gap-4">
+        <!-- Ambiance -->
+        <div id="filter-group-type" class="flex items-center gap-1.5 sm:gap-2 w-full">
+          <span class="w-20 font-bold text-neutral-400 uppercase shrink-0">Ambiance :</span>
+          <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            <button data-type-filter="all" class="filter-btn-type px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer">Tous</button>
+            <button data-type-filter="aventure" class="filter-btn-type px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-1.5">
+              <span>🥾</span><span>Aventure & Trek</span>
+            </button>
+            <button data-type-filter="plages" class="filter-btn-type px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-1.5">
+              <span>🏖️</span><span>Plage & Farniente</span>
+            </button>
+            <button data-type-filter="culture" class="filter-btn-type px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-1.5">
+              <span>🏛️</span><span>Villes & Culture</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Profil voyageur -->
+        <div id="filter-group-profil" class="flex items-center gap-1.5 sm:gap-2 w-full">
+          <span class="w-20 font-bold text-neutral-400 uppercase shrink-0">Profil :</span>
+          <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            <button data-profil-filter="all" class="filter-btn-profil px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer">Tous</button>
+            <button data-profil-filter="couple" class="filter-btn-profil px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-1.5">
+              <span>👫</span><span>Couple</span>
+            </button>
+            <button data-profil-filter="famille" class="filter-btn-profil px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-1.5">
+              <span>👨‍👩‍👧</span><span>Famille</span>
+            </button>
+            <button data-profil-filter="solo" class="filter-btn-profil px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-1.5">
+              <span>🧍</span><span>Solo</span>
+            </button>
+            <button data-profil-filter="amis" class="filter-btn-profil px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-1.5">
+              <span>👥</span><span>Amis</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colonnes 7 à 10 (33.3%) : Recherche et Menu déroulant (délimités par des bordures rigides) -->
+      <div class="lg:col-span-4 flex flex-col sm:flex-row gap-3 items-center w-full lg:border-l lg:border-r lg:border-neutral-200/80 lg:px-6">
+        <!-- Input Recherche -->
+        <div class="relative w-full">
           <input 
             type="text" 
             id="destination-search" 
             placeholder="Rechercher..." 
             autocomplete="off"
             maxlength="100"
-            class="w-full bg-[#FFFFFF] border border-neutral-200/80 px-3 py-2 pl-8 text-[11px] font-mono uppercase tracking-wider text-neutral-800 placeholder-neutral-400 focus:outline-hidden focus:border-amber-600 rounded-xs transition-colors shadow-2xs"
+            class="w-full bg-[#FFFFFF] border border-neutral-200/80 px-3 py-2.5 pl-8 text-[11px] font-mono uppercase tracking-wider text-neutral-800 placeholder-neutral-400 focus:outline-hidden focus:border-amber-600 rounded-lg transition-colors shadow-2xs"
           />
-          <span class="absolute left-2.5 top-2.5 text-neutral-400 text-[10px]">🔍</span>
+          <span class="absolute left-2.5 top-3.5 text-neutral-400 text-[10px]">🔍</span>
         </div>
         
         <!-- Menu Déroulant Compact -->
-        <div class="relative w-full xs:w-auto">
+        <div class="relative w-full sm:w-auto shrink-0">
           <select 
             id="compact-filter" 
-            class="w-full xs:w-auto bg-[#FFFFFF] border border-neutral-200/80 px-4 py-2 pr-8 text-[11px] font-mono uppercase tracking-widest text-neutral-700 focus:outline-hidden focus:border-amber-600 rounded-xs transition-colors shadow-2xs appearance-none cursor-pointer"
+            class="w-full sm:w-auto bg-[#FFFFFF] border border-neutral-200/80 px-4 py-2.5 pr-8 text-[11px] font-mono uppercase tracking-widest text-neutral-700 focus:outline-hidden focus:border-amber-600 rounded-lg transition-colors shadow-2xs appearance-none cursor-pointer"
           >
           </select>
-          <span class="absolute right-3 top-3 text-[8px] text-neutral-400 pointer-events-none">▼</span>
+          <span class="absolute right-3 top-3.5 text-[8px] text-neutral-400 pointer-events-none">▼</span>
+        </div>
+      </div>
+
+      <!-- Colonnes 11 à 12 (16.6%) : Nombre de destinations (étanche aux décalages de chiffres) -->
+      <div class="lg:col-span-2 text-right w-full lg:pl-6 shrink-0">
+        <div class="text-neutral-500 font-medium whitespace-nowrap text-center lg:text-left">
+          <span id="results-count" class="font-bold text-neutral-900 text-xs sm:text-sm">0</span> destinations
         </div>
       </div>
     </div>
@@ -93,7 +144,7 @@ import Layout from '../layouts/Layout.astro';
     <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 transition-all duration-500">
       
       <!-- CARD 1 : ALBANIE -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="albanie" data-continent="Europe" data-country="Albanie" data-search="europe balkans albanie riviera parcs tirana ksamil">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="albanie" data-continent="Europe" data-country="Albanie" data-search="europe balkans albanie riviera parcs tirana ksamil">
         <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
           <img src="/images/drone/drone-albania-5.JPG" alt="Guide Itinéraire Albanie" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
           <!-- Bouton Cœur positionné en haut à droite (top-3/right-3) avec fond glassmorphism discret -->
@@ -120,7 +171,7 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 2 : LA CORSE -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="corse" data-continent="Europe" data-country="Corse" data-search="europe france corse ile beaute piana bonifacio bavella">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="corse" data-continent="Europe" data-country="Corse" data-search="europe france corse ile beaute piana bonifacio bavella">
         <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
           <img src="/images/drone/drone-albania-1.JPG" alt="Guide Corse" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
           <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
@@ -146,7 +197,7 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 3 : CHICAGO -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="chicago" data-continent="Amérique" data-country="USA" data-search="amerique usa chicago architecture michigan gratte ciel millenium park jazz">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="chicago" data-continent="Amérique" data-country="USA" data-search="amerique usa chicago architecture michigan gratte ciel millenium park jazz">
         <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
           <img src="/images/drone/drone-albania-2.JPG" alt="Guide Chicago" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
           <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
@@ -172,7 +223,7 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 4 : MIAMI -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="miami" data-continent="Amérique" data-country="USA" data-search="amerique usa miami floride soleil south beach everglades highway key west">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="miami" data-continent="Amérique" data-country="USA" data-search="amerique usa miami floride soleil south beach everglades highway key west">
         <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
           <img src="/images/drone/drone-albania-5.JPG" alt="Guide Miami" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
           <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
@@ -198,7 +249,7 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 5 : SAINT-TROPEZ -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="saint-tropez" data-continent="Europe" data-country="France" data-search="europe france saint tropez var douceur ponche ramatuelle vignobles">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="saint-tropez" data-continent="Europe" data-country="France" data-search="europe france saint tropez var douceur ponche ramatuelle vignobles">
         <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
           <img src="/images/drone/drone-albania-1.JPG" alt="Guide Saint-Tropez" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
           <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
@@ -224,7 +275,7 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 6 : BORDEAUX -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="bordeaux" data-continent="Europe" data-country="France" data-search="europe france bordeaux vignobles immersion culturelle pierre cite du vin saint emilion">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="bordeaux" data-continent="Europe" data-country="France" data-search="europe france bordeaux vignobles immersion culturelle pierre cite du vin saint emilion">
         <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
           <img src="/images/drone/drone-albania-2.JPG" alt="Guide Bordeaux" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
           <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
@@ -250,7 +301,7 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 7 : BASSIN D'ARCACHON -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="arcachon" data-continent="Europe" data-country="France" data-search="europe france arcachon bassin pilat huitres cabanes cap ferret">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="arcachon" data-continent="Europe" data-country="France" data-search="europe france arcachon bassin pilat huitres cabanes cap ferret">
         <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
           <img src="/images/drone/drone-albania-5.JPG" alt="Le Bassin d'Arcachon" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
           <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
@@ -276,10 +327,10 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 8 : BIARRITZ -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="biarritz" data-continent="Europe" data-country="France" data-search="europe france biarritz pays basque ocean atlantique surf espelette">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="biarritz" data-continent="Europe" data-country="France" data-search="europe france biarritz pays basque ocean atlantique surf espelette">
         <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
           <img src="/images/drone/drone-albania-1.JPG" alt="Guide Biarritz" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
-          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
+          <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer group/fav" aria-label="Ajouter aux favoris">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 transition-all duration-300">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
             </svg>
@@ -302,7 +353,7 @@ import Layout from '../layouts/Layout.astro';
       </article>
       
       <!-- CARD 9 : TOKYO -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="tokyo" data-continent="Asie" data-country="Japon" data-search="asie japon tokyo architecture shibuya shinjuku mont fuji temple">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="tokyo" data-continent="Asie" data-country="Japon" data-search="asie japon tokyo architecture shibuya shinjuku mont fuji temple">
         <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
           <img src="/images/drone/drone-albania-2.JPG" alt="Guide Tokyo" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
           <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
@@ -328,7 +379,7 @@ import Layout from '../layouts/Layout.astro';
       </article>
 
       <!-- CARD 10 : MOSCOU -->
-      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow w-full mx-auto" data-id="moscou" data-continent="Europe" data-country="Russie" data-search="europe russie moscou kremlin place rouge architecture hiver">
+      <article class="guide-card group flex flex-col justify-between h-full bg-[#FFFFFF] border border-neutral-200/40 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all duration-500 ease-out w-full mx-auto" data-id="moscou" data-continent="Europe" data-country="Russie" data-search="europe russie moscou kremlin place rouge architecture hiver">
         <div class="w-full aspect-[16/9] overflow-hidden bg-neutral-100 relative">
           <img src="/images/drone/drone-albania-5.JPG" alt="Guide Moscou" class="w-full h-full object-cover rounded-t-2xl group-hover:scale-101 transition-transform duration-1000 ease-out" />
           <button class="fav-btn absolute top-3 right-3 z-30 p-2.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white/90 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm cursor-pointer" aria-label="Ajouter aux favoris">
@@ -410,8 +461,8 @@ import Layout from '../layouts/Layout.astro';
             <div class="w-5 h-5 text-neutral-400 group-hover/manifesto-title:rotate-45 group-hover/manifesto-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
                 <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5" stroke="currentColor"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
                 <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
                 <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
               </svg>
@@ -449,8 +500,8 @@ import Layout from '../layouts/Layout.astro';
         <div class="w-5 h-5 text-neutral-400 group-hover/insta-title:rotate-45 group-hover/insta-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
             <circle cx="12" cy="12" r="10"></circle>
-            <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-            <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+            <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5" stroke="currentColor"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
             <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
             <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
           </svg>
@@ -518,7 +569,7 @@ import Layout from '../layouts/Layout.astro';
               <div class="w-5 h-5 text-neutral-400 group-hover/bons-plans-title:rotate-45 group-hover/bons-plans-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
                   <circle cx="12" cy="12" r="10"></circle>
-                  <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                  <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5" stroke="currentColor"></circle>
                   <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
                   <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
                   <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
@@ -555,7 +606,7 @@ import Layout from '../layouts/Layout.astro';
 <!-- Astro compile désormais ce script en module JS autonome déporté. C'est 100% compatible CSP ("self"). -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // 1. Déclarations et casting strict de tous les éléments du DOM
+    // 1. Déclarations et casting de tous les éléments du DOM
     const searchInput = document.getElementById('destination-search') as HTMLInputElement | null;
     const compactSelect = document.getElementById('compact-filter') as HTMLSelectElement | null;
     const needle = document.getElementById('compass-needle') as HTMLElement | null;
@@ -565,6 +616,16 @@ import Layout from '../layouts/Layout.astro';
     const cards = document.querySelectorAll('.guide-card') as NodeListOf<HTMLElement>;
     const favBtnMenu = document.getElementById('favorites-menu-btn');
 
+    // NOUVEAUX ÉLÉMENTS DE FILTRAGE
+    const typeButtons = document.querySelectorAll('.filter-btn-type') as NodeListOf<HTMLButtonElement>;
+    const profilButtons = document.querySelectorAll('.filter-btn-profil') as NodeListOf<HTMLButtonElement>;
+    const resultsCountEl = document.getElementById('results-count') as HTMLElement | null;
+
+    // LECTURE DU CONTEXTE DE RECHERCHE DEPUIS L'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentFilterType = urlParams.get('type') || 'all';
+    let currentFilterProfil = urlParams.get('profil') || 'all';
+
     let currentFilter = 'all';
     let searchQuery = '';
     let currentPage = 1;
@@ -572,6 +633,98 @@ import Layout from '../layouts/Layout.astro';
     let visibleCards: HTMLElement[] = [];
 
     const romanNumerals = ["", "I", "II", "III", "IV", "V", "VI"];
+
+    // LEXIQUE AUTOMATIQUE DE CLASSIFICATION DES CARDS
+    const lexicons = {
+      type: {
+        aventure: ['trek', 'randonnée', 'randonnees', 'sentier', 'sentiers', 'montagne', 'montagnes', 'col', 'sommet', 'sommets', 'volcan', 'cirque', 'hiking', 'ascension', 'aiguilles', 'bavella', 'bergeries', 'villages'],
+        plages: ['plage', 'plages', 'lagon', 'lagons', 'snorkeling', 'sable', 'côte', 'côtes', 'riviera', 'baignade', 'turquoise', 'crique', 'criques', 'eau', 'ocean', 'vagues', 'surf', 'ksamil', 'côtières', 'mer'],
+        culture: ['architecture', 'musée', 'musées', 'patrimoine', 'historique', 'ville', 'villes', 'capitale', 'temple', 'temples', 'gratte-ciel', 'jazz', 'galerie', 'galeries', 'historique', 'chicago', 'bordeaux', 'tokyo', 'moscou', 'splendeurs', 'architecturales', 'cathédrales', 'métros', 'kremlin', 'shibuya', 'shinjuku', 'sanctuaires']
+      },
+      profil: {
+        couple: ['romantique', 'intime', 'escapade', 'escapades', 'duo', 'coucher', 'couchers', 'road-trip', 'douceur', 'bergeries', 'intimes', 'confidents', 'lune', 'vignobles', 'vignes', 'charme'],
+        famille: ['famille', 'familles', 'enfant', 'enfants', 'kids', 'accessible', 'baignade sécurisée', 'calme', 'parcs', 'parc', ' road-trip'],
+        solo: ['solo', 'sac', 'dos', 'liberté', 'immersion', 'vibrante', 'secrets', 'historique', 'road-trip', 'découvrir'],
+        amis: ['amis', 'groupe', 'club', 'festif', 'convivial', 'vagues', 'surf', 'jazz', 'bars', 'session', 'sessions', 'vignobles', 'road-trip']
+      }
+    };
+
+    // SCAN & ATTRIBUTION DYNAMIQUE DES ATTRIBUTS DATA-TYPE & DATA-PROFIL
+    function autoAttributeCards() {
+      cards.forEach(card => {
+        const titleEl = card.querySelector('h2');
+        const descEl = card.querySelector('p');
+        const titleText = titleEl ? titleEl.innerText.toLowerCase() : '';
+        const descText = descEl ? descEl.innerText.toLowerCase() : '';
+        const fullText = `${titleText} ${descText}`;
+
+        // Attribution des ambiances (type)
+        const matchedTypes: string[] = [];
+        Object.entries(lexicons.type).forEach(([type, keywords]) => {
+          if (keywords.some(kw => fullText.includes(kw))) {
+            matchedTypes.push(type);
+          }
+        });
+        
+        // Ajustements exceptionnels pour classification riche
+        const cardId = card.dataset.id;
+        if (cardId === 'corse' || cardId === 'albanie') {
+          if (!matchedTypes.includes('aventure')) matchedTypes.push('aventure');
+          if (!matchedTypes.includes('plages')) matchedTypes.push('plages');
+        }
+        if (matchedTypes.length === 0) matchedTypes.push('aventure');
+        card.setAttribute('data-type', matchedTypes.slice(0, 2).join(' '));
+
+        // Attribution des profils voyageurs
+        const matchedProfils: string[] = [];
+        Object.entries(lexicons.profil).forEach(([profil, keywords]) => {
+          if (keywords.some(kw => fullText.includes(kw))) {
+            matchedProfils.push(profil);
+          }
+        });
+        if (matchedProfils.length === 0) matchedProfils.push('couple');
+        card.setAttribute('data-profil', matchedProfils.join(' '));
+      });
+    }
+
+    // MISE À JOUR VISUELLE DE L'ACTIVE DES BOUTONS DE FILTRE (Ardoise & Ambré)
+    function updateFilterUI() {
+      // Ambiance active : #2C3E50
+      typeButtons.forEach(btn => {
+        const filterVal = btn.getAttribute('data-type-filter');
+        if (filterVal === currentFilterType) {
+          btn.className = "filter-btn-type px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer bg-[#2C3E50] text-white font-bold shadow-sm scale-102";
+        } else {
+          btn.className = "filter-btn-type px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 bg-transparent";
+        }
+      });
+
+      // Profil active : #C8813A
+      profilButtons.forEach(btn => {
+        const filterVal = btn.getAttribute('data-profil-filter');
+        if (filterVal === currentFilterProfil) {
+          btn.className = "filter-btn-profil px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer bg-[#C8813A] text-white font-bold shadow-sm scale-102";
+        } else {
+          btn.className = "filter-btn-profil px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 bg-transparent";
+        }
+      });
+    }
+
+    // SAUVEGARDE DU CONTEXTE DANS L'URL
+    function updateURL() {
+      const url = new URL(window.location.href);
+      if (currentFilterType !== 'all') {
+        url.searchParams.set('type', currentFilterType);
+      } else {
+        url.searchParams.delete('type');
+      }
+      if (currentFilterProfil !== 'all') {
+        url.searchParams.set('profil', currentFilterProfil);
+      } else {
+        url.searchParams.delete('profil');
+      }
+      window.history.pushState({}, '', url.toString());
+    }
 
     // PROTECTION DOUBLE SÉCURISÉE DU LOCALSTORAGE CONTRE LES CRASHS D'IFRAMES & DONNÉES ALTÉRÉES
     function getFavorites(): string[] {
@@ -611,6 +764,11 @@ import Layout from '../layouts/Layout.astro';
         localStorage.setItem('the_odyssey_favorites', JSON.stringify(favs));
       } catch (e) {}
       updateFavStates();
+      
+      // Mise à jour de la grille uniquement si l'utilisateur est sur la vue active des favoris
+      if (currentFilter === 'favorites') {
+        updatePagination();
+      }
     }
 
     // GESTION SYNCHRONISÉE DES CŒURS (CARDS + MENU AVEC BORDURE BLANCHE RENFORCÉE)
@@ -723,7 +881,7 @@ import Layout from '../layouts/Layout.astro';
     });
     if(compactSelect) compactSelect.innerHTML = selectHTML;
 
-    // Assigne les clics favoris sur les cartes
+    // Assigne les clics favoris sur les cartes (Sans rafraîchir la grille globale pour supprimer le sursaut)
     cards.forEach(card => {
       const cardId = card.dataset.id;
       const btn = card.querySelector('.fav-btn') as HTMLButtonElement | null;
@@ -732,50 +890,118 @@ import Layout from '../layouts/Layout.astro';
           e.preventDefault();
           e.stopPropagation();
           toggleFavorite(cardId);
-          updatePagination();
         });
       }
+    });
+
+    // ÉVÈNEMENTS AU CLIC SUR LES FILTRES HORIZONTAUX (AVEC TOGGLE SI RE-CLIC)
+    typeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetType = btn.getAttribute('data-type-filter') || 'all';
+        if (targetType === currentFilterType) {
+          currentFilterType = 'all'; // Re-clic réinitialise
+        } else {
+          currentFilterType = targetType;
+        }
+        currentPage = 1;
+        updateFilterUI();
+        updateURL();
+        updatePagination();
+      });
+    });
+
+    profilButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetProfil = btn.getAttribute('data-profil-filter') || 'all';
+        if (targetProfil === currentFilterProfil) {
+          currentFilterProfil = 'all'; // Re-clic réinitialise
+        } else {
+          currentFilterProfil = targetProfil;
+        }
+        currentPage = 1;
+        updateFilterUI();
+        updateURL();
+        updatePagination();
+      });
+    });
+
+    // SYNCHRONISATION DU BOUTON RETOUR NAVIGATEUR
+    window.addEventListener('popstate', () => {
+      const popParams = new URLSearchParams(window.location.search);
+      currentFilterType = popParams.get('type') || 'all';
+      currentFilterProfil = popParams.get('profil') || 'all';
+      updateFilterUI();
+      updatePagination();
     });
 
     function updatePagination() {
       const favs = getFavorites();
 
+      // 1. Calcul de toutes les cards correspondantes à l'intégralité des filtres actifs (Exclusion complète)
       visibleCards = Array.from(cards).filter(card => {
         const continentSlug = card.dataset.continent ? card.dataset.continent.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
         const countrySlug = card.dataset.country ? card.dataset.country.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
         
-        let matchesSelect = false;
+        let matchesContinent = false;
         if (currentFilter === 'all') {
-          matchesSelect = true;
+          matchesContinent = true;
         } else if (currentFilter === 'favorites') {
-          matchesSelect = card.dataset.id ? favs.includes(card.dataset.id) : false;
+          matchesContinent = card.dataset.id ? favs.includes(card.dataset.id) : false;
         } else {
-          matchesSelect = (continentSlug === currentFilter || countrySlug === currentFilter);
+          matchesContinent = (continentSlug === currentFilter || countrySlug === currentFilter);
         }
 
         const matchesSearch = card.dataset.search ? card.dataset.search.includes(searchQuery) : false;
-        return matchesSelect && matchesSearch;
+
+        const cardTypes = (card.getAttribute('data-type') || '').split(' ');
+        const cardProfils = (card.getAttribute('data-profil') || '').split(' ');
+
+        const matchesType = (currentFilterType === 'all' || cardTypes.includes(currentFilterType));
+        const matchesProfil = (currentFilterProfil === 'all' || cardProfils.includes(currentFilterProfil));
+
+        return matchesContinent && matchesSearch && matchesType && matchesProfil;
       });
 
+      // Mise à jour du compteur réel de destinations
+      if (resultsCountEl) {
+        resultsCountEl.innerText = visibleCards.length.toString();
+      }
+
+      // 2. Calcul du nombre de pages basées sur les cartes filtrées uniquement
       const totalPages = Math.ceil(visibleCards.length / cardsPerPage) || 1;
       if (currentPage > totalPages) currentPage = totalPages;
 
-      cards.forEach(card => { card.style.display = 'none'; card.style.opacity = '0'; });
+      // 3. Affichage en une seule passe pour supprimer définitivement l'effet de sursaut (Layout Shift)
       const start = (currentPage - 1) * cardsPerPage;
-      visibleCards.slice(start, start + cardsPerPage).forEach(card => {
-        card.style.display = 'flex';
-        setTimeout(() => card.style.opacity = '1', 50);
+      const pageCards = visibleCards.slice(start, start + cardsPerPage);
+
+      cards.forEach(card => {
+        const shouldShow = pageCards.includes(card);
+        if (shouldShow) {
+          if (card.style.display !== 'flex') {
+            card.style.display = 'flex';
+            void card.offsetHeight; // Force le reflow du navigateur pour rendre la transition fluide
+          }
+          card.style.opacity = '1';
+          card.style.transform = 'scale(1)';
+          card.style.pointerEvents = 'auto';
+        } else {
+          card.style.display = 'none';
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.95)';
+          card.style.pointerEvents = 'none';
+        }
       });
 
-      // Affichage de l'état vide
+      // Affichage de l'état vide si aucune destination ne correspond
       const grid = document.getElementById('guides-grid') as HTMLElement | null;
       let emptyMessage = document.getElementById('empty-favorites-message') as HTMLElement | null;
-      if (currentFilter === 'favorites' && visibleCards.length === 0) {
+      if (visibleCards.length === 0) {
         if (!emptyMessage && grid) {
           emptyMessage = document.createElement('div');
           emptyMessage.id = 'empty-favorites-message';
           emptyMessage.className = 'col-span-full py-16 text-center text-neutral-500 font-mono text-[11px] uppercase tracking-wider bg-white rounded-2xl border border-neutral-200/40 p-8 shadow-2xs';
-          emptyMessage.innerHTML = `<span class="block text-2xl mb-3">❤️</span> Aucun favori pour le moment. Cliquez sur le cœur de vos destinations préférées pour les ajouter ici.`;
+          emptyMessage.innerHTML = `<span class="block text-2xl mb-3">🔍</span> Aucun itinéraire ne correspond à ces filtres. Essayez d'autres ambiances ou profils voyageurs.`;
           grid.appendChild(emptyMessage);
         } else if (emptyMessage) {
           emptyMessage.style.display = 'block';
@@ -902,7 +1128,9 @@ import Layout from '../layouts/Layout.astro';
       });
     }
 
-    // Initialisation globale
+    // Initialisation globale et auto-classification
+    autoAttributeCards();
+    updateFilterUI();
     updateFavStates();
     updatePagination();
 
