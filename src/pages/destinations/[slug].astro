@@ -53,8 +53,8 @@ const similarDestinations = destinationsData
   
   <div class="dest-page-wrapper">
     
-    <!-- HERO PLEINE LARGEUR — IMAGE PURE ET TEXTE CENTRÉ -->
-    <section class="hero select-none relative h-[520px]">
+    <!-- HERO PLEINE LARGEUR — IMAGE PURE ET TEXTE CENTRÉ (Hauteur de 560px pour plus d'envergure) -->
+    <section class="hero select-none relative h-[560px]">
       <img src={dest.image} alt={dest.titre} class="absolute inset-0 w-full h-full object-cover opacity-90 z-0" />
       <div class="hero-overlay z-10"></div>
       
@@ -406,9 +406,10 @@ const similarDestinations = destinationsData
     font-family: 'Playfair Display', Georgia, serif;
   }
 
+  /* Hauteur augmentée à 560px pour faire respirer l'image */
   .hero {
     position: relative;
-    height: 480px; 
+    height: 560px; 
     overflow: hidden;
   }
   
@@ -425,10 +426,10 @@ const similarDestinations = destinationsData
     z-index: 10;
   }
   
-  /* Bouton retour épuré, élégant et non imposant */
+  /* Bouton retour épuré, élégant, descendu à top 105px */
   .hero-back {
     position: absolute; 
-    top: 105px; /* Décalé sous l'en-tête de navigation h-20 (80px) */
+    top: 105px; /* Positionné sous l'en-tête de navigation h-20 (80px) */
     left: 32px;
     display: flex; 
     align-items: center; 
@@ -454,10 +455,10 @@ const similarDestinations = destinationsData
     transform: translateY(-1.5px);
   }
   
-  /* Style de base pour le cœur favori rehaussé en z-index */
+  /* Style de base pour le cœur favori rehaussé en z-index 30 */
   .hero-fav {
     position: absolute; 
-    top: 105px; /* Aligné avec le bouton retour sous le header */
+    top: 105px; /* Aligné avec le bouton retour sous l'en-tête */
     right: 32px;
     width: 36px;
     height: 36px;
@@ -491,11 +492,16 @@ const similarDestinations = destinationsData
     stroke-width: 2.2px;
   }
   
+  /* Padding-top de 100px pour descendre les textes et libérer de l'espace sous le header fixe */
   .hero-content {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center; padding: 0 40px;
+    position: absolute; 
+    inset: 0;
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    text-align: center; 
+    padding: 100px 40px 20px 40px; 
   }
   
   /* Géolocalisation avec séparateurs discrets et pays mis en avant en orange ambré fluide */
