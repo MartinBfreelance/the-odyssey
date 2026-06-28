@@ -103,7 +103,9 @@ const climateDatabase: Record<string, string> = {
   'france': 'Mai – Oct.',
   'italie': 'Avril – Oct.',
   'maroc': 'Oct. – Avril',
-  'espagne': 'Mai – Oct.'
+  'espagne': 'Mai – Oct.',
+  'russie': 'Mai – Sept.',
+  'islande': 'Juin – Août'
 };
 
 if (climateDatabase[countryKey]) {
@@ -285,7 +287,7 @@ if (dest.slug === 'albanie') {
             <div class="section-line"></div>
           </div>
 
-          <!-- Boucle de rendu dynamique des étapes de l'itinéraire s'ils sont renseignés dans le JSON -->
+          <!-- Boucle de rendu dynamique des étapes de l'itinéraire s'ils sont renseignés dans le JSON (Commentaires HTML retirés pour la compatibilité JSX d'Astro) -->
           {dest.etapes_details ? (
             dest.etapes_details.map((etape, idx) => (
               <div class="etape pb-6 border-b border-[#E0D9D0]/60 last:border-b-0 last:pb-0">
@@ -304,7 +306,6 @@ if (dest.slug === 'albanie') {
               </div>
             ))
           ) : (
-            <!-- Bloc de repli statique d'origine (Albanie) si aucune étape_details n'est renseignée dans le JSON -->
             <>
               <div class="etape pb-6 border-b border-[#E0D9D0]/60 last:border-b-0 last:pb-0">
                 <div class="etape-header flex flex-col md:flex-row md:items-center justify-between gap-5 md:gap-6 w-full">
@@ -369,7 +370,6 @@ if (dest.slug === 'albanie') {
                 </div>
               ))
             ) : (
-              <!-- Repli statique d'origine si aucune trouvaille dans le JSON -->
               <>
                 <div class="trouvaille-card">
                   <div class="trouvaille-icon">🍽️</div>
