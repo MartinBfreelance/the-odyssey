@@ -217,7 +217,7 @@ import destinationsData from '../data/destinations.json';
       <div class="space-y-6 group/manifesto-heading cursor-default">
         <div class="space-y-2">
           <div class="flex items-center space-x-3 justify-center lg:justify-start group/manifesto-title cursor-default">
-            <!-- Boussole d'origine verticalisée pointant vers le haut, animée en rotation et ambre au survol -->
+            <!-- boussole d'origine verticalisée pointant vers le haut, animée en rotation et ambre au survol -->
             <div class="w-5 h-5 text-neutral-400 group-hover/manifesto-title:rotate-45 group-hover/manifesto-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -344,17 +344,54 @@ import destinationsData from '../data/destinations.json';
             <p class="text-neutral-400 text-xs font-light leading-relaxed max-w-2xl">Nous sélectionnons nos partenaires with soin. En passant par nos invitations, vous économisez sur vos réservations tout en soutenant notre travail indépendant.</p>
           </div>
 
-          <div id="astuces" class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 text-left font-mono text-[10px]">
-            <div class="border border-[#E0D9D0] p-6 bg-neutral-900/40 w-full rounded-sm">
-              <p class="text-amber-500 uppercase tracking-wider font-bold">📱 Forfaits Internet eSIM</p>
-              <p class="text-neutral-400 leading-relaxed">Activez vos données à l'étranger instantanément with Nomad. Idéal pour rester connecté sans frais d'itinérance et gérer son forfait directement depuis l'application.</p>
-              <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block">Lien Privilège Nomad →</a>
+          <!-- Grille des partenaires mise à jour sur 3 colonnes pour accueillir les 5 partenaires officiels de manière harmonieuse -->
+          <div id="astuces" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-left font-mono text-[10px]">
+            
+            <!-- 1. Hébergements & Hôtels (Booking.com) -->
+            <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm flex flex-col justify-between">
+              <div>
+                <p class="text-amber-500 uppercase tracking-wider font-bold">🏡 Hébergements & Hôtels</p>
+                <p class="text-neutral-400 leading-relaxed mt-2">De la case créole typique au gîte de montagne authentique — trouvez votre logement idéal sélectionné sur le terrain avec Booking.</p>
+              </div>
+              <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Réserver mon hébergement →</a>
             </div>
-            <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm">
-              <p class="text-amber-500 uppercase tracking-wider font-bold">🏥 Assurance Voyage & Santé</p>
-              <p class="text-neutral-400 leading-relaxed">Couverture médicale complète, rapatriement et annulation de vol pour explorer le globe en totale sérénité.</p>
-              <a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block">Bénéficier des 5% Chapka →</a>
+
+            <!-- 2. Forfaits Internet eSIM (Nomad) -->
+            <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm flex flex-col justify-between">
+              <div>
+                <p class="text-amber-500 uppercase tracking-wider font-bold">📱 Forfaits Internet eSIM</p>
+                <p class="text-neutral-400 leading-relaxed mt-2">Activez vos données à l'étranger instantanément with Nomad. Idéal pour rester connecté sans frais d'itinérance et gérer son forfait directement depuis l'application.</p>
+              </div>
+              <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Lien Privilège Nomad →</a>
             </div>
+
+            <!-- 3. Assurance Voyage & Santé (Chapka) -->
+            <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm flex flex-col justify-between">
+              <div>
+                <p class="text-amber-500 uppercase tracking-wider font-bold">🏥 Assurance Voyage & Santé</p>
+                <p class="text-neutral-400 leading-relaxed mt-2">Couverture médicale complète, rapatriement et annulation de vol pour explorer le globe en totale sérénité avec notre offre Chapka.</p>
+              </div>
+              <a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Bénéficier des 5% Chapka →</a>
+            </div>
+
+            <!-- 4. Comment y aller (Vols & Transport Aérien) -->
+            <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm flex flex-col justify-between">
+              <div>
+                <p class="text-amber-500 uppercase tracking-wider font-bold">✈️ Vols & Transport Aérien</p>
+                <p class="text-neutral-400 leading-relaxed mt-2">Comparez et trouvez les meilleurs tarifs de vols directs ou avec escales depuis la Belgique pour rejoindre votre prochaine aventure.</p>
+              </div>
+              <a href="https://booking.com/flights" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Rechercher un vol →</a>
+            </div>
+
+            <!-- 5. Se déplacer (Location de Véhicule) -->
+            <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm flex flex-col justify-between">
+              <div>
+                <p class="text-amber-500 uppercase tracking-wider font-bold">🚗 Location de Véhicule</p>
+                <p class="text-neutral-400 leading-relaxed mt-2">Explorez vos itinéraires de voyage en toute indépendance et à votre propre rythme avec nos agences de location de confiance.</p>
+              </div>
+              <a href="https://booking.com/carrental" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Louer un véhicule →</a>
+            </div>
+
           </div>
         </div>
       </section>
