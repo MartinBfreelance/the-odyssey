@@ -1,83 +1,200 @@
 [
   {
     "slug": "albanie",
+    "continent": "Europe",
+    "geo": "EUROPE // BALKANS // ALBANIE",
+    "image": "/images/drone/drone-albania-1.JPG",
     "titre": "Albanie : Riviera & Parcs",
     "sous_titre": "Un road-trip équilibré d'une semaine complète entre villages de pierre et criques cachées.",
-    "geo": "Europe // Balkans // Albanie",
-    "continent": "europe",
-    "image": "/images/drone/drone-albania-5.JPG",
     "type": ["aventure", "plages"],
-    "profil": ["couple", "solo", "amis"],
+    "profil": ["couple", "solo"],
+    "note": 4.7,
+    "nb_avis": 12,
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "Mai 2024"
+    },
     "stats": {
       "duree": "7 jours",
       "etapes": "5 étapes",
       "budget": "~650€",
       "periode": "Mai – Sept."
     },
-    "auteur": {
-      "nom": "Martin & Flo",
-      "initiale": "M",
-      "date": "14 mai 2026",
-      "lecture": "8 min"
-    },
-    "note": 4.7,
-    "nb_avis": 12,
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
-    }
+    },
+    "coup_de_coeur_titre": "L'île qui résume tout ce qu'on aime dans le voyage",
+    "coup_de_coeur_texte": "On ne s'attendait pas à tomber aussi fort pour cette destination. Entre la nature brute qui s'exprime à chaque kilomètre et le lagon turquoise qui appelle au calme, c'est une terre qui réunit tout ce qui nous fait voyager — la force sauvage, l'effort récompensé, et la douceur infinie de l'après.",
+    "trouvailles": [
+      {
+        "icon": "🍽️",
+        "titre": "Le bistrot secret",
+        "texte": "Petit resto authentique face à la mer, sans carte. Rougail traditionnel à tomber."
+      },
+      {
+        "icon": "🏄",
+        "titre": "Le lagon sauvage",
+        "texte": "Arriver très tôt le matin. L'eau est d'un calme irréel, idéale pour le snorkeling."
+      },
+      {
+        "icon": "🏡",
+        "titre": "La guesthouse confit",
+        "texte": "Une demeure en pierres de taille offrant un accueil sincère et des petits déjeuners maison."
+      }
+    ],
+    "etapes_details": [
+      {
+        "titre": "Premier contact & immersion locale — Jours 1 à 3",
+        "texte": "Notre voyage débute dans la douceur de l'aube. Nous aimons prendre le temps de nous imprégner du climat, d'écouter les bruits de la place principale et de boire un premier café en observant la vie locale s'éveiller. C'est l'étape essentielle pour caler ses pas sur le rythme de la destination.",
+        "image": "/images/drone/drone-albania-1.JPG"
+      },
+      {
+        "titre": "Les sentiers secrets & panoramas sauvages — Jours 4 à 6",
+        "texte": "Le seul itinéraire accessible uniquement à pied. Plusieurs jours de marche complète, accueil chaleureux chez l'habitant, repas traditionnels et couchers de soleil spectaculaires depuis les sommets — on en parle encore.",
+        "image": "/images/drone/drone-albania-2.JPG"
+      }
+    ]
   },
   {
     "slug": "corse",
+    "continent": "Europe",
+    "geo": "EUROPE // FRANCE // CORSE",
+    "image": "/images/drone/drone-albania-5.JPG",
     "titre": "Corse : L'Île de Beauté",
     "sous_titre": "15 jours des calanques de Piana aux falaises de Bonifacio, entre aiguilles et eaux turquoises.",
-    "geo": "Europe // France // Corse",
-    "continent": "europe",
-    "image": "/images/drone/drone-albania-1.JPG",
     "type": ["aventure", "plages"],
     "profil": ["couple", "famille"],
-    "stats": {
-      "duree": "15 jours",
-      "etapes": "8 étapes",
-      "budget": "~1 200€",
-      "periode": "Juin – Oct."
-    },
+    "note": 4.5,
+    "nb_avis": 22,
     "auteur": {
       "nom": "Martin & Flo",
       "initiale": "M",
-      "date": "2 mai 2026",
-      "lecture": "14 min"
+      "date": "Juillet 2024"
     },
-    "note": 4.9,
-    "nb_avis": 31,
+    "stats": {
+      "duree": "15 jours",
+      "etapes": "6 étapes",
+      "budget": "~2100€",
+      "periode": "Nov. – Avril"
+    },
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
-    }
+    },
+    "coup_de_coeur_titre": "La montagne dans la mer",
+    "coup_de_coeur_texte": "La Corse regorge de paysages à couper le souffle. Entre les sommets acérés des aiguilles de Bavella, les piscines de rivières limpides et les criques confidentielles de l'extrême sud, chaque journée est une nouvelle aventure sauvage et inoubliable.",
+    "trouvailles": [
+      {
+        "icon": "🍽️",
+        "titre": "L'auberge de montagne",
+        "texte": "Un repas traditionnel corse cuisiné au feu de bois dans les hauteurs de Sartène."
+      },
+      {
+        "icon": "🏖️",
+        "titre": "La plage d'Erbaju",
+        "texte": "Une immense étendue de sable blanc sauvage, accessible uniquement après une marche de 2h ou en 4x4."
+      },
+      {
+        "icon": "🏡",
+        "titre": "Les bergeries de Basi",
+        "texte": "Des bergeries en vieilles pierres restaurées avec passion au milieu des oliviers centenaires."
+      }
+    ],
+    "etapes_details": [
+      {
+        "titre": "La Haute-Corse et la Balagne — Jours 1 à 5",
+        "texte": "Nous attaquons ce grand voyage par la découverte des villages perchés de Balagne et les sentiers côtiers du Cap Corse. Les routes sont étroites et sinueuses, mais les panoramas sur la Méditerranée récompensent chaque virage.",
+        "image": "/images/drone/drone-albania-5.JPG"
+      },
+      {
+        "titre": "Les joyaux du Sud sauvage — Jours 6 à 15",
+        "texte": "Cap sur le sud ! Des falaises calcaires de Bonifacio aux plages de Palombaggia et Santa Giulia, en passant par les randonnées de l'Alta Rocca, cette seconde partie de road-trip est un enchantement permanent.",
+        "image": "/images/drone/drone-albania-2.JPG"
+      }
+    ]
   },
   {
     "slug": "chicago",
+    "continent": "Amérique",
+    "geo": "AMÉRIQUE // USA // CHICAGO",
+    "image": "/images/drone/drone-albania-2.JPG",
     "titre": "Chicago : Architecture",
     "sous_titre": "Une semaine immersive le long du Michigan, à la découverte des gratte-ciels et des clubs de jazz.",
-    "geo": "Amérique // USA // Chicago",
-    "continent": "amerique",
-    "image": "/images/drone/drone-albania-2.JPG",
     "type": ["culture"],
-    "profil": ["solo", "couple"],
-    "stats": {
-      "duree": "7 jours",
-      "etapes": "4 étapes",
-      "budget": "~1 600€",
-      "periode": "Mai – Sept."
-    },
+    "profil": ["solo", "couple", "amis"],
+    "note": 4.6,
+    "nb_avis": 18,
     "auteur": {
       "nom": "Martin & Flo",
       "initiale": "M",
-      "date": "24 avril 2026",
-      "lecture": "9 min"
+      "date": "Septembre 2024"
     },
-    "note": 4.6,
-    "nb_avis": 18,
+    "stats": {
+      "duree": "7 jours",
+      "etapes": "4 étapes",
+      "budget": "~1600€",
+      "periode": "Mai – Sept."
+    },
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    },
+    "coup_de_coeur_titre": "La force tranquille du Midwest",
+    "coup_de_coeur_texte": "Chicago nous a séduits par son dynamisme culturel et la bienveillance de ses habitants. Traversée par sa rivière emblématique et bordée par l'immensité du lac Michigan, c'est une métropole d'art et d'histoire qui se visite merveilleusement bien à pied.",
+    "trouvailles": [
+      {
+        "icon": "🍕",
+        "titre": "La Deep Dish Pizza",
+        "texte": "Une spécialité culinaire unique et très copieuse dans un petit restaurant historique et confidentiel du Loop."
+      },
+      {
+        "icon": "🎷",
+        "titre": "Le club de jazz légendaire",
+        "texte": "Une session de jazz intimiste et mémorable dans le sous-sol d'un club ouvert depuis les années 1940."
+      },
+      {
+        "icon": "🚢",
+        "titre": "La croisière d'architecture",
+        "texte": "Prendre le bateau à la tombée de la nuit pour observer les reflets des gratte-ciels sur la skyline."
+      }
+    ],
+    "etapes_details": [
+      {
+        "titre": "Le Loop et l'architecture fluviale — Jours 1 à 3",
+        "texte": "Nous explorons le cœur historique de la ville, le Millennium Park et les gratte-ciels iconiques. Prendre le métro aérien (L-Train) à l'heure dorée est une expérience incontournable pour ressentir le rythme de la ville.",
+        "image": "/images/drone/drone-albania-1.JPG"
+      },
+      {
+        "titre": "Wicker Park et l'esprit jazz — Jours 4 à 7",
+        "texte": "Nous nous éloignons du centre-ville pour explorer les quartiers bohèmes de Wicker Park et Logan Square, célèbres pour leurs disquaires indépendants, leurs galeries d'art et leurs légendaires clubs de jazz.",
+        "image": "/images/drone/drone-albania-5.JPG"
+      }
+    ]
+  },
+  {
+    "slug": "saint-tropez",
+    "continent": "Europe",
+    "geo": "EUROPE // FRANCE // SAINT-TROPEZ",
+    "image": "/images/drone/drone-albania-5.JPG",
+    "titre": "Saint-Tropez & Var",
+    "sous_titre": "Un week-end de 3 jours entre villages perchés de Provence, criques sauvages et plages de sable blanc.",
+    "type": ["plages", "culture"],
+    "profil": ["couple", "amis"],
+    "note": 4.4,
+    "nb_avis": 15,
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "Août 2024"
+    },
+    "stats": {
+      "duree": "3 jours",
+      "etapes": "3 étapes",
+      "budget": "~450€",
+      "periode": "Mai – Oct."
+    },
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
@@ -85,55 +202,26 @@
   },
   {
     "slug": "miami",
+    "continent": "Amérique",
+    "geo": "AMÉRIQUE // USA // FLORIDE",
+    "image": "/images/drone/drone-albania-2.JPG",
     "titre": "Miami & Floride : Le Soleil",
-    "sous_titre": "15 jours de South Beach aux Everglades. Un itinéraire magique sur l'Overseas Highway.",
-    "geo": "Amérique // USA // Floride",
-    "continent": "amerique",
-    "image": "/images/drone/drone-albania-5.JPG",
-    "type": ["plages"],
-    "profil": ["famille", "amis"],
+    "sous_titre": "Un road-trip ensoleillé de 10 jours entre l'ambiance Art Déco, les Everglades et les Keys.",
+    "type": ["plages", "aventure"],
+    "profil": ["couple", "famille"],
+    "note": 4.5,
+    "nb_avis": 24,
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "Décembre 2024"
+    },
     "stats": {
-      "duree": "15 jours",
-      "etapes": "6 étapes",
-      "budget": "~2 100€",
+      "duree": "10 jours",
+      "etapes": "5 étapes",
+      "budget": "~1800€",
       "periode": "Nov. – Avril"
     },
-    "auteur": {
-      "nom": "Martin & Flo",
-      "initiale": "M",
-      "date": "10 avril 2026",
-      "lecture": "11 min"
-    },
-    "note": 4.5,
-    "nb_avis": 22,
-    "liens": {
-      "booking": "https://booking.com",
-      "esim": "https://www.nomadesim.com/"
-    }
-  },
-  {
-    "slug": "saint-tropez",
-    "titre": "Saint-Tropez & Var",
-    "sous_titre": "Une semaine de douceur de vivre, entre les ruelles de la Ponche, sentiers côtiers et vignobles cachés.",
-    "geo": "Europe // France // Saint-Tropez",
-    "continent": "europe",
-    "image": "/images/drone/drone-albania-1.JPG",
-    "type": ["plages", "culture"],
-    "profil": ["couple"],
-    "stats": {
-      "duree": "7 jours",
-      "etapes": "3 étapes",
-      "budget": "~950€",
-      "periode": "Mai – Oct."
-    },
-    "auteur": {
-      "nom": "Martin & Flo",
-      "initiale": "M",
-      "date": "15 mars 2026",
-      "lecture": "6 min"
-    },
-    "note": 4.4,
-    "nb_avis": 9,
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
@@ -141,83 +229,26 @@
   },
   {
     "slug": "bordeaux",
-    "titre": "Bordeaux & Vignobles",
-    "sous_titre": "7 jours d'immersion culturelle, entre splendeurs de pierre, Cité du Vin et escapades à Saint-Émilion.",
-    "geo": "Europe // France // Bordeaux",
-    "continent": "europe",
-    "image": "/images/drone/drone-albania-2.JPG",
+    "continent": "Europe",
+    "geo": "EUROPE // FRANCE // BORDEAUX",
+    "image": "/images/drone/drone-albania-5.JPG",
+    "titre": "Bordeaux : Vignobles & Châteaux",
+    "sous_titre": "Une escapade de 4 jours entre l'architecture classée UNESCO et les prestigieux domaines viticoles.",
     "type": ["culture"],
     "profil": ["couple", "solo"],
-    "stats": {
-      "duree": "7 jours",
-      "etapes": "4 étapes",
-      "budget": "~800€",
-      "periode": "Avril – Oct."
-    },
+    "note": 4.6,
+    "nb_avis": 19,
     "auteur": {
       "nom": "Martin & Flo",
       "initiale": "M",
-      "date": "1 mars 2026",
-      "lecture": "7 min"
+      "date": "Octobre 2024"
     },
-    "note": 4.8,
-    "nb_avis": 15,
-    "liens": {
-      "booking": "https://booking.com",
-      "esim": "https://www.nomadesim.com/"
-    }
-  },
-  {
-    "slug": "arcachon",
-    "titre": "Le Bassin d'Arcachon",
-    "sous_titre": "Une semaine iodée entre Dune du Pilat, cabanes ostréicoles et plages sauvages du Cap Ferret.",
-    "geo": "Europe // France // Arcachon",
-    "continent": "europe",
-    "image": "/images/drone/drone-albania-5.JPG",
-    "type": ["plages"],
-    "profil": ["famille", "couple"],
     "stats": {
-      "duree": "7 jours",
+      "duree": "4 jours",
       "etapes": "3 étapes",
-      "budget": "~750€",
-      "periode": "Mai – Sept."
+      "budget": "~500€",
+      "periode": "Mai – Oct."
     },
-    "auteur": {
-      "nom": "Martin & Flo",
-      "initiale": "M",
-      "date": "12 février 2026",
-      "lecture": "8 min"
-    },
-    "note": 4.7,
-    "nb_avis": 26,
-    "liens": {
-      "booking": "https://booking.com",
-      "esim": "https://www.nomadesim.com/"
-    }
-  },
-  {
-    "slug": "biarritz",
-    "titre": "Biarritz & Le Pays Basque",
-    "sous_titre": "15 jours majeurs entre vagues de l'Océan Atlantique, sessions de surf, et immersion dans les villages.",
-    "geo": "Europe // France // Biarritz",
-    "continent": "europe",
-    "image": "/images/drone/drone-albania-1.JPG",
-    "type": ["aventure", "plages"],
-    "profil": ["couple", "amis", "solo"],
-    "stats": {
-      "duree": "15 jours",
-      "etapes": "6 étapes",
-      "budget": "~1 350€",
-      "periode": "Juin – Oct."
-    },
-    "auteur": {
-      "nom": "Martin & Flo",
-      "initiale": "M",
-      "date": "24 janvier 2026",
-      "lecture": "12 min"
-    },
-    "note": 4.9,
-    "nb_avis": 38,
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
@@ -225,27 +256,53 @@
   },
   {
     "slug": "tokyo",
-    "titre": "Tokyo : Immersion Urbaine",
-    "sous_titre": "Une semaine vibrante au cœur de la capitale nippone, entre Shibuya et sanctuaires historiques.",
-    "geo": "Asie // Japon // Tokyo",
-    "continent": "asie",
-    "image": "/images/drone/drone-albania-2.JPG",
-    "type": ["culture"],
+    "continent": "Asie",
+    "geo": "ASIE // JAPON // TOKYO",
+    "image": "/images/drone/drone-albania-1.JPG",
+    "titre": "Tokyo : Tradition & Modernité",
+    "sous_titre": "Une aventure de 8 jours entre gratte-ciels néons, sanctuaires millénaires et gastronomie unique.",
+    "type": ["culture", "aventure"],
     "profil": ["solo", "amis"],
-    "stats": {
-      "duree": "7 jours",
-      "etapes": "5 étapes",
-      "budget": "~2 200€",
-      "periode": "Mars – Mai"
-    },
+    "note": 4.8,
+    "nb_avis": 32,
     "auteur": {
       "nom": "Martin & Flo",
       "initiale": "M",
-      "date": "12 janvier 2026",
-      "lecture": "10 min"
+      "date": "Novembre 2024"
     },
-    "note": 4.8,
-    "nb_avis": 42,
+    "stats": {
+      "duree": "8 jours",
+      "etapes": "5 étapes",
+      "budget": "~1900€",
+      "periode": "Avril – Nov."
+    },
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  },
+  {
+    "slug": "lisbonne",
+    "continent": "Europe",
+    "geo": "EUROPE // PORTUGAL // LISBONNE",
+    "image": "/images/drone/drone-albania-5.JPG",
+    "titre": "Lisbonne : Douceur de Vivre",
+    "sous_titre": "Un séjour de 5 jours entre tramways rétro, ruelles colorées de l'Alfama et saveurs locales.",
+    "type": ["culture", "plages"],
+    "profil": ["couple", "solo", "amis"],
+    "note": 4.6,
+    "nb_avis": 27,
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "Avril 2024"
+    },
+    "stats": {
+      "duree": "5 jours",
+      "etapes": "4 étapes",
+      "budget": "~600€",
+      "periode": "Avril – Oct."
+    },
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
@@ -253,27 +310,53 @@
   },
   {
     "slug": "moscou",
-    "titre": "Moscou : Cœur Historique",
-    "sous_titre": "7 jours à la découverte de la Place Rouge, du Kremlin et de l'architecture impériale.",
-    "geo": "Europe // Russie // Moscou",
-    "continent": "europe",
-    "image": "/images/drone/drone-albania-5.JPG",
+    "continent": "Europe",
+    "geo": "EUROPE // RUSSIE // MOSCOU",
+    "image": "/images/drone/drone-albania-1.JPG",
+    "titre": "Moscou : Splendeurs & Cathédrales",
+    "sous_titre": "Un séjour de 6 jours à la découverte des coupoles dorées, du Kremlin historique et du métro légendaire.",
     "type": ["culture"],
-    "profil": ["solo"],
-    "stats": {
-      "duree": "7 jours",
-      "etapes": "4 étapes",
-      "budget": "~1 100€",
-      "periode": "Mai – Sept."
-    },
+    "profil": ["couple", "solo"],
+    "note": 4.5,
+    "nb_avis": 14,
     "auteur": {
       "nom": "Martin & Flo",
       "initiale": "M",
-      "date": "5 janvier 2026",
-      "lecture": "9 min"
+      "date": "Janvier 2024"
     },
-    "note": 4.6,
-    "nb_avis": 14,
+    "stats": {
+      "duree": "6 jours",
+      "etapes": "3 étapes",
+      "budget": "~900€",
+      "periode": "Mai – Sept."
+    },
+    "liens": {
+      "booking": "https://booking.com",
+      "esim": "https://www.nomadesim.com/"
+    }
+  },
+  {
+    "slug": "islande",
+    "continent": "Europe",
+    "geo": "EUROPE // ISLANDE // REYKJAVIK",
+    "image": "/images/drone/drone-albania-2.JPG",
+    "titre": "Islande : Terres de Glace & de Feu",
+    "sous_titre": "Un voyage aventure de 12 jours le long de la Route 1 entre cascades géantes, geysers actifs et fjords sauvages.",
+    "type": ["aventure"],
+    "profil": ["couple", "solo", "amis"],
+    "note": 4.9,
+    "nb_avis": 41,
+    "auteur": {
+      "nom": "Martin & Flo",
+      "initiale": "M",
+      "date": "Octobre 2024"
+    },
+    "stats": {
+      "duree": "12 jours",
+      "etapes": "8 étapes",
+      "budget": "~2300€",
+      "periode": "Juin – Août"
+    },
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
