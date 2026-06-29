@@ -1,0 +1,391 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// TABLEAU DE CONFIGURATION DES PROMOS
+// Passez simplement "active" à true ou false pour afficher/masquer un code promo.
+const promos = {
+  booking: { active: false, code: "ODYSSEY",  reduction: "Tarif privilège" },
+  nomad:   { active: true,  code: "MF15",       reduction: "Tarif préférentiel" }, // Exemple activé
+  chapka:  { active: true,  code: "LIEN DIRECT", reduction: "Avantage exclusif" },  // Exemple activé (remise auto via le lien)
+  vols:    { active: false, code: "ODYSSEYVOLS", reduction: "Tarif préférentiel" },
+  voiture: { active: false, code: "ODYSSEYCAR",  reduction: "Tarif préférentiel" }
+};
+---
+
+<Layout title="Bons Plans & Partenaires Éthiques | THE ODYSSEY">
+  <div class="bp-page-wrapper">
+    
+    <!-- EN-TÊTE DE LA PAGE (HERO COMPACT) -->
+    <section class="bp-hero select-none relative bg-[#0A0A0A] h-[380px] overflow-hidden">
+      <!-- Gradient pour fusionner avec le fond de la page -->
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F5F2ED] z-10 pointer-events-none"></div>
+      
+      <!-- BOUTON DE RETOUR -->
+      <div class="absolute top-[105px] left-6 sm:left-12 z-30">
+        <a href="/" class="hero-back">
+          ← Retour à l'accueil
+        </a>
+      </div>
+
+      <!-- Arrière-plan sombre avec le logo boussole en filigrane géant -->
+      <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none z-0">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-[500px] h-[500px]">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+        </svg>
+      </div>
+
+      <!-- CONTENEUR DU TITRE -->
+      <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-6 pointer-events-none">
+        <div class="w-full max-w-4xl mx-auto text-white space-y-4 px-2 mt-8 pointer-events-auto">
+          <span class="text-[10px] font-mono tracking-[0.5em] uppercase text-amber-500 block">The Odyssey Support</span>
+          <h1 class="text-3xl sm:text-5xl font-serif font-light tracking-tight leading-tight">
+            Bons Plans & <br/><span class="italic font-normal text-amber-400">Partenariats Éthiques</span>
+          </h1>
+          <p class="text-neutral-300 max-w-md mx-auto text-[9px] font-mono tracking-widest uppercase pt-2">
+            Réductions voyageurs et soutien de notre travail indépendant
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION TRANSPARENCE & ETHIQUE -->
+    <section class="max-w-4xl mx-auto px-6 sm:px-8 py-12 -mt-10 relative z-30">
+      <div class="bg-white border border-[#E0D9D0] p-6 sm:p-10 rounded-2xl shadow-sm space-y-6 text-center">
+        <div class="flex items-center justify-center space-x-3 group/manifesto-title cursor-default">
+          <div class="w-5 h-5 text-neutral-400 group-hover/manifesto-title:rotate-45 group-hover/manifesto-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+              <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+              <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+              <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+            </svg>
+          </div>
+          <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold">
+            Notre Charte de Transparence
+          </span>
+        </div>
+        
+        <h2 class="text-xl sm:text-2xl font-serif font-light text-neutral-900 leading-snug">
+          Comment fonctionne notre modèle d'indépendance ?
+        </h2>
+        
+        <div class="text-xs text-neutral-600 font-light leading-relaxed max-w-2xl mx-auto space-y-4 text-left font-sans">
+          <p>
+            Depuis la création de <strong>The Odyssey</strong>, nous avons pris un engagement fort : ne jamais publier d'articles de complaisance ou de bannières publicitaires intrusives qui gâchent la lecture. Nous souhaitons que ce journal de voyage reste épuré, calme et entièrement libre de ses avis.
+          </p>
+          <p>
+            Pour financer nos mois passés sur la route, les heures d'écriture et de traitement photographique, nous utilisons l'<strong>affiliation éthique</strong>. Lorsque vous préparez votre voyage et réservez un service en cliquant sur nos boutons d'invitation :
+          </p>
+          <ul class="list-disc pl-5 space-y-2 text-[11px] text-neutral-500">
+            <li>Vous bénéficiez parfois d'une <strong>réduction immédiate</strong> (comme chez Chapka).</li>
+            <li>Le prix du service reste <strong>strictement identique</strong> pour vous (aucun surcoût masqué).</li>
+            <li>Le partenaire nous reverse une petite commission pour valoriser notre recommandation.</li>
+          </ul>
+          <p class="text-center font-serif italic text-amber-800 text-sm pt-2">
+            "Nous ne recommandons absolument aucun service que nous n'utilisons pas nous-mêmes lors de nos propres explorations."
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION DES 5 PARTENAIRES -->
+    <section class="max-w-5xl mx-auto px-6 sm:px-8 py-8 space-y-16">
+
+      <!-- 1. BOOKING.COM -->
+      <div id="booking" class="scroll-mt-24 bg-white border border-[#E0D9D0] rounded-2xl overflow-hidden shadow-2xs flex flex-col lg:flex-row transition-all duration-300 hover:shadow-md">
+        <div class="p-8 lg:p-12 flex-1 space-y-4 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center gap-2.5 text-xs font-mono tracking-widest text-amber-700 uppercase font-bold select-none">
+              <span class="text-base sm:text-lg">🏡</span>
+              <span>Hébergements & Hôtels</span>
+            </div>
+            
+            <h3 class="text-xl sm:text-2xl font-serif font-light text-neutral-900">Booking — Notre boussole pour loger chez l'habitant</h3>
+            <p class="text-xs text-neutral-500 font-light leading-relaxed font-sans">
+              Qu'il s'agisse d'une guesthouse de pierre rustique dans les montagnes albanaises ou d'une petite auberge confidentielle dans les hauteurs corses, l'immense majorité de nos nuits est dénichée via Booking.
+            </p>
+            <div class="bg-neutral-50 p-4 rounded-xl border border-neutral-100 font-sans text-[11px] text-neutral-600 leading-relaxed space-y-2">
+              <span class="font-bold text-[9px] font-mono tracking-wider text-[#2C3E50] uppercase block">💡 Nos astuces de réservation :</span>
+              <p>• Filtrez toujours par une note minimale de 8.5 pour éviter les déconvenues.</p>
+              <p>• Lisez principalement les avis récents de voyageurs solos ou en couple pour comprendre l'atmosphère exacte du lieu.</p>
+            </div>
+          </div>
+          
+          <!-- CTA & BADGE PROMO ALIGNÉS -->
+          <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 pt-4">
+            <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="bp-cta inline-block text-center font-mono self-start sm:self-auto">
+              Rechercher sur Booking →
+            </a>
+            {promos.booking.active && (
+              <div class="inline-flex items-center gap-2.5 bg-amber-50/70 border border-amber-500/20 text-amber-800 rounded-full px-4 py-1.5 text-[10px] font-mono tracking-wider font-bold select-none w-max">
+                <span class="flex h-2 w-2 relative">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                </span>
+                {promos.booking.reduction} avec le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.booking.code}</span>
+              </div>
+            )}
+          </div>
+        </div>
+        <div class="w-full lg:w-[350px] bg-neutral-100 aspect-square lg:aspect-auto relative shrink-0">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10"></div>
+          <img src="/images/drone/drone-albania-5.JPG" class="w-full h-full object-cover" alt="Booking.com Accommodations" />
+          <div class="absolute bottom-4 left-4 z-20 text-white font-serif text-sm italic">"Des adresses vécues et validées"</div>
+        </div>
+      </div>
+
+      <!-- 2. NOMAD ESIM -->
+      <div id="nomad" class="scroll-mt-24 bg-white border border-[#E0D9D0] rounded-2xl overflow-hidden shadow-2xs flex flex-col lg:flex-row-reverse transition-all duration-300 hover:shadow-md">
+        <div class="p-8 lg:p-12 flex-1 space-y-4 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center gap-2.5 text-xs font-mono tracking-widest text-amber-700 uppercase font-bold select-none">
+              <span class="text-base sm:text-lg">📶</span>
+              <span>Forfaits Internet eSIM</span>
+            </div>
+            
+            <h3 class="text-xl sm:text-2xl font-serif font-light text-neutral-900">Nomad eSIM — Restez connectés partout sans frais d'itinérance</h3>
+            <p class="text-xs text-neutral-500 font-light leading-relaxed font-sans">
+              Changer de carte SIM à chaque frontière fait partie du passé. Avec Nomad, vous achetez un forfait de données virtuelles (eSIM) directement depuis chez vous en Belgique. Une fois arrivés dans votre pays de destination, la connexion s'active d'un simple clic.
+            </p>
+            <div class="bg-neutral-50 p-4 rounded-xl border border-neutral-100 font-sans text-[11px] text-neutral-600 leading-relaxed space-y-2">
+              <span class="font-bold text-[9px] font-mono tracking-wider text-[#2C3E50] uppercase block">📱 Pourquoi nous avons choisi Nomad :</span>
+              <p>• **Facilité** : Pas besoin de retirer votre carte SIM physique habituelle, vous conservez votre numéro WhatsApp.</p>
+              <p>• **Réseau** : Ils s'associent aux meilleurs opérateurs locaux à des tarifs ultra-compétitifs.</p>
+            </div>
+          </div>
+          
+          <!-- CTA & BADGE PROMO ALIGNÉS (ACTIF) -->
+          <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 pt-4">
+            <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="bp-cta inline-block text-center font-mono self-start sm:self-auto">
+              Activer mon eSIM Nomad →
+            </a>
+            {promos.nomad.active && (
+              <div class="inline-flex items-center gap-2.5 bg-amber-50/70 border border-amber-500/20 text-amber-800 rounded-full px-4 py-1.5 text-[10px] font-mono tracking-wider font-bold select-none w-max">
+                <span class="flex h-2 w-2 relative">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                </span>
+                {promos.nomad.reduction} avec le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.nomad.code}</span>
+              </div>
+            )}
+          </div>
+        </div>
+        <div class="w-full lg:w-[350px] bg-neutral-100 aspect-square lg:aspect-auto relative shrink-0">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10"></div>
+          <img src="/images/drone/drone-albania-1.JPG" class="w-full h-full object-cover" alt="Nomad eSIM Connection" />
+          <div class="absolute bottom-4 left-4 z-20 text-white font-serif text-sm italic">"Réseau stable et activation immédiate"</div>
+        </div>
+      </div>
+
+      <!-- 3. CHAPKA ASSURANCE -->
+      <div id="chapka" class="scroll-mt-24 bg-white border border-[#E0D9D0] rounded-2xl overflow-hidden shadow-2xs flex flex-col lg:flex-row transition-all duration-300 hover:shadow-md">
+        <div class="p-8 lg:p-12 flex-1 space-y-4 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center gap-2.5 text-xs font-mono tracking-widest text-amber-700 uppercase font-bold select-none">
+              <span class="text-base sm:text-lg">🏥</span>
+              <span>Assurance Voyage & Santé</span>
+            </div>
+            
+            <h3 class="text-xl sm:text-2xl font-serif font-light text-neutral-900">Chapka — Partez l'esprit tranquille avec notre offre partenaire</h3>
+            <p class="text-xs text-neutral-500 font-light leading-relaxed font-sans">
+              La santé en voyage n'est pas un sujet à prendre à la légère. Que ce soit pour une entorse sur un sentier escarpé ou un rapatriement d'urgence, Chapka offre des contrats d'assurance complets, simples et sans jargon.
+            </p>
+            <div class="bg-[#FAF9F6] p-4 rounded-xl border border-amber-500/10 font-sans text-[11px] text-amber-900 leading-relaxed space-y-2">
+              <span class="font-bold text-[9px] font-mono tracking-wider text-amber-800 uppercase block">🎁 Votre Avantage Lecteur :</span>
+              <p>En passant par notre lien privilège d'affilié, la remise partenaire s'applique automatiquement sur votre contrat d'assurance Cap Assistance, sans avoir de code à saisir.</p>
+            </div>
+          </div>
+          
+          <!-- CTA & BADGE PROMO ALIGNÉS (ACTIF) -->
+          <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 pt-4">
+            <a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="bp-cta inline-block text-center font-mono self-start sm:self-auto">
+              S'assurer avec Chapka →
+            </a>
+            {promos.chapka.active && (
+              <div class="inline-flex items-center gap-2.5 bg-amber-50/70 border border-amber-500/20 text-amber-800 rounded-full px-4 py-1.5 text-[10px] font-mono tracking-wider font-bold select-none w-max">
+                <span class="flex h-2 w-2 relative">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                </span>
+                {promos.chapka.reduction} via notre <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.chapka.code}</span>
+              </div>
+            )}
+          </div>
+        </div>
+        <div class="w-full lg:w-[350px] bg-neutral-100 aspect-square lg:aspect-auto relative shrink-0">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10"></div>
+          <img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover" alt="Chapka Travel Insurance" />
+          <div class="absolute bottom-4 left-4 z-20 text-white font-serif text-sm italic">"Une sécurité indispensable"</div>
+        </div>
+      </div>
+
+      <!-- 4. VOLS & TRANSPORTS -->
+      <div id="vols" class="scroll-mt-24 bg-white border border-[#E0D9D0] rounded-2xl overflow-hidden shadow-2xs flex flex-col lg:flex-row-reverse transition-all duration-300 hover:shadow-md">
+        <div class="p-8 lg:p-12 flex-1 space-y-4 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center gap-2.5 text-xs font-mono tracking-widest text-amber-700 uppercase font-bold select-none">
+              <span class="text-base sm:text-lg">✈️</span>
+              <span>Vols & Transport Aérien</span>
+            </div>
+            
+            <h3 class="text-xl sm:text-2xl font-serif font-light text-neutral-900">Transports — Atteindre vos points de départ au meilleur prix</h3>
+            <p class="text-xs text-neutral-500 font-light leading-relaxed font-sans">
+              La recherche de vols peut rapidement devenir fastidieuse. Nous utilisons et recommandons la plateforme Booking Flights pour centraliser les réservations, comparer les plans de vols et gérer les correspondances sans friction.
+            </p>
+            <div class="bg-neutral-50 p-4 rounded-xl border border-neutral-100 font-sans text-[11px] text-neutral-600 leading-relaxed space-y-2">
+              <span class="font-bold text-[9px] font-mono tracking-wider text-[#2C3E50] uppercase block">✈️ Conseil Éco-Responsable :</span>
+              <p>Pour vos voyages de moyenne distance, pensez également aux trains ou ferries depuis l'Europe occidentale. C'est l'essence même du slow travel.</p>
+            </div>
+          </div>
+          
+          <!-- CTA & BADGE PROMO ALIGNÉS -->
+          <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 pt-4">
+            <a href="https://booking.com/flights" target="_blank" rel="noopener noreferrer" class="bp-cta inline-block text-center font-mono self-start sm:self-auto">
+              Trouver un vol →
+            </a>
+            {promos.vols.active && (
+              <div class="inline-flex items-center gap-2.5 bg-amber-50/70 border border-amber-500/20 text-amber-800 rounded-full px-4 py-1.5 text-[10px] font-mono tracking-wider font-bold select-none w-max">
+                <span class="flex h-2 w-2 relative">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                </span>
+                {promos.vols.reduction} avec le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.vols.code}</span>
+              </div>
+            )}
+          </div>
+        </div>
+        <div class="w-full lg:w-[350px] bg-neutral-100 aspect-square lg:aspect-auto relative shrink-0">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10"></div>
+          <img src="/images/drone/drone-albania-5.JPG" class="w-full h-full object-cover" alt="Flights & Transports" />
+          <div class="absolute bottom-4 left-4 z-20 text-white font-serif text-sm italic">"Planifier ses sauts de puce"</div>
+        </div>
+      </div>
+
+      <!-- 5. LOCATION DE VOITURE -->
+      <div id="voiture" class="scroll-mt-24 bg-white border border-[#E0D9D0] rounded-2xl overflow-hidden shadow-2xs flex flex-col lg:flex-row transition-all duration-300 hover:shadow-md">
+        <div class="p-8 lg:p-12 flex-1 space-y-4 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center gap-2.5 text-xs font-mono tracking-widest text-amber-700 uppercase font-bold select-none">
+              <span class="text-base sm:text-lg">🚗</span>
+              <span>Location de Véhicule</span>
+            </div>
+            
+            <h3 class="text-xl sm:text-2xl font-serif font-light text-neutral-900">Location de Voiture — Prendre le volant en toute sérénité</h3>
+            <p class="text-xs text-neutral-500 font-light leading-relaxed font-sans">
+              Certaines destinations de *The Odyssey* sont impossibles à vivre en profondeur sans un véhicule personnel. Les petites routes de montagne corses ou l'arrière-pays sauvage d'Albanie demandent de l'autonomie.
+            </p>
+            <div class="bg-neutral-50 p-4 rounded-xl border border-neutral-100 font-sans text-[11px] text-neutral-600 leading-relaxed space-y-2">
+              <span class="font-bold text-[9px] font-mono tracking-wider text-[#2C3E50] uppercase block">⚠️ Points de vigilance importants :</span>
+              <p>• Prenez toujours des photos précises de la carrosserie sous tous les angles avant de démarrer.</p>
+              <p>• Optez pour le rachat complet de franchise pour parer aux projections de cailloux fréquentes sur les pistes.</p>
+            </div>
+          </div>
+          
+          <!-- CTA & BADGE PROMO ALIGNÉS -->
+          <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 pt-4">
+            <a href="https://booking.com/carrental" target="_blank" rel="noopener noreferrer" class="bp-cta inline-block text-center font-mono self-start sm:self-auto">
+              Louer un véhicule →
+            </a>
+            {promos.voiture.active && (
+              <div class="inline-flex items-center gap-2.5 bg-amber-50/70 border border-amber-500/20 text-amber-800 rounded-full px-4 py-1.5 text-[10px] font-mono tracking-wider font-bold select-none w-max">
+                <span class="flex h-2 w-2 relative">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                </span>
+                {promos.voiture.reduction} avec le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.voiture.code}</span>
+              </div>
+            )}
+          </div>
+        </div>
+        <div class="w-full lg:w-[350px] bg-neutral-100 aspect-square lg:aspect-auto relative shrink-0">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10"></div>
+          <img src="/images/drone/drone-albania-2.JPG" class="w-full h-full object-cover" alt="Car Rental Travel" />
+          <div class="absolute bottom-4 left-4 z-20 text-white font-serif text-sm italic">"La liberté du tracé indépendant"</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- BOUTON RETOUR EN PIED DE PAGE -->
+    <div class="w-full bg-[#FAF9F6] py-16 border-t border-[#E0D9D0] relative z-20">
+      <div class="max-w-[1600px] mx-auto px-8 sm:px-12 text-center">
+        <a href="/" class="inline-block text-[10px] font-mono uppercase tracking-[0.25em] bg-neutral-900 text-white font-bold px-8 py-4 rounded-xl hover:bg-amber-600 hover:scale-102 transition-all duration-300 shadow-xs">
+          ← Retourner au Tableau d'Exploration
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .bp-page-wrapper {
+    background-color: #F5F2ED;
+    color: #2a2520;
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  .bp-hero {
+    position: relative;
+    height: 380px; 
+    overflow: hidden;
+  }
+
+  /* Style revu du bouton retour : contraste élevé, contour net et effet cinétique élégant au survol */
+  .hero-back {
+    display: inline-flex; 
+    align-items: center; 
+    gap: 8px;
+    color: #ffffff; /* Blanc pur de base */
+    font-family: 'Inter', sans-serif; 
+    font-size: 10px; 
+    letter-spacing: 0.15em; 
+    text-transform: uppercase; 
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.12); /* Fond plus lumineux */
+    padding: 8px 18px; 
+    border-radius: 30px;
+    backdrop-filter: blur(8px); 
+    border: 1px solid rgba(255, 255, 255, 0.35); /* Contour plus affirme */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .hero-back:hover { 
+    background: #C8813A; /* Ambre chaleureux sur toute la boîte */
+    color: #ffffff; 
+    border-color: #C8813A;
+    transform: translateX(-4px); /* Léger décalage vers la gauche très fluide */
+    box-shadow: 0 4px 18px rgba(200, 129, 58, 0.35); /* Halo ambré doux */
+  }
+
+  /* Style pour les boutons d'action des partenaires */
+  .bp-cta {
+    background: #C8813A;
+    color: #fff;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    text-decoration: none;
+    white-space: nowrap; /* Interdit formellement le retour à la ligne */
+    flex-shrink: 0;      /* Empêche le bouton de s'écraser sous la pression des éléments voisins */
+  }
+  .bp-cta:hover {
+    background: #2C3E50;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 640px) {
+    .bp-hero {
+      height: 320px;
+    }
+  }
+</style>

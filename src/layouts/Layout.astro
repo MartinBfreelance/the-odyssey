@@ -11,7 +11,9 @@ import destinationsData from '../data/destinations.json';
 const pathname = Astro.url.pathname;
 const isHome = pathname === '/' || pathname === '/index.html' || pathname === '';
 const destinationsHref = isHome ? "#destinations" : "/#destinations";
-const bonsPlansHref = isHome ? "#bons-plans" : "/#bons-plans";
+
+// Le lien Bons Plans pointe de manière permanente vers la page dédiée
+const bonsPlansHref = "/bons-plans";
 ---
 
 <!DOCTYPE html>
@@ -81,29 +83,28 @@ const bonsPlansHref = isHome ? "#bons-plans" : "/#bons-plans";
 							</div>
 						</div>
 
-						<!-- Menu Déroulant Bons Plans -->
+						<!-- Menu Déroulant Bons Plans Génériques (Sans marques visibles) -->
 						<div class="relative group/dropdown py-2">
 							<a href={bonsPlansHref} class="relative py-2 text-white hover:text-amber-400 hover:scale-105 transition-all duration-300 group/link flex items-center gap-1.5 cursor-pointer">
 								Bons Plans
 								<span class="text-[7px] text-neutral-400 group-hover/dropdown:rotate-180 transition-transform duration-300">▼</span>
 								<span class="absolute bottom-1 left-0 w-0 h-[3px] bg-amber-500/30 transition-all duration-300 group-hover/link:w-full -z-10 rounded-xs"></span>
 							</a>
-							<!-- Boîte de sous-menu des partenaires complétée sur 5 blocs -->
-							<div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-52 opacity-0 pointer-events-none group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto transition-all duration-300 z-50">
+							<div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-56 opacity-0 pointer-events-none group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto transition-all duration-300 z-50">
 								<div class="bg-neutral-950/95 backdrop-blur-md border border-white/10 rounded-xl py-2 px-1 shadow-xl">
-									<a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200">
-										🏢 Hôtels Booking
+									<a href="/bons-plans#booking" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
+										🏢 Hébergements
 									</a>
-									<a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200">
-										📶 eSIM Nomad
+									<a href="/bons-plans#nomad" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
+										📶 eSIM & Connexion
 									</a>
-									<a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200">
-										🏥 Chapka (-5%)
+									<a href="/bons-plans#chapka" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
+										🏥 Assurance Voyage
 									</a>
-									<a href="https://booking.com/flights" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200">
-										✈️ Vols Transports
+									<a href="/bons-plans#vols" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
+										✈️ Vols & Transports
 									</a>
-									<a href="https://booking.com/carrental" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200">
+									<a href="/bons-plans#voiture" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
 										🚗 Location Voiture
 									</a>
 								</div>
@@ -128,7 +129,7 @@ const bonsPlansHref = isHome ? "#bons-plans" : "/#bons-plans";
 			<slot />
 		</main>
 
-		<!-- PIED DE PAGE MAGAZINE -->
+		<!-- PIED DE PAGE MAGAZINE (Harmonisé également) -->
 		<footer class="bg-neutral-950 text-neutral-400 py-16 px-6 sm:px-8 md:px-12 border-t border-neutral-900 font-mono text-[10px] tracking-widest relative z-20">
 			<div class="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 pb-16 border-b border-neutral-900">
 				
@@ -180,15 +181,15 @@ const bonsPlansHref = isHome ? "#bons-plans" : "/#bons-plans";
 					</ul>
 				</div>
 
-				<!-- Colonne 3 : Liens partenaires (Mise à jour avec l'index complet des 5 partenaires) -->
+				<!-- Colonne 3 : Liens partenaires ramenant vers notre Onepager éthique de façon générique -->
 				<div class="md:col-span-4 space-y-4">
 					<p class="text-white font-bold uppercase tracking-widest text-[11px]">Bons Plans Voyageurs</p>
 					<ul class="space-y-2.5 text-neutral-500 font-sans text-xs">
-						<li><a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="hover:text-amber-500 transition-colors">🏢 Hôtels & Guesthouses Sélectionnés</a></li>
-						<li><a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="hover:text-amber-500 transition-colors">📶 Forfaits eSIM Nomad</a></li>
-						<li><a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="hover:text-amber-500 transition-colors">🏥 Assurance Voyage Chapka (-5%)</a></li>
-						<li><a href="https://booking.com/flights" target="_blank" rel="noopener noreferrer" class="hover:text-amber-500 transition-colors">✈️ Vols & Transport Aérien</a></li>
-						<li><a href="https://booking.com/carrental" target="_blank" rel="noopener noreferrer" class="hover:text-amber-500 transition-colors">🚗 Location de Véhicule</a></li>
+						<li><a href="/bons-plans#booking" class="hover:text-amber-500 transition-colors">🏢 Hébergements & Hôtels</a></li>
+						<li><a href="/bons-plans#nomad" class="hover:text-amber-500 transition-colors">📶 eSIM & Connexion Internet</a></li>
+						<li><a href="/bons-plans#chapka" class="hover:text-amber-500 transition-colors">🏥 Assurance Voyage & Santé</a></li>
+						<li><a href="/bons-plans#vols" class="hover:text-amber-500 transition-colors">✈️ Vols & Transport Aérien</a></li>
+						<li><a href="/bons-plans#voiture" class="hover:text-amber-500 transition-colors">🚗 Location de Véhicule</a></li>
 					</ul>
 				</div>
 
