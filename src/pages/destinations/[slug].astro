@@ -1,9 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import destinationsData from '../../data/destinations.json';
-import promos from '../../data/promos.json';
+import partners from '../../data/partners.json';
 
-// Configuration du routage dynamique Astro
 export async function getStaticPaths() {
   return destinationsData.map((dest) => ({
     params: { slug: dest.slug },
@@ -13,73 +12,41 @@ export async function getStaticPaths() {
 
 const { dest } = Astro.props;
 
-// SÉCURISATION & EN-TÊTE
 const slugRegex = /^[a-z0-9\-]+$/;
 if (!slugRegex.test(dest.slug)) {
   return Astro.redirect('/404');
 }
 
-const allowedDomains = ["booking.com", "nomadesim.com", "chapkadirect.fr"];
-const validateLink = (urlStr: string) => {
-  try {
-    const url = new URL(urlStr);
-    return allowedDomains.some(domain => url.hostname === domain || url.hostname.endsWith('.' + domain));
-  } catch(e) {
-    return false;
-  }
+// Correction du typage TypeScript pour indexer de façon dynamique dest.liens de manière sécurisée
+const getPartnerUrl = (partnerId: string, defaultUrl: string) => {
+  const liens = dest.liens as Record<string, string> | undefined;
+  return liens && liens[partnerId] ? liens[partnerId] : defaultUrl;
 };
 
-const bookingLink = validateLink(dest.liens.booking) ? dest.liens.booking : "https://booking.com";
-const esimLink = validateLink(dest.liens.esim) ? dest.liens.esim : "https://www.nomadesim.com/";
-
 const country = dest.geo.split(' // ').pop() || 'Exploration';
-const continent = dest.geo.split(' // ')[0] || 'Continent';
-
-// Séparation du titre de la carte en deux parties pour l'accentuation ambrée éditoriale (sans double point)
 const titleParts = dest.titre.split(':');
 const titleMain = titleParts[0].trim();
 const titleSub = titleParts[1] ? titleParts[1].trim() : '';
-
-// Séparation de la géo-localisation pour styliser le pays en orange ambré
 const geoPartsList = dest.geo.split(' // ');
-
 const ratingStars = "★".repeat(Math.round(dest.note)) + "☆".repeat(5 - Math.round(dest.note));
 
 const similarDestinations = destinationsData
   .filter((d) => d.slug !== dest.slug && (d.type.some(t => dest.type.includes(t)) || d.profil.some(p => dest.profil.includes(p))))
   .slice(0, 3);
 
-// ==========================================================================
-// ALGORITHME DE SCAN & EXTRACTION AUTOMATIQUE DU BANDEAU D'INFOS (NLP/REGEX)
-// ==========================================================================
-
+// ANALYSE AUTO INFOS PRATIQUES
 const bodyToScan = `${dest.titre} ${dest.sous_titre} ${dest.stats.duree || ''} ${dest.stats.etapes || ''} ${dest.stats.budget || ''}`.toLowerCase();
-
-// A) Automatisation "Notre séjour" (Durée)
 let autoDuree = dest.stats.duree;
-const dureeRegex = /(\d+)\s*(jours|jours\b|j\b)/g;
-const dureeMatch = dureeRegex.exec(bodyToScan);
+const dureeMatch = /(\d+)\s*(jours|jours\b|j\b)/g.exec(bodyToScan);
+if (dureeMatch) autoDuree = `${dureeMatch[1]} jours`;
+else if (bodyToScan.includes("semaine")) autoDuree = "7 jours";
 
-if (dureeMatch) {
-  autoDuree = `${dureeMatch[1]} jours`;
-} else if (bodyToScan.includes("semaine")) {
-  autoDuree = "7 jours";
-}
-
-// B) Automatisation "Itinéraire" (Étapes)
 let autoEtapes = dest.stats.etapes;
-const etapesRegex = /(\d+)\s*(étapes|étape|haltes|arrêts)/g;
-const etapesMatch = etapesRegex.exec(bodyToScan);
+const etapesMatch = /(\d+)\s*(étapes|étape|haltes|arrêts)/g.exec(bodyToScan);
+if (etapesMatch) autoEtapes = `${etapesMatch[1]} étapes`;
 
-if (etapesMatch) {
-  autoEtapes = `${etapesMatch[1]} étapes`;
-}
-
-// C) Automatisation "Budget"
 let autoBudget = dest.stats.budget;
-const budgetRegex = /(~?\s*\d+[\s\d]*)\s*(€|euros)/g;
-const budgetMatch = budgetRegex.exec(bodyToScan);
-
+const budgetMatch = /(~?\s*\d+[\s\d]*)\s*(€|euros)/g.exec(bodyToScan);
 if (budgetMatch) {
   let extractedVal = budgetMatch[1].trim();
   if (!extractedVal.startsWith('~') && (bodyToScan.includes('environ') || bodyToScan.includes('budget moyen'))) {
@@ -88,72 +55,54 @@ if (budgetMatch) {
   autoBudget = `${extractedVal}€`.replace(/\s+/g, ' ');
 }
 
-// D) Automatisation "Meilleure période" (Dictionnaire de données climatiques)
 let autoPeriode = dest.stats.periode;
-const countryKey = country.toLowerCase().trim();
-
 const climateDatabase: Record<string, string> = {
-  'albanie': 'Mai – Sept.',
-  'corse': 'Mai – Oct.',
-  'chicago': 'Mai – Sept.',
-  'usa': 'Mai – Sept.',
-  'france': 'Mai – Oct.',
-  'italie': 'Avril – Oct.',
-  'maroc': 'Oct. – Avril',
-  'espagne': 'Mai – Oct.',
-  'russie': 'Mai – Sept.',
-  'islande': 'Juin – Août'
+  'albanie': 'Mai – Sept.', 'corse': 'Mai – Oct.', 'chicago': 'Mai – Sept.',
+  'usa': 'Mai – Sept.', 'france': 'Mai – Oct.', 'italie': 'Avril – Oct.',
+  'maroc': 'Oct. – Avril', 'espagne': 'Mai – Oct.', 'russie': 'Mai – Sept.', 'islande': 'Juin – Août'
 };
-
-if (climateDatabase[countryKey]) {
-  autoPeriode = climateDatabase[countryKey];
+if (climateDatabase[country.toLowerCase().trim()]) {
+  autoPeriode = climateDatabase[country.toLowerCase().trim()];
 }
 
-// E) LOGIQUE D'AUTOMATISATION DES INFOS PRATIQUES (BELGIQUE-CENTRIC)
 let docPratique = "Passeport ou carte d'identité en cours de validité (UE). Aucun visa requis.";
 let volPratique = "Vols directs ou avec escale depuis la Belgique.";
 let deplacerPratique = "Location de voiture recommandée sur place. Réseau de bus limité.";
 let monnaiePratique = "Euro (€) fortement conseillé.";
 
 if (dest.slug === 'albanie') {
-  docPratique = "Carte d'identité ou passeport en cours de validité pour les ressortissants belges. Aucun visa requis.";
+  docPratique = "Carte d'identité ou passeport en cours de validité. Aucun visa requis.";
   volPratique = "Environ 2h30 de vol direct depuis l'aéroport de Bruxelles (BRU) ou Charleroi (CRL).";
-  deplacerPratique = "Location de voiture indispensable sur place pour explorer l'arrière-pays. Réseau de bus limité.";
-  monnaiePratique = "Lek albanais (ALL). L'Euro (€) est également très largement accepté partout sur place.";
+  deplacerPratique = "Location de voiture indispensable sur place pour explorer l'arrière-pays.";
+  monnaiePratique = "Lek albanais (ALL). L'Euro (€) est également très largement accepté.";
 } else if (dest.slug === 'corse') {
   docPratique = "Carte d'identité ou passeport en cours de validité. Aucune formalité douanière.";
   volPratique = "Environ 1h45 de vol direct depuis Bruxelles (BRU) ou Charleroi (CRL) vers Bastia/Ajaccio.";
-  deplacerPratique = "Location de véhicule (voiture ou scooter) indispensable pour arpenter les routes de montagne.";
+  deplacerPratique = "Location de véhicule (voiture ou scooter) indispensable pour arpenter les routes.";
   monnaiePratique = "Euro (€). Les cartes bancaires sont acceptées partout, prévoyez un peu de cash.";
 } else if (dest.slug === 'chicago') {
-  docPratique = "Passeport biométrique valide + autorisation électronique ESTA obligatoire avant l'embarquement.";
+  docPratique = "Passeport biométrique valide + autorisation électronique ESTA obligatoire.";
   volPratique = "Environ 8h30 de vol direct depuis Bruxelles (BRU) vers Chicago O'Hare (ORD).";
-  deplacerPratique = "Réseau de métro (L-Train) et marche à pied recommandés. Voiture déconseillée en ville.";
+  deplacerPratique = "Réseau de métro (L-Train) et marche à pied recommandés. Voiture déconseillée.";
   monnaiePratique = "Dollar américain (USD). Paiement par carte de crédit ultra-généralisé.";
 }
 ---
 
 <Layout title={`${dest.titre} | The Odyssey`}>
-  
   <div class="dest-page-wrapper">
     
-    <!-- HERO PLEINE LARGEUR — IMAGE PURE ET TEXTE CENTRÉ -->
+    <!-- HERO HEADER -->
     <section class="hero select-none relative h-[560px]">
       <img src={dest.image} alt={dest.titre} class="absolute inset-0 w-full h-full object-cover opacity-90 z-0" />
       <div class="hero-overlay z-10"></div>
       
-      <!-- BOUTON DE RETOUR HARMONISÉ SUR LE LOOK DU ONEPAGER BONS PLANS -->
-      <a href="/#destinations" id="back-to-home-btn" class="hero-back z-30">
-        ← Retour aux destinations
-      </a>
+      <a href="/#destinations" id="back-to-home-btn" class="hero-back z-30">← Retour aux destinations</a>
       
-      <!-- Cœur favori interactif synchronisé -->
       <button id="dest-fav-btn" data-id={dest.slug} class="hero-fav z-30" aria-label="Ajouter aux favoris">
         <svg viewBox="0 0 24 24" class="transition-all duration-300"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </button>
       
       <div class="hero-content z-20">
-        <!-- Localisation géo stylisée -->
         <span class="hero-geo uppercase">
           {geoPartsList.map((part, idx) => (
             <>
@@ -162,32 +111,19 @@ if (dest.slug === 'albanie') {
             </>
           ))}
         </span>
-
-        <!-- Titre principal -->
         <h1 class="hero-title">
           {titleMain}
           {titleSub && <span class="hero-title-accent block mt-1.5 sm:mt-2">{titleSub}</span>}
         </h1>
-
-        <!-- Sous-titre automatique -->
         <h2 class="hero-subtitle">{dest.sous_titre}</h2>
-        
         <div class="hero-tags">
-          {dest.type.map((t) => (
-            <span class="hero-tag">
-              {t === 'aventure' ? '🥾 Aventure' : t === 'plages' ? '🏖️ Plages' : '🏛️ Culture'}
-            </span>
-          ))}
-          {dest.profil.map((p) => (
-            <span class="hero-tag">
-              {p === 'couple' ? '👫 Couple' : p === 'famille' ? '👨‍👩‍👧 Famille' : p === 'solo' ? '🧍 Solo' : '👥 Amis'}
-            </span>
-          ))}
+          {dest.type.map((t) => <span class="hero-tag">{t === 'aventure' ? '🥾 Aventure' : t === 'plages' ? '🏖️ Plages' : '🏛️ Culture'}</span>)}
+          {dest.profil.map((p) => <span class="hero-tag">{p === 'couple' ? '👫 Couple' : p === 'famille' ? '👨‍👩‍👧 Famille' : p === 'solo' ? '🧍 Solo' : '👥 Amis'}</span>)}
         </div>
       </div>
     </section>
 
-    <!-- BLOC AUTEUR & STATS -->
+    <!-- BARRE DE STATS -->
     <div class="author-stats border-b border-[#E0D9D0]">
       <div class="author-part select-none">
         <div class="author-avatar">{dest.auteur.initiale}</div>
@@ -199,7 +135,6 @@ if (dest.slug === 'albanie') {
           </div>
         </div>
       </div>
-      
       <div class="stats-right select-none">
         <div class="stat-inline"><span class="text-base block mb-0.5">📅</span><div class="stat-inline-val font-serif font-bold">{autoDuree}</div><div class="stat-inline-lbl">Notre séjour</div></div>
         <div class="sep-v"></div>
@@ -207,80 +142,46 @@ if (dest.slug === 'albanie') {
         <div class="sep-v"></div>
         <div class="stat-inline"><span class="text-base block mb-0.5">💶</span><div class="stat-inline-val font-serif font-bold">{autoBudget}</div><div class="stat-inline-lbl">Budget / pers.</div></div>
         <div class="sep-v"></div>
-        <div class="stat-inline"><span class="text-base block mb-0.5">🌤️</span><div class="stat-inline-val font-serif font-bold">{autoPeriode}</div><div class="stat-inline-lbl">Meilleure période</div></div>
+        <div class="stat-inline"><span class="text-base block mb-0.5">🌤️</span><div class="stat-inline-val font-serif font-bold">{autoPeriode}</div><div class="stat-inline-lbl">Période</div></div>
       </div>
     </div>
 
-    <!-- AGENCEMENT DE LA PAGE -->
+    <!-- CORPS DE PAGE -->
     <div class="page max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 relative overflow-visible">
       
-      <!-- TRAJET DU VAN EN SVG MINIMALISTE POINTILLÉ (STICKY À DROITE) -->
+      <!-- TRAJET VAN SVG -->
       <div class="trail-right hidden lg:block">
         <div class="trail-sticky">
           <svg width="44" height="520" viewBox="0 0 44 520" xmlns="http://www.w3.org/2000/svg" class="overflow-visible">
-            <path id="travel-path" d="M22 50 C34 90, 10 130, 22 170 C34 210, 10 250, 22 290 C34 330, 10 370, 22 410 C34 450, 10 490, 22 520"
-              fill="none" stroke="#D6CFC4" stroke-width="1.5" stroke-dasharray="4 7" stroke-linecap="round"/>
-            <circle cx="22" cy="170" r="3.5" fill="#C8813A" opacity="0.6"/>
-            <circle cx="22" cy="290" r="3.5" fill="#C8813A" opacity="0.6"/>
-            <circle cx="22" cy="410" r="3.5" fill="#C8813A" opacity="0.6"/>
+            <path id="travel-path" d="M22 50 C34 90, 10 130, 22 170 C34 210, 10 250, 22 290 C34 330, 10 370, 22 410 C34 450, 10 490, 22 520" fill="none" stroke="#D6CFC4" stroke-width="1.5" stroke-dasharray="4 7" stroke-linecap="round"/>
+            <circle cx="22" cy="170" r="3.5" fill="#C8813A" opacity="0.6"/><circle cx="22" cy="290" r="3.5" fill="#C8813A" opacity="0.6"/><circle cx="22" cy="410" r="3.5" fill="#C8813A" opacity="0.6"/>
             <g id="scrolling-van" transform="translate(4, 14)">
-              <rect x="0" y="12" width="34" height="16" rx="3" fill="#2C3E50"/>
-              <rect x="3" y="4" width="24" height="12" rx="2" fill="#2C3E50"/>
-              <rect x="5" y="6" width="9" height="7" rx="1" fill="#F5F2ED" opacity="0.55"/>
-              <rect x="16" y="6" width="9" height="7" rx="1" fill="#F5F2ED" opacity="0.55"/>
+              <rect x="0" y="12" width="34" height="16" rx="3" fill="#2C3E50"/><rect x="3" y="4" width="24" height="12" rx="2" fill="#2C3E50"/>
+              <rect x="5" y="6" width="9" height="7" rx="1" fill="#F5F2ED" opacity="0.55"/><rect x="16" y="6" width="9" height="7" rx="1" fill="#F5F2ED" opacity="0.55"/>
               <rect x="27" y="5" width="5" height="9" rx="1" fill="#C8813A" opacity="0.7"/>
-              <circle cx="8" cy="29" r="4.5" fill="#1a2a38"/>
-              <circle cx="8" cy="29" r="2" fill="#D6CFC4"/>
-              <circle cx="26" cy="29" r="4.5" fill="#1a2a38"/>
-              <circle cx="26" cy="29" r="2" fill="#D6CFC4"/>
-              <rect x="3" y="2" width="24" height="2.5" rx="1" fill="#C8813A" opacity="0.85"/>
-              <rect x="32" y="14" width="2.5" height="4" rx="0.5" fill="#C8813A" opacity="0.95"/>
-              <rect x="32" y="19" width="2.5" height="4" rx="0.5" fill="#C8813A" opacity="0.4"/>
+              <circle cx="8" cy="29" r="4.5" fill="#1a2a38"/><circle cx="8" cy="29" r="2" fill="#D6CFC4"/>
+              <circle cx="26" cy="29" r="4.5" fill="#1a2a38"/><circle cx="26" cy="29" r="2" fill="#D6CFC4"/>
             </g>
           </svg>
         </div>
       </div>
 
-      <!-- CONTENU ÉDITORIAL (À GAUCHE) -->
       <div class="content w-full lg:w-[calc(100%-44px)]">
         
-        <!-- NOTRE COUP DE COEUR -->
+        <!-- COUP DE COEUR -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
-                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
-                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
-              </svg>
-            </div>
-            <span class="section-label-text">Notre coup de cœur</span>
-            <div class="section-line"></div>
+            <span class="section-label-text">Notre coup de cœur</span><div class="section-line"></div>
           </div>
           <div class="section-title">{dest.coup_de_coeur_titre || "L'île qui résume tout ce qu'on aime dans le voyage"}</div>
-          <div class="section-text font-sans">
-            {dest.coup_de_coeur_texte || "On ne s'attendait pas à tomber aussi fort pour cette destination. Entre la nature brute qui s'exprime à chaque kilomètre et le lagon turquoise qui appelle au calme, c'est une terre qui réunit tout ce qui nous fait voyager — la force sauvage, l'effort récompensé, et la douceur infinie de l'après."}
-          </div>
+          <div class="section-text font-sans">{dest.coup_de_coeur_texte || "On ne s'attendait pas à tomber aussi fort pour cette destination."}</div>
         </div>
 
-        <!-- NOTRE ITINÉRAIRE -->
+        <!-- ITINÉRAIRE -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
-                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
-                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
-              </svg>
-            </div>
-            <span class="section-label-text">Notre itinéraire</span>
-            <div class="section-line"></div>
+            <span class="section-label-text">Notre itinéraire</span><div class="section-line"></div>
           </div>
-
           {dest.etapes_details ? (
             dest.etapes_details.map((etape, idx) => (
               <div class="etape pb-6 border-b border-[#E0D9D0]/60 last:border-b-0 last:pb-0">
@@ -299,60 +200,28 @@ if (dest.slug === 'albanie') {
               </div>
             ))
           ) : (
-            <>
-              <div class="etape pb-6 border-b border-[#E0D9D0]/60 last:border-b-0 last:pb-0">
-                <div class="etape-header flex flex-col md:flex-row md:items-center justify-between gap-5 md:gap-6 w-full">
-                  <div class="flex items-start gap-3 flex-grow">
-                    <div class="etape-num">1</div>
-                    <div class="space-y-3">
-                      <div class="etape-title font-serif font-bold text-neutral-900 text-base">Premier contact & immersion locale — Jours 1 à 3</div>
-                      <div class="etape-text font-sans max-w-xl">
-                        Notre voyage débute dans la douceur de l'aube. Nous aimons prendre le temps de nous imprégner du climat, d'écouter les bruits de la place principale et de boire un premier café en observant la vie locale s'éveiller. C'est l'étape essentielle pour caler ses pas sur le rythme de la destination.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="w-full md:w-[550px] shrink-0 aspect-[16/10] overflow-hidden rounded-xl border border-[#E0D9D0] shadow-2xs">
-                    <img src={dest.image} alt="Itinéraire Étape 1" class="w-full h-full object-cover" />
+            <div class="etape pb-6">
+              <div class="etape-header flex flex-col md:flex-row md:items-center justify-between gap-5 w-full">
+                <div class="flex items-start gap-3 flex-grow">
+                  <div class="etape-num">1</div>
+                  <div class="space-y-3">
+                    <div class="etape-title font-serif font-bold text-neutral-900 text-base">Premier contact & immersion locale</div>
+                    <div class="etape-text font-sans max-w-xl">Prendre le temps de s'imprégner du climat et d'écouter les bruits locaux.</div>
                   </div>
                 </div>
-              </div>
-
-              <div class="etape pb-6 border-b border-[#E0D9D0]/60 last:border-b-0 last:pb-0">
-                <div class="etape-header flex flex-col md:flex-row md:items-center justify-between gap-5 md:gap-6 w-full">
-                  <div class="flex items-start gap-3 flex-grow">
-                    <div class="etape-num">2</div>
-                    <div class="space-y-3">
-                      <div class="etape-title font-serif font-bold text-neutral-900 text-base">Les sentiers secrets & panoramas sauvages — Jours 4 à 6</div>
-                      <div class="etape-text font-sans max-w-xl">
-                        Le seul itinéraire accessible uniquement à pied. Plusieurs jours de marche complète, accueil chaleureux chez l'habitant, repas traditionnels et couchers de soleil spectaculaires depuis les sommets — on en parle encore.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="w-full md:w-[550px] shrink-0 aspect-[16/10] overflow-hidden rounded-xl border border-[#E0D9D0] shadow-2xs">
-                    <div class="w-full h-full img-ph-1 rounded-xl"></div>
-                  </div>
+                <div class="w-full md:w-[550px] shrink-0 aspect-[16/10] overflow-hidden rounded-xl border border-[#E0D9D0]">
+                  <img src={dest.image} alt="Étape 1" class="w-full h-full object-cover" />
                 </div>
               </div>
-            </>
+            </div>
           )}
         </div>
 
-        <!-- NOS TROUVAILLES -->
+        <!-- TROUVAILLES -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
-                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
-                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
-              </svg>
-            </div>
-            <span class="section-label-text">Nos trouvailles</span>
-            <div class="section-line"></div>
+            <span class="section-label-text">Nos trouvailles</span><div class="section-line"></div>
           </div>
-          
           <div class="trouvailles-grid font-mono">
             {dest.trouvailles ? (
               dest.trouvailles.map((t) => (
@@ -363,203 +232,71 @@ if (dest.slug === 'albanie') {
                 </div>
               ))
             ) : (
-              <>
-                <div class="trouvaille-card">
-                  <div class="trouvaille-icon">🍽️</div>
-                  <div class="trouvaille-title font-serif font-bold">Le bistrot secret</div>
-                  <div class="trouvaille-text font-sans">Petit resto authentique face à la mer, sans carte. Rougail traditionnel à tomber.</div>
-                </div>
-                <div class="trouvaille-card">
-                  <div class="trouvaille-icon">🏄</div>
-                  <div class="trouvaille-title font-serif font-bold">Le lagon sauvage</div>
-                  <div class="trouvaille-text font-sans">Arriver très tôt le matin. L'eau est d'un calme irréel, idéale pour le snorkeling.</div>
-                </div>
-                <div class="trouvaille-card">
-                  <div class="trouvaille-icon">🏡</div>
-                  <div class="trouvaille-title font-serif font-bold">La guesthouse confit</div>
-                  <div class="trouvaille-text font-sans">Une demeure en pierres de taille offrant un accueil sincère et des petits déjeuners maison.</div>
-                </div>
-              </>
+              <div class="trouvaille-card">
+                <div class="trouvaille-icon">🍽️</div>
+                <div class="trouvaille-title font-serif font-bold">Le bistrot secret</div>
+                <div class="trouvaille-text font-sans">Petit resto authentique face à la mer.</div>
+              </div>
             )}
           </div>
         </div>
 
-        <!-- NOS PARTENAIRES (STRATÉGIE HYBRIDE UNIFIÉE ET DYNAMIQUE) -->
+        <!-- PARTENAIRES DYNAMIQUES -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
-                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
-                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
-              </svg>
-            </div>
-            <span class="section-label-text">Préparer votre voyage</span>
-            <div class="section-line"></div>
+            <span class="section-label-text">Préparer votre voyage</span><div class="section-line"></div>
           </div>
-
-          <!-- 1. HÉBERGEMENT (CIBLÉ DYNAMIQUE) -->
-          <div class="partner-block">
-            <div class="partner-icon">🏡</div>
-            <div style="flex:1">
-              <div class="partner-label">Où dormir</div>
-              <div class="partner-title font-serif">Trouver son hébergement à {titleMain}</div>
-              <div class="partner-text font-sans text-xs">
-                Notre sélection de guesthouses et d'hôtels de charme testés et validés par nos soins sur le terrain.
-                {promos.booking.active && (
-                  <span class="text-amber-800 font-bold block mt-1">🎁 Offre partenaire : {promos.booking.reduction} avec le code {promos.booking.code}.</span>
-                )}
+          {partners.filter(p => p.active).map((p) => {
+            const resolvedUrl = getPartnerUrl(p.id, p.default_url);
+            return (
+              <div class="partner-block">
+                <div class="partner-icon">{p.emoji}</div>
+                <div style="flex:1">
+                  <div class="partner-label">{p.category}</div>
+                  <div class="partner-title font-serif">{p.id === 'booking' || p.id === 'nomad' || p.id === 'vols' ? `${p.button_text} pour ${titleMain}` : p.title.split(' — ')[0]}</div>
+                  <div class="partner-text font-sans text-xs">
+                    {p.desc}
+                    {p.promo.active && (
+                      <span class="text-amber-800 font-bold block mt-1">
+                        🎁 Code avantage : {p.promo.code === 'LIEN DIRECT' ? 'Remise appliquée automatiquement.' : `Utilisez le code ${p.promo.code} (${p.promo.reduction}).`}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <a href={resolvedUrl} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">{p.button_text} →</a>
               </div>
-            </div>
-            <a href={bookingLink} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Voir notre sélection →</a>
-          </div>
-
-          <!-- 2. ESIM (CIBLÉ DYNAMIQUE) -->
-          <div class="partner-block">
-            <div class="partner-icon">📱</div>
-            <div style="flex:1">
-              <div class="partner-label">Rester connecté</div>
-              <div class="partner-title font-serif">Activer son eSIM pour {titleMain}</div>
-              <div class="partner-text font-sans text-xs">
-                Achetez vos données internet locales avant votre départ avec Nomad. 
-                {promos.nomad.active && (
-                  <span class="text-amber-800 font-bold block mt-1">🎁 Code avantage : Utilisez le code {promos.nomad.code} ({promos.nomad.reduction}).</span>
-                )}
-              </div>
-            </div>
-            <a href={esimLink} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Activer mon eSIM →</a>
-          </div>
-
-          <!-- 3. ASSURANCE (CIBLÉ DYNAMIQUE) -->
-          <div class="partner-block">
-            <div class="partner-icon">🏥</div>
-            <div style="flex:1">
-              <div class="partner-label">Santé & Sécurité</div>
-              <div class="partner-title font-serif">S'assurer pour ce voyage avec Chapka</div>
-              <div class="partner-text font-sans text-xs">
-                Partez l'esprit libre. Assistance médicale, rapatriement et annulation.
-                {promos.chapka.active && (
-                  <span class="text-amber-800 font-bold block mt-1">🎁 Offre partenaire : {promos.chapka.reduction} appliquée via notre lien.</span>
-                )}
-              </div>
-            </div>
-            <a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Profiter de l'offre Chapka →</a>
-          </div>
-
-          <!-- 4. TRANSPORTS (CIBLÉ DYNAMIQUE) -->
-          <div class="partner-block">
-            <div class="partner-icon">✈️</div>
-            <div style="flex:1">
-              <div class="partner-label">Comment y aller</div>
-              <div class="partner-title font-serif">Trouver un vol avantageux pour {titleMain}</div>
-              <div class="partner-text font-sans text-xs">
-                Comparez les tarifs et trouvez les meilleurs plans de vols réguliers ou directs depuis la Belgique.
-                {promos.vols.active && (
-                  <span class="text-amber-800 font-bold block mt-1">🎁 Offre partenaire : {promos.vols.reduction} avec le code {promos.vols.code}.</span>
-                )}
-              </div>
-            </div>
-            <a href="https://booking.com/flights" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Rechercher un vol →</a>
-          </div>
-
-          <!-- 5. VOITURE (CIBLÉ DYNAMIQUE) -->
-          <div class="partner-block">
-            <div class="partner-icon">🚗</div>
-            <div style="flex:1">
-              <div class="partner-label">Se déplacer</div>
-              <div class="partner-title font-serif">Louer un véhicule pour votre itinéraire</div>
-              <div class="partner-text font-sans text-xs">
-                Le moyen idéal pour explorer l'arrière-pays et suivre notre itinéraire étape par étape à votre rythme.
-                {promos.voiture.active && (
-                  <span class="text-amber-800 font-bold block mt-1">🎁 Offre partenaire : {promos.voiture.reduction} avec le code {promos.voiture.code}.</span>
-                )}
-              </div>
-            </div>
-            <a href="https://booking.com/carrental" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Louer un véhicule →</a>
-          </div>
-
-          <!-- PONT VERS LE ONEPAGER GÉNÉRAL -->
+            );
+          })}
           <div class="text-left mt-6 font-mono text-[9px] tracking-wider uppercase text-neutral-500 select-none">
-            * Retrouvez notre charte éthique complète et tous nos codes avantages sur notre page <a href="/bons-plans" class="text-amber-700 hover:text-neutral-900 underline font-bold">Bons Plans Voyageurs →</a>
+            * Retrouvez notre charte complète sur notre page <a href="/bons-plans" class="text-amber-700 hover:text-neutral-900 underline font-bold">Bons Plans Voyageurs →</a>
           </div>
         </div>
 
         <!-- INFOS PRATIQUES -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
-                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
-                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
-              </svg>
-            </div>
-            <span class="section-label-text">Infos pratiques</span>
-            <div class="section-line"></div>
+            <span class="section-label-text">Infos pratiques</span><div class="section-line"></div>
           </div>
           <div class="pratique-grid font-sans text-left">
-            <div class="pratique-item">
-              <div class="pratique-icon">🛂</div>
-              <div>
-                <div class="pratique-label">Documents nécessaires</div>
-                <div class="pratique-text">{docPratique}</div>
-              </div>
-            </div>
-            <div class="pratique-item">
-              <div class="pratique-icon">✈️</div>
-              <div>
-                <div class="pratique-label">Temps de vol depuis la Belgique</div>
-                <div class="pratique-text">{volPratique}</div>
-              </div>
-            </div>
-            <div class="pratique-item">
-              <div class="pratique-icon">🚗</div>
-              <div>
-                <div class="pratique-label">Se déplacer</div>
-                <div class="pratique-text">{deplacerPratique}</div>
-              </div>
-            </div>
-            <div class="pratique-item">
-              <div class="pratique-icon">💶</div>
-              <div>
-                <div class="pratique-label">Monnaie locale</div>
-                <div class="pratique-text">{monnaiePratique}</div>
-              </div>
-            </div>
+            <div class="pratique-item"><div class="pratique-icon">🛂</div><div><div class="pratique-label">Documents</div><div class="pratique-text">{docPratique}</div></div></div>
+            <div class="pratique-item"><div class="pratique-icon">✈️</div><div><div class="pratique-label">Vol depuis la Belgique</div><div class="pratique-text">{volPratique}</div></div></div>
+            <div class="pratique-item"><div class="pratique-icon">🚗</div><div><div class="pratique-label">Se déplacer</div><div class="pratique-text">{deplacerPratique}</div></div></div>
+            <div class="pratique-item"><div class="pratique-icon">💶</div><div><div class="pratique-label">Monnaie</div><div class="pratique-text">{monnaiePratique}</div></div></div>
           </div>
         </div>
 
-        <!-- BLOC D'AVIS INTERACTIF ET LIGNE VERS INSTAGRAM -->
+        <!-- RATING INTERACTIF -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
-                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
-                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
-              </svg>
-            </div>
-            <span class="section-label-text">Votre avis compte</span>
-            <div class="section-line"></div>
+            <span class="section-label-text">Votre avis compte</span><div class="section-line"></div>
           </div>
-
           <div class="rating-box-container select-none" data-base-note={dest.note} data-base-count={dest.nb_avis} data-slug={dest.slug}>
             <div class="rating-box bg-white border border-[#E0D9D0] rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xs">
               <div class="space-y-3 text-center md:text-left max-w-xl">
                 <h3 class="text-base sm:text-lg font-serif font-bold text-neutral-900">Ce guide vous a été utile ?</h3>
-                <p class="text-neutral-500 font-sans text-[11px] sm:text-xs leading-relaxed">
-                  Nous écrivons ces carnets de route de manière indépendante. Laissez-nous une note pour soutenir notre travail, ou venez nous rejoindre pour échanger directement avec nous sur notre compte Instagram !
-                </p>
+                <p class="text-neutral-500 font-sans text-xs">Soutenez notre travail indépendant en nous laissant une note ou en nous rejoignant sur Instagram !</p>
               </div>
-              
               <div class="flex flex-col items-center gap-4 shrink-0 min-w-[240px] w-full md:w-auto">
-                <!-- Étoiles de notation interactive -->
                 <div id="interactive-rating-stars" class="flex items-center gap-2 text-3xl text-neutral-200 cursor-pointer">
                   <span data-star="1" class="interactive-star hover:scale-115 transition-transform duration-150">★</span>
                   <span data-star="2" class="interactive-star hover:scale-115 transition-transform duration-150">★</span>
@@ -567,15 +304,8 @@ if (dest.slug === 'albanie') {
                   <span data-star="4" class="interactive-star hover:scale-115 transition-transform duration-150">★</span>
                   <span data-star="5" class="interactive-star hover:scale-115 transition-transform duration-150">★</span>
                 </div>
-                
-                <div id="rating-feedback-msg" class="text-[9px] font-mono uppercase tracking-widest text-neutral-400 h-4">
-                  Cliquez pour noter ce guide
-                </div>
-
-                <!-- Bouton vers le compte Instagram -->
-                <a href="https://instagram.com/the_odyssey_travel_journal" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none w-full py-2.5">
-                  Suivre notre aventure sur Instagram 📸
-                </a>
+                <div id="rating-feedback-msg" class="text-[9px] font-mono uppercase tracking-widest text-neutral-400 h-4">Cliquez pour noter ce guide</div>
+                <a href="https://instagram.com/the_odyssey_travel_journal" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none w-full py-2.5">Suivre notre aventure ❤️</a>
               </div>
             </div>
           </div>
@@ -584,17 +314,7 @@ if (dest.slug === 'albanie') {
         <!-- SIMILAIRES -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
-                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
-                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
-              </svg>
-            </div>
-            <span class="section-label-text">Ces destinations pourraient vous plaire</span>
-            <div class="section-line"></div>
+            <span class="section-label-text">Ces destinations pourraient vous plaire</span><div class="section-line"></div>
           </div>
           <div class="similaires-grid select-none">
             {similarDestinations.map((sim) => (
@@ -609,286 +329,84 @@ if (dest.slug === 'albanie') {
               </a>
             ))}
           </div>
-          
           <div class="text-left mt-6">
-            <a href="/#destinations" id="see-all-routes-btn" class="partner-cta inline-block select-none font-sans">
-              Voir tous les guides de voyages →
-            </a>
+            <a href="/#destinations" id="see-all-routes-btn" class="partner-cta inline-block select-none font-sans">Voir tous les guides →</a>
           </div>
         </div>
 
       </div>
-
     </div>
   </div>
 
-  <!-- BOUTON RETOUR EN PIED DE PAGE -->
   <div class="w-full bg-[#FAF9F6] py-16 border-t border-[#E0D9D0] relative z-20">
     <div class="max-w-[1600px] mx-auto px-8 sm:px-12 text-center">
-      <a href="/#destinations" class="inline-block text-[10px] font-mono uppercase tracking-[0.25em] bg-neutral-900 text-white font-bold px-8 py-4 rounded-xl hover:bg-amber-600 hover:scale-102 transition-all duration-300 shadow-xs">
-        ← Retourner au Tableau d'Exploration
-      </a>
+      <a href="/#destinations" class="inline-block text-[10px] font-mono uppercase tracking-[0.25em] bg-neutral-900 text-white font-bold px-8 py-4 rounded-xl hover:bg-amber-600 hover:scale-102 transition-all duration-300 shadow-xs">← Retourner au Tableau d'Exploration</a>
     </div>
   </div>
 </Layout>
 
-<!-- FEUILLE DE STYLE LOCALE STRICTE MAQUETTE -->
 <style>
-  .dest-page-wrapper {
-    background-color: #F5F2ED;
-    color: #2a2520;
-    font-family: 'Playfair Display', Georgia, serif;
-  }
-
-  /* Hauteur de 560px */
-  .hero {
-    position: relative;
-    height: 560px; 
-    overflow: hidden;
-  }
-  
-  /* Filtre d'arrière-plan progressif */
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.4) 0%,
-      rgba(0, 0, 0, 0.25) 45%,
-      rgba(0, 0, 0, 0.5) 100%
-    );
-    z-index: 10;
-  }
-  
-  /* Style unifié et corrigé du bouton retour (Identique à celui du Onepager Bons Plans) */
+  .dest-page-wrapper { background-color: #F5F2ED; color: #2a2520; font-family: 'Playfair Display', Georgia, serif; }
+  .hero { position: relative; height: 560px; overflow: hidden; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.5) 100%); z-index: 10; }
   .hero-back {
-    position: absolute; 
-    top: 105px; 
-    left: 32px;
-    display: inline-flex; 
-    align-items: center; 
-    gap: 8px;
-    color: #ffffff; /* Blanc pur de base */
-    font-family: 'Inter', sans-serif; 
-    font-size: 10px; 
-    letter-spacing: 0.15em; 
-    text-transform: uppercase; 
-    font-weight: 600;
-    background: rgba(255, 255, 255, 0.12); /* Fond lumineux */
-    padding: 8px 18px; 
-    border-radius: 30px;
-    backdrop-filter: blur(8px); 
-    border: 1px solid rgba(255, 255, 255, 0.35); /* Contour net */
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
+    position: absolute; top: 105px; left: 32px; display: inline-flex; align-items: center; gap: 8px; color: #ffffff;
+    font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600;
+    background: rgba(255, 255, 255, 0.12); padding: 8px 18px; border-radius: 30px; backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.35); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); cursor: pointer;
   }
-  
-  .hero-back:hover { 
-    background: #C8813A; /* Ambre marque */
-    color: #ffffff; 
-    border-color: #C8813A;
-    transform: translateX(-4px); /* Léger décalage horizontal vers la gauche */
-    box-shadow: 0 4px 18px rgba(200, 129, 58, 0.35); /* Halo lumineux */
-  }
-  
-  /* Style de base pour le cœur favori */
-  .hero-fav {
-    position: absolute; 
-    top: 105px; 
-    right: 32px;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(4px);
-    transition: all 0.3s ease;
-  }
-  .hero-fav:hover { 
-    transform: scale(1.1); 
-    background: rgba(255, 255, 255, 0.3);
-  }
-  .hero-fav svg { 
-    width: 18px; 
-    height: 18px; 
-    fill: none; 
-    stroke: rgba(255, 255, 255, 0.9); 
-    stroke-width: 1.8; 
-    transition: all 0.3s ease; 
-  }
-  
-  /* Style actif du cœur favori */
-  .hero-fav.is-active svg {
-    fill: #e2b173 !important; 
-    stroke: #ffffff !important; 
-    stroke-width: 2.2px;
-  }
-  
-  .hero-content {
-    position: absolute; 
-    inset: 0;
-    display: flex; 
-    flex-direction: column;
-    align-items: center; 
-    justify-content: center;
-    text-align: center; 
-    padding: 100px 40px 20px 40px; 
-  }
-  
-  .hero-geo {
-    font-family: 'Inter', sans-serif; 
-    font-size: 10px; 
-    letter-spacing: 0.5em; 
-    color: rgba(255, 255, 255, 0.85); 
-    text-transform: uppercase; 
-    margin-bottom: 16px;
-    font-weight: 500;
-    display: block;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-  }
-  .geo-parent {
-    color: rgba(255, 255, 255, 0.7);
-  }
-  .geo-sep {
-    color: rgba(255, 255, 255, 0.3);
-  }
-  .geo-country {
-    color: #e2b173; 
-    font-weight: 600;
-  }
-  
-  .hero-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 64px; color: #fff; line-height: 1.15; margin-bottom: 12px;
-    font-weight: 300; 
-    letter-spacing: -0.025em; 
-    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.6), 0 1px 4px rgba(0, 0, 0, 0.4);
-    max-width: 900px;
-  }
-  .hero-title-accent {
-    color: #e2b173; 
-    font-style: italic;
-    font-weight: 400;
-  }
-
-  .hero-subtitle {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 24px;
-    color: rgba(255, 255, 255, 0.95); 
-    font-style: italic; 
-    font-weight: 400; 
-    line-height: 1.35;
-    margin-bottom: 24px;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.4);
-    max-width: 800px;
-  }
-
+  .hero-back:hover { background: #C8813A; color: #ffffff; border-color: #C8813A; transform: translateX(-4px); box-shadow: 0 4px 18px rgba(200, 129, 58, 0.35); }
+  .hero-fav { position: absolute; top: 105px; right: 32px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(4px); transition: all 0.3s ease; }
+  .hero-fav:hover { transform: scale(1.1); background: rgba(255,255,255,0.3); }
+  .hero-fav svg { width: 18px; height: 18px; fill: none; stroke: rgba(255,255,255,0.9); stroke-width: 1.8; transition: all 0.3s ease; }
+  .hero-fav.is-active svg { fill: #e2b173 !important; stroke: #ffffff !important; stroke-width: 2.2px; }
+  .hero-content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 40px 20px 40px; }
+  .hero-geo { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.5em; color: rgba(255, 255, 255, 0.85); text-transform: uppercase; margin-bottom: 16px; font-weight: 500; display: block; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); }
+  .geo-parent { color: rgba(255, 255, 255, 0.7); }
+  .geo-sep { color: rgba(255, 255, 255, 0.3); }
+  .geo-country { color: #e2b173; font-weight: 600; }
+  .hero-title { font-family: 'Playfair Display', Georgia, serif; font-size: 64px; color: #fff; line-height: 1.15; margin-bottom: 12px; font-weight: 300; text-shadow: 0 3px 18px rgba(0, 0, 0, 0.6), 0 1px 4px rgba(0, 0, 0, 0.4); max-width: 900px; }
+  .hero-title-accent { color: #e2b173; font-style: italic; font-weight: 400; }
+  .hero-subtitle { font-family: 'Playfair Display', Georgia, serif; font-size: 24px; color: rgba(255, 255, 255, 0.95); font-style: italic; font-weight: 400; line-height: 1.35; margin-bottom: 24px; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.4); max-width: 800px; }
   .hero-tags { display: flex; gap: 8px; justify-content: center; }
-  .hero-tag {
-    font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 1px;
-    padding: 4px 12px; border-radius: 12px;
-    background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.9);
-    text-transform: uppercase; backdrop-filter: blur(4px);
-    border: 1px solid rgba(255,255,255,0.2);
-  }
-
-  .author-stats {
-    background: #fff; border-bottom: 1px solid #E0D9D0;
-    padding: 16px 40px; display: flex; align-items: center;
-    justify-content: space-between; gap: 20px; flex-wrap: wrap;
-  }
+  .hero-tag { font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 1px; padding: 4px 12px; border-radius: 12px; background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.9); text-transform: uppercase; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.2); }
+  .author-stats { background: #fff; border-bottom: 1px solid #E0D9D0; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
   .author-part { display: flex; align-items: center; gap: 10px; }
-  .author-avatar {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: linear-gradient(135deg, #C8813A, #8a5a2a);
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 14px; flex-shrink: 0;
-  }
+  .author-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #C8813A, #8a5a2a); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0; }
   .author-name { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 1px; color: #2C3E50; text-transform: uppercase; font-weight: 600; }
-  
   .rating-inline { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
   .stars { color: #C8813A; font-size: 11px; letter-spacing: 1px; }
   .rating-count { font-family: 'Inter', sans-serif; font-size: 9px; color: #9a9088; }
-
   .stats-right { display: flex; align-items: center; flex-wrap: wrap; }
   .sep-v { width: 1px; height: 32px; background: #E0D9D0; margin: 0 18px; flex-shrink: 0; }
   .stat-inline { display: flex; flex-direction: column; align-items: center; padding: 0 12px; }
   .stat-inline-val { font-size: 13px; color: #2C3E50; font-weight: 700; }
   .stat-inline-lbl { font-family: 'Inter', sans-serif; font-size: 7.5px; letter-spacing: 1px; color: #b0a898; text-transform: uppercase; margin-top: 2px; }
-
   .page { display: flex; position: relative; padding: 40px 0; }
-
   .trail-right { position: absolute; right: 8px; top: 0; bottom: 0; width: 44px; pointer-events: none; z-index: 10; }
   .trail-sticky { position: sticky; top: 120px; } 
-
   .content { flex: 1; padding: 28px 64px 0 40px; }
-  @media (max-width: 1024px) {
-    .content { padding: 28px 32px 0 32px; }
-  }
-
-  .section-header {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 14px; cursor: default;
-  }
-  .compass {
-    width: 22px; height: 22px; flex-shrink: 0;
-    transition: transform 0.6s ease;
-  }
-  .section-header:hover .compass { transform: rotate(180deg); }
-  .section-label-text {
-    font-family: 'Inter', sans-serif; font-size: 9.5px; letter-spacing: 2.5px;
-    color: #C8813A; text-transform: uppercase; font-weight: 600;
-    position: relative; padding-bottom: 2px;
-  }
-  .section-label-text::after {
-    content: ''; position: absolute; bottom: 0; left: 0;
-    width: 0; height: 1.5px; background: #C8813A;
-    transition: width 0.3s ease;
-  }
+  @media (max-width: 1024px) { .content { padding: 28px 32px 0 32px; } .author-stats { flex-direction: column; align-items: flex-start; gap: 16px; padding: 20px; } .stats-right { width: 100%; justify-content: space-between; } }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; cursor: default; }
+  .section-label-text { font-family: 'Inter', sans-serif; font-size: 9.5px; letter-spacing: 2.5px; color: #C8813A; text-transform: uppercase; font-weight: 600; position: relative; padding-bottom: 2px; }
+  .section-label-text::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px; background: #C8813A; transition: width 0.3s ease; }
   .section-header:hover .section-label-text::after { width: 100%; }
   .section-line { flex: 1; height: 1px; background: #E0D9D0; }
-  
   .section { margin-bottom: 28px; }
   .section-title { font-size: 19px; color: #2a2520; margin-bottom: 8px; font-weight: normal; line-height: 1.3; }
   .section-text { font-family: 'Inter', sans-serif; font-size: 11px; color: #5a5248; line-height: 1.8; }
-
   .etape { margin-bottom: 22px; }
   .etape-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
-  .etape-num {
-    width: 26px; height: 26px; border-radius: 50%; background: #2C3E50;
-    color: #fff; font-family: 'Inter', sans-serif; font-size: 10px;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
-  }
+  .etape-num { width: 26px; height: 26px; border-radius: 50%; background: #2C3E50; color: #fff; font-family: 'Inter', sans-serif; font-size: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
   .etape-title { font-size: 14px; color: #2a2520; margin-bottom: 4px; }
   .etape-text { font-family: 'Inter', sans-serif; font-size: 10.5px; color: #5a5248; line-height: 1.7; }
-  
-  .etape-media {
-    display: grid; gap: 14px; margin-top: 12px; margin-left: 38px;
-  }
-  .etape-media.media-left { grid-template-columns: 320px 1fr; }
-  .etape-media.media-right { grid-template-columns: 1fr 320px; }
-  .etape-media.media-none { display: none; }
-  
-  .media-img { border-radius: 10px; overflow: hidden; border: 1px solid #E0D9D0; }
-  .media-img-ph { height: 180px; border-radius: 10px; }
-  .ph-1 { background: linear-gradient(135deg, #4a7c59, #1a3d2a); }
-  .ph-2 { background: linear-gradient(135deg, #7a5a3a, #3a2a1a); }
-  .media-caption { font-family: 'Inter', sans-serif; font-size: 9px; color: #9a9088; margin-top: 5px; font-style: italic; text-align: center; }
-  .etape-text-block { display: flex; flex-direction: column; justify-content: center; }
-
   .trouvailles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .trouvaille-card { background: #fff; border: 1px solid #E0D9D0; border-radius: 12px; padding: 14px; transition: box-shadow 0.2s; }
   .trouvaille-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
   .trouvaille-icon { font-size: 20px; margin-bottom: 7px; }
   .trouvaille-title { font-size: 12px; color: #2a2520; margin-bottom: 4px; }
-  .trouvaille-text { font-family: 'Inter', sans-serif; font-size: 9.5px; color: #7a7060; line-height: 1.6; }
-
+  .trouvaille-text { font-family: 'Inter', sans-serif; font-size: 9.5px; color: #7a7060; line-height: 1.5; }
   .partner-block { background: #fff; border: 1px solid #E0D9D0; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 10px; transition: box-shadow 0.2s; }
   .partner-block:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
   .partner-icon { font-size: 26px; flex-shrink: 0; }
@@ -897,13 +415,11 @@ if (dest.slug === 'albanie') {
   .partner-text { font-family: 'Inter', sans-serif; font-size: 9.5px; color: #7a7060; line-height: 1.5; }
   .partner-cta { background: #C8813A; color: #fff; font-family: 'Inter', sans-serif; font-size: 8.5px; letter-spacing: 1.5px; text-transform: uppercase; border: none; border-radius: 20px; padding: 8px 14px; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.2s; text-decoration: none; }
   .partner-cta:hover { background: #2C3E50; }
-
   .pratique-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .pratique-item { background: #fff; border: 1px solid #E0D9D0; border-radius: 10px; padding: 12px; display: flex; gap: 8px; }
   .pratique-icon { font-size: 15px; flex-shrink: 0; }
   .pratique-label { font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 1px; color: #C8813A; text-transform: uppercase; margin-bottom: 2px; }
   .pratique-text { font-family: 'Inter', sans-serif; font-size: 10px; color: #5a5248; line-height: 1.5; }
-
   .similaires-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .sim-card { background: #fff; border: 1px solid #E0D9D0; border-radius: 10px; overflow: hidden; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; }
   .sim-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
@@ -911,36 +427,7 @@ if (dest.slug === 'albanie') {
   .sim-body { padding: 10px; }
   .sim-region { font-family: 'Inter', sans-serif; font-size: 7.5px; letter-spacing: 1px; color: #C8813A; text-transform: uppercase; margin-bottom: 3px; }
   .sim-title { font-family: 'Playfair Display', Georgia, serif; font-size: 11px; color: #2a2520; }
-
-  @media (max-width: 1024px) {
-    .author-stats {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 20px;
-    }
-    .stats-right {
-      width: 100%;
-      justify-content: space-between;
-    }
-  }
-  @media (max-width: 640px) {
-    .hero-title {
-      font-size: 44px;
-    }
-    .hero-subtitle {
-      font-size: 18px;
-    }
-    .stats-right {
-      gap: 10px;
-    }
-    .sep-v {
-      display: none;
-    }
-    .stat-inline {
-      padding: 0 6px;
-    }
-  }
+  @media (max-width: 640px) { .hero-title { font-size: 44px; } .hero-subtitle { font-size: 18px; } .stats-right { gap: 10px; } .sep-v { display: none; } .stat-inline { padding: 0 6px; } }
 </style>
 
 <script>
@@ -951,55 +438,40 @@ if (dest.slug === 'albanie') {
     const destFavBtn = document.getElementById('dest-fav-btn') as HTMLButtonElement | null;
     const backBtn = document.getElementById('back-to-home-btn') as HTMLAnchorElement | null;
 
-    // 1. ANIMATION DU VAN SVG AU SCROLL
     if (pageEl && van && path) {
       const pathLength = path.getTotalLength();
-      
       const animateVan = () => {
-        const scrollY = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        
-        let scrollPercent = scrollY / (docHeight || 1);
-        scrollPercent = Math.min(Math.max(scrollPercent, 0), 1);
-        
+        const scrollPercent = Math.min(Math.max(window.scrollY / ((document.documentElement.scrollHeight - window.innerHeight) || 1), 0), 1);
         const point = path.getPointAtLength(scrollPercent * pathLength);
-        
-        // Centre l'icône du van sur la courbe de Bézier
         van.setAttribute('transform', `translate(${point.x - 17}, ${point.y - 15})`);
       };
-
       window.addEventListener('scroll', animateVan, { passive: true });
       animateVan();
     }
 
-    // 2. RETOUR CONTEXTUALISÉ ET RESTAURATION DE SESSION
     if (backBtn) {
       backBtn.addEventListener('click', (e) => {
         e.preventDefault();
         try {
-          sessionStorage.removeItem('odyssey_home_scroll'); // On efface la mémoire de défilement pour forcer l'ancre #destinations
+          sessionStorage.removeItem('odyssey_home_scroll');
           sessionStorage.removeItem('odyssey_home_filter'); 
         } catch (err) {}
         window.location.href = '/#destinations';
       });
     }
 
-    // 3. SYNCHRONISATION DU BOUTON FAVORIS LOCAL DE LA CARD
     if (destFavBtn) {
       const cardId = destFavBtn.getAttribute('data-id');
-
       const getFavorites = (): string[] => {
         try {
           const stored = localStorage.getItem('the_odyssey_favorites');
           return stored ? JSON.parse(stored) : [];
         } catch (e) { return []; }
       };
-
       const isFavorite = (id: string) => getFavorites().includes(id);
 
       const updateFavButtonUI = () => {
         if (!cardId) return;
-        
         const favs = getFavorites();
         const svg = destFavBtn.querySelector('svg');
         if (svg) {
@@ -1011,8 +483,6 @@ if (dest.slug === 'albanie') {
             svg.setAttribute('stroke-width', '1.8');
           }
         }
-
-        // Appel de la synchronisation globale exposée sur window par Layout.astro
         if (typeof (window as any).syncGlobalMenuFavorites === 'function') {
           (window as any).syncGlobalMenuFavorites();
         }
@@ -1029,11 +499,9 @@ if (dest.slug === 'albanie') {
         localStorage.setItem('the_odyssey_favorites', JSON.stringify(favs));
         updateFavButtonUI();
       });
-
       updateFavButtonUI();
     }
 
-    // 4. SYSTÈME INTERACTIF D'AVIS ET DE NOTATION RÉACTIF (LOCAL STORAGE)
     const ratingContainer = document.querySelector('.rating-box-container') as HTMLElement | null;
     if (ratingContainer) {
       const slug = ratingContainer.getAttribute('data-slug') || '';
@@ -1043,38 +511,27 @@ if (dest.slug === 'albanie') {
       const feedbackMsg = document.getElementById('rating-feedback-msg');
       const headerStarsEl = document.querySelector('.author-stats .stars');
       const headerCountEl = document.querySelector('.author-stats .rating-count');
-
       const stars = starsContainer ? starsContainer.querySelectorAll('.interactive-star') : [];
 
       const getVote = () => {
-        try {
-          return localStorage.getItem(`vote_${slug}`);
-        } catch(e) { return null; }
+        try { return localStorage.getItem(`vote_${slug}`); } catch(e) { return null; }
       };
-
       const setVote = (val: number) => {
-        try {
-          localStorage.setItem(`vote_${slug}`, val.toString());
-        } catch(e) {}
+        try { localStorage.setItem(`vote_${slug}`, val.toString()); } catch(e) {}
       };
 
       const updateHeaderRating = (votedVal: number) => {
         if (!headerStarsEl || !headerCountEl) return;
         const newCount = baseCount + 1;
         const newNote = ((baseNote * baseCount) + votedVal) / newCount;
-        
         const roundedNote = Math.round(newNote);
-        const newStars = "★".repeat(roundedNote) + "☆".repeat(5 - Math.round(newNote));
-        
-        headerStarsEl.textContent = newStars;
+        headerStarsEl.textContent = "★".repeat(roundedNote) + "☆".repeat(5 - roundedNote);
         headerCountEl.textContent = `${newNote.toFixed(1)} · ${newCount} avis`;
 
         const authorStatsBar = document.querySelector('.author-stats');
         if (authorStatsBar) {
           authorStatsBar.classList.add('scale-[1.01]', 'border-amber-500', 'transition-all', 'duration-300');
-          setTimeout(() => {
-            authorStatsBar.classList.remove('scale-[1.01]', 'border-amber-500');
-          }, 600);
+          setTimeout(() => authorStatsBar.classList.remove('scale-[1.01]', 'border-amber-500'), 600);
         }
       };
 
@@ -1091,49 +548,42 @@ if (dest.slug === 'albanie') {
         });
       };
 
-      const initRatingSystem = () => {
-        stars.forEach((star, idx) => {
-          const starEl = star as HTMLElement;
-          
-          starEl.addEventListener('mouseenter', () => {
-            highlightStars(idx + 1, '#e2b173', '#e5e5e5');
-            if (feedbackMsg) feedbackMsg.textContent = `Donner ${idx + 1} étoile${idx > 0 ? 's' : ''}`;
-          });
-
-          starEl.addEventListener('mouseleave', () => {
-            const currentVote = getVote();
-            if (currentVote) {
-              const voteVal = parseInt(currentVote);
-              highlightStars(voteVal, '#e2b173', '#e5e5e5');
-              if (feedbackMsg) feedbackMsg.textContent = `Votre note enregistrée (${voteVal}/5) - Cliquez pour modifier`;
-            } else {
-              highlightStars(0);
-              if (feedbackMsg) feedbackMsg.textContent = 'Cliquez pour noter ce guide';
-            }
-          });
-
-          starEl.addEventListener('click', () => {
-            const voteVal = idx + 1;
-            setVote(voteVal);
-            highlightStars(voteVal, '#e2b173', '#e5e5e5');
-            if (feedbackMsg) feedbackMsg.textContent = `Merci ! Note enregistrée (${voteVal}/5) - Cliquez pour modifier`;
-            updateHeaderRating(voteVal);
-          });
+      stars.forEach((star, idx) => {
+        const starEl = star as HTMLElement;
+        starEl.addEventListener('mouseenter', () => {
+          highlightStars(idx + 1, '#e2b173', '#e5e5e5');
+          if (feedbackMsg) feedbackMsg.textContent = `Donner ${idx + 1} étoile${idx > 0 ? 's' : ''}`;
         });
 
-        const existingVote = getVote();
-        if (existingVote) {
-          const voteVal = parseInt(existingVote);
-          highlightStars(voteVal, '#e2b173', '#e5e5e5');
-          if (feedbackMsg) feedbackMsg.textContent = `Votre note enregistrée (${voteVal}/5) - Cliquez pour modifier`;
-          updateHeaderRating(voteVal);
-        }
-      };
+        starEl.addEventListener('mouseleave', () => {
+          const currentVote = getVote();
+          if (currentVote) {
+            const voteVal = parseInt(currentVote);
+            highlightStars(voteVal, '#e2b173', '#e5e5e5');
+            if (feedbackMsg) feedbackMsg.textContent = `Note enregistrée (${voteVal}/5)`;
+          } else {
+            highlightStars(0);
+            if (feedbackMsg) feedbackMsg.textContent = 'Cliquez pour noter ce guide';
+          }
+        });
 
-      initRatingSystem();
+        starEl.addEventListener('click', () => {
+          const voteVal = idx + 1;
+          setVote(voteVal);
+          highlightStars(voteVal, '#e2b173', '#e5e5e5');
+          if (feedbackMsg) feedbackMsg.textContent = `Note enregistrée (${voteVal}/5)`;
+          updateHeaderRating(voteVal);
+        });
+      });
+
+      const existingVote = getVote();
+      if (existingVote) {
+        const voteVal = parseInt(existingVote);
+        highlightStars(voteVal, '#e2b173', '#e5e5e5');
+        updateHeaderRating(voteVal);
+      }
     }
 
-    // 5. GESTION DU RETOUR DU BOUTON SOUS LES SIMILAIRES
     const seeAllBtn = document.getElementById('see-all-routes-btn');
     if (seeAllBtn) {
       seeAllBtn.addEventListener('click', () => {
@@ -1145,3 +595,4 @@ if (dest.slug === 'albanie') {
     }
   });
 </script>
+</Layout>

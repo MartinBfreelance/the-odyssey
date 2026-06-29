@@ -1,0 +1,115 @@
+[
+  {
+    "id": "booking",
+    "active": true,
+    "emoji": "🏡",
+    "category": "Hébergements",
+    "homepageText": "De la case créole typique au gîte de montagne authentique — trouvez votre logement idéal sélectionné sur le terrain avec Booking.",
+    "title": "Booking — Notre boussole pour loger chez l'habitant",
+    "desc": "Qu'il s'agisse d'une guesthouse de pierre rustique dans les montagnes albanaises ou d'une petite auberge confidentielle dans les hauteurs corses, l'immense majorité de nos nuits est dénichée via Booking.",
+    "tips_title": "💡 Nos astuces de réservation :",
+    "tips": [
+      "Filtrez toujours par une note minimale de 8.5 pour éviter les déconvenues.",
+      "Lisez principalement les avis récents de voyageurs solos ou en couple pour comprendre l'atmosphère exacte du lieu."
+    ],
+    "button_text": "Rechercher sur Booking",
+    "default_url": "https://booking.com",
+    "promo": {
+      "active": false,
+      "code": "ODYSSEY10",
+      "reduction": "Tarif privilège"
+    },
+    "image": "/images/drone/drone-albania-5.JPG",
+    "quote": "Des adresses vécues et validées"
+  },
+  {
+    "id": "nomad",
+    "active": true,
+    "emoji": "📶",
+    "category": "eSIM & Connexion",
+    "homepageText": "Activez vos données à l'étranger instantanément avec Nomad. Idéal pour rester connecté sans frais d'itinérance et gérer son forfait directement depuis l'application.",
+    "title": "Nomad eSIM — Restez connectés partout sans frais d'itinérance",
+    "desc": "Changer de carte SIM à chaque frontière fait partie du passé. Avec Nomad, vous achetez un forfait de données virtuelles (eSIM) directement depuis chez vous en Belgique. Une fois arrivés dans votre pays de destination, la connexion s'active d'un simple clic.",
+    "tips_title": "📱 Pourquoi nous avons choisi Nomad :",
+    "tips": [
+      "Facilité : Pas besoin de retirer votre carte SIM physique habituelle, vous conservez votre numéro WhatsApp.",
+      "Réseau : Ils s'associent aux meilleurs opérateurs locaux à des tarifs ultra-compétitifs."
+    ],
+    "button_text": "Activer mon eSIM Nomad",
+    "default_url": "https://www.nomadesim.com/",
+    "promo": {
+      "active": true,
+      "code": "MF15",
+      "reduction": "Tarif préférentiel"
+    },
+    "image": "/images/drone/drone-albania-1.JPG",
+    "quote": "Réseau stable et activation immédiate"
+  },
+  {
+    "id": "chapka",
+    "active": true,
+    "emoji": "🏥",
+    "category": "Assurance Voyage",
+    "homepageText": "Couverture médicale complète, rapatriement et annulation de vol pour explorer le globe en totale sérénité avec notre offre Chapka.",
+    "title": "Chapka — Partez l'esprit tranquille avec notre offre partenaire",
+    "desc": "La santé en voyage n'est pas un sujet à prendre à la légère. Que ce soit pour une entorse sur un sentier escarpé ou un rapatriement d'urgence, Chapka offre des contrats d'assurance complets, simples et sans jargon.",
+    "tips_title": "🎁 Votre Avantage Lecteur :",
+    "tips": [
+      "En passant par notre lien privilège d'affilié, la remise s'applique automatiquement sur votre contrat d'assurance Cap Assistance, sans avoir de code à saisir."
+    ],
+    "button_text": "S'assurer avec Chapka",
+    "default_url": "https://chapkadirect.fr",
+    "promo": {
+      "active": true,
+      "code": "LIEN DIRECT",
+      "reduction": "Avantage exclusif"
+    },
+    "image": "/images/drone/drone-albania-2.JPG",
+    "quote": "Une sécurité indispensable"
+  },
+  {
+    "id": "vols",
+    "active": true,
+    "emoji": "✈️",
+    "category": "Vols & Transports",
+    "homepageText": "Comparez et trouvez les meilleurs tarifs de vols directs ou avec escales depuis la Belgique pour rejoindre votre prochaine aventure.",
+    "title": "Transports — Atteindre vos points de départ au meilleur prix",
+    "desc": "La recherche de vols peut rapidement devenir fastidieuse. Nous utilisons et recommandons la plateforme Booking Flights pour centraliser les réservations, comparer les plans de vols et gérer les correspondances sans friction.",
+    "tips_title": "✈️ Conseil Éco-Responsable :",
+    "tips": [
+      "Pour vos voyages de moyenne distance, pensez également aux trains ou ferries depuis l'Europe occidentale. C'est l'essence même du slow travel."
+    ],
+    "button_text": "Trouver un vol",
+    "default_url": "https://booking.com/flights",
+    "promo": {
+      "active": false,
+      "code": "ODYSSEYVOLS",
+      "reduction": "Tarif préférentiel"
+    },
+    "image": "/images/drone/drone-albania-5.JPG",
+    "quote": "Planifier ses sauts de puce"
+  },
+  {
+    "id": "voiture",
+    "active": true,
+    "emoji": "🚗",
+    "category": "Location Voiture",
+    "homepageText": "Explorez vos itinéraires de voyage en toute indépendance et à votre propre rythme avec nos agences de location de confiance.",
+    "title": "Location de Voiture — Prendre le volant en toute sérénité",
+    "desc": "Certaines destinations de The Odyssey sont impossibles à vivre en profondeur sans un véhicule personnel. Les petites routes de montagne corses ou l'arrière-pays sauvage d'Albanie demandent de l'autonomie.",
+    "tips_title": "⚠️ Points de vigilance importants :",
+    "tips": [
+      "Prenez toujours des photos précises de la carrosserie sous tous les angles avant de démarrer.",
+      "Optez pour le rachat complet de franchise pour parer aux projections de cailloux fréquentes sur les pistes."
+    ],
+    "button_text": "Louer un véhicule",
+    "default_url": "https://booking.com/carrental",
+    "promo": {
+      "active": false,
+      "code": "ODYSSEYCAR",
+      "reduction": "Tarif préférentiel"
+    },
+    "image": "/images/drone/drone-albania-2.JPG",
+    "quote": "La liberté du tracé indépendant"
+  }
+]

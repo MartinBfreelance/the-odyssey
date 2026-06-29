@@ -6,13 +6,13 @@ interface Props {
 const { title } = Astro.props;
 import '../styles/global.css';
 import destinationsData from '../data/destinations.json';
+import partners from '../data/partners.json';
 
 // Lecture de l'URL courante pour adapter dynamiquement les ancres de navigation
 const pathname = Astro.url.pathname;
 const isHome = pathname === '/' || pathname === '/index.html' || pathname === '';
 const destinationsHref = isHome ? "#destinations" : "/#destinations";
 
-// Le lien Bons Plans pointe de manière permanente vers la page dédiée
 const bonsPlansHref = "/bons-plans";
 ---
 
@@ -36,7 +36,7 @@ const bonsPlansHref = "/bons-plans";
 		<header class="w-full fixed top-0 left-0 z-50 bg-neutral-950/10 backdrop-blur-md border-b border-white/10 transition-all duration-300">
 			<div class="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
 				
-				<!-- LOGO : BOUSSOLE ANIMÉE (POINTE EN HAUT) + TEXTE HIGHLIGHT -->
+				<!-- LOGO : BOUSSOLE ANIMÉE -->
 				<a href="/" class="flex items-center space-x-3 group select-none">
 					<div class="w-7 h-7 text-white group-hover:rotate-45 group-hover:text-amber-500 transition-all duration-500 ease-out shrink-0">
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
@@ -48,7 +48,6 @@ const bonsPlansHref = "/bons-plans";
 						</svg>
 					</div>
 
-					<!-- Surlignage et slogan -->
 					<div class="flex flex-col text-left leading-none relative">
 						<span class="relative font-serif text-sm sm:text-base font-medium tracking-[0.25em] text-white uppercase transition-colors duration-300 group-hover:text-amber-400">
 							THE ODYSSEY
@@ -60,18 +59,17 @@ const bonsPlansHref = "/bons-plans";
 					</div>
 				</a>
 
-				<!-- BLOC NAVIGATION DROITE AVEC MENUS DÉROULANTS CSS RÉACTIFS -->
+				<!-- NAVIGATION SUPÉRIEURE AUTOMATIQUE -->
 				<div class="flex items-center">
 					<nav class="hidden md:flex items-center space-x-10 text-[10px] font-mono uppercase tracking-[0.25em]">
 						
-						<!-- Menu Déroulant Destinations -->
+						<!-- Menu Destinations -->
 						<div class="relative group/dropdown py-2">
 							<a href={destinationsHref} class="relative py-2 text-white hover:text-amber-400 hover:scale-105 transition-all duration-300 group/link flex items-center gap-1.5 cursor-pointer">
 								Destinations
 								<span class="text-[7px] text-neutral-400 group-hover/dropdown:rotate-180 transition-transform duration-300">▼</span>
 								<span class="absolute bottom-1 left-0 w-0 h-[3px] bg-amber-500/30 transition-all duration-300 group-hover/link:w-full -z-10 rounded-xs"></span>
 							</a>
-							<!-- Boîte de sous-menu automatique -->
 							<div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-48 opacity-0 pointer-events-none group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto transition-all duration-300 z-50">
 								<div class="bg-neutral-950/95 backdrop-blur-md border border-white/10 rounded-xl py-2 px-1 shadow-xl">
 									{destinationsData.map((dest) => (
@@ -83,7 +81,7 @@ const bonsPlansHref = "/bons-plans";
 							</div>
 						</div>
 
-						<!-- Menu Déroulant Bons Plans Génériques (Sans marques visibles) -->
+						<!-- Menu Déroulant Bons Plans Génériques (100% Automatique via partners.json) -->
 						<div class="relative group/dropdown py-2">
 							<a href={bonsPlansHref} class="relative py-2 text-white hover:text-amber-400 hover:scale-105 transition-all duration-300 group/link flex items-center gap-1.5 cursor-pointer">
 								Bons Plans
@@ -92,31 +90,20 @@ const bonsPlansHref = "/bons-plans";
 							</a>
 							<div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-56 opacity-0 pointer-events-none group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto transition-all duration-300 z-50">
 								<div class="bg-neutral-950/95 backdrop-blur-md border border-white/10 rounded-xl py-2 px-1 shadow-xl">
-									<a href="/bons-plans#booking" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
-										🏢 Hébergements
-									</a>
-									<a href="/bons-plans#nomad" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
-										📶 eSIM & Connexion
-									</a>
-									<a href="/bons-plans#chapka" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
-										🏥 Assurance Voyage
-									</a>
-									<a href="/bons-plans#vols" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
-										✈️ Vols & Transports
-									</a>
-									<a href="/bons-plans#voiture" class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
-										🚗 Location Voiture
-									</a>
+									{partners.filter(p => p.active).map((p) => (
+										<a href={`/bons-plans#${p.id}`} class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
+											{p.emoji} {p.category}
+										</a>
+									))}
 								</div>
 							</div>
 						</div>
 						
-						<!-- Cœur de favoris épuré -->
+						<!-- Favoris -->
 						<button id="favorites-menu-btn" class="relative group/fav-menu p-1 transition-colors duration-300 cursor-pointer shrink-0" aria-label="Voir les favoris">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" class="w-5.5 h-5.5 text-white transition-all duration-300 group-hover/fav-menu:scale-110 fav-menu-svg">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
 							</svg>
-							<!-- Badge de notification discret décalé -->
 							<span id="favorites-dot" class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-amber-500 border border-neutral-900 scale-0 opacity-0 transition-all duration-300 ease-out"></span>
 						</button>
 					</nav>
@@ -129,11 +116,11 @@ const bonsPlansHref = "/bons-plans";
 			<slot />
 		</main>
 
-		<!-- PIED DE PAGE MAGAZINE (Harmonisé également) -->
+		<!-- PIED DE PAGE MAGAZINE (Automatique via partners.json) -->
 		<footer class="bg-neutral-950 text-neutral-400 py-16 px-6 sm:px-8 md:px-12 border-t border-neutral-900 font-mono text-[10px] tracking-widest relative z-20">
 			<div class="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 pb-16 border-b border-neutral-900">
 				
-				<!-- Colonne 1 : Signature éditoriale -->
+				<!-- Signature -->
 				<div class="md:col-span-5 space-y-6">
 					<div class="flex items-center space-x-3 group/footer-logo cursor-pointer">
 						<div class="w-8 h-8 text-neutral-500 group-hover/footer-logo:rotate-45 group-hover/footer-logo:text-amber-500 transition-all duration-500 ease-out shrink-0">
@@ -151,10 +138,9 @@ const bonsPlansHref = "/bons-plans";
 						</div>
 					</div>
 					<p class="text-neutral-500 font-light leading-relaxed max-w-sm tracking-normal text-[11px] font-sans">
-						Un espace dédié à l'exploration lente, à la photographie sincère et aux récits vécus pas à pas. Suivez nos aventures au long cours à travers le globe.
+						Un espace dédié à l'exploration lente, à la photographie sincère et aux récits vécus pas à pas.
 					</p>
 					
-					<!-- Liens Réseaux avec le VRAI logo Instagram vectoriel -->
 					<div class="flex items-center space-x-4 pt-2">
 						<a href="https://instagram.com/the_odyssey_travel_journal" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white transition-colors flex items-center space-x-2 group/footer-insta">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-neutral-400 group-hover/footer-insta:text-amber-500 transition-colors">
@@ -171,7 +157,7 @@ const bonsPlansHref = "/bons-plans";
 					</div>
 				</div>
 
-				<!-- Colonne 2 : Index des destinations par Continent -->
+				<!-- Index Continent -->
 				<div class="md:col-span-3 space-y-4">
 					<p class="text-white font-bold uppercase tracking-widest text-[11px]">Explorations</p>
 					<ul class="space-y-2.5 text-neutral-500 font-sans text-xs">
@@ -181,15 +167,17 @@ const bonsPlansHref = "/bons-plans";
 					</ul>
 				</div>
 
-				<!-- Colonne 3 : Liens partenaires ramenant vers notre Onepager éthique de façon générique -->
+				<!-- Liens partenaires génériques via partners.json -->
 				<div class="md:col-span-4 space-y-4">
 					<p class="text-white font-bold uppercase tracking-widest text-[11px]">Bons Plans Voyageurs</p>
 					<ul class="space-y-2.5 text-neutral-500 font-sans text-xs">
-						<li><a href="/bons-plans#booking" class="hover:text-amber-500 transition-colors">🏢 Hébergements & Hôtels</a></li>
-						<li><a href="/bons-plans#nomad" class="hover:text-amber-500 transition-colors">📶 eSIM & Connexion Internet</a></li>
-						<li><a href="/bons-plans#chapka" class="hover:text-amber-500 transition-colors">🏥 Assurance Voyage & Santé</a></li>
-						<li><a href="/bons-plans#vols" class="hover:text-amber-500 transition-colors">✈️ Vols & Transport Aérien</a></li>
-						<li><a href="/bons-plans#voiture" class="hover:text-amber-500 transition-colors">🚗 Location de Véhicule</a></li>
+						{partners.filter(p => p.active).map((p) => (
+							<li>
+								<a href={`/bons-plans#${p.id}`} class="hover:text-amber-500 transition-colors">
+									{p.emoji} {p.category}
+								</a>
+							</li>
+						))}
 					</ul>
 				</div>
 
@@ -207,19 +195,15 @@ const bonsPlansHref = "/bons-plans";
 			</div>
 		</footer>
 
-		<!-- Script global de gestion des états de redirection et des favoris -->
+		<!-- Script global -->
 		<script>
-			// 1. Lecture sécurisée des favoris depuis le localStorage
 			function getGlobalFavorites(): string[] {
 				try {
 					const stored = localStorage.getItem('the_odyssey_favorites');
 					return stored ? JSON.parse(stored) : [];
-				} catch (e) {
-					return [];
-				}
+				} catch (e) { return []; }
 			}
 
-			// 2. Synchronisation visuelle de l'état du cœur supérieur et du point de notification rouge
 			function syncGlobalMenuFavorites() {
 				const favs = getGlobalFavorites();
 				const menuBtn = document.getElementById('favorites-menu-btn');
@@ -249,17 +233,14 @@ const bonsPlansHref = "/bons-plans";
 				}
 			}
 
-			// Exposer la méthode de synchronisation globale sur l'objet window
 			(window as any).syncGlobalMenuFavorites = syncGlobalMenuFavorites;
 
 			document.addEventListener('DOMContentLoaded', () => {
 				const pathname = window.location.pathname;
 				const isHome = pathname === '/' || pathname === '/index.html' || pathname === '';
 				
-				// Exécuter la synchronisation des favoris dès le chargement de n'importe quelle page
 				syncGlobalMenuFavorites();
 
-				// Gestion unifiée du clic sur le cœur supérieur pour rediriger vers la home filtrée
 				const menuBtn = document.getElementById('favorites-menu-btn');
 				if (menuBtn) {
 					menuBtn.addEventListener('click', (e) => {
@@ -267,14 +248,13 @@ const bonsPlansHref = "/bons-plans";
 							e.preventDefault();
 							try {
 								sessionStorage.setItem('odyssey_home_filter', 'favorites');
-								sessionStorage.removeItem('odyssey_home_scroll'); // Nettoyage de la mémoire de scroll
+								sessionStorage.removeItem('odyssey_home_scroll');
 							} catch (err) {}
 							window.location.href = '/#destinations';
 						}
 					});
 				}
 
-				// Si l'utilisateur clique délibérément sur une section ou un logo depuis une sous-page
 				if (!isHome) {
 					const navLinks = document.querySelectorAll('header nav a');
 					navLinks.forEach(link => {
@@ -311,7 +291,6 @@ const bonsPlansHref = "/bons-plans";
 				}
 			});
 
-			// Écouter les changements de stockage local (si modifié depuis un autre onglet par exemple)
 			window.addEventListener('storage', (e) => {
 				if (e.key === 'the_odyssey_favorites') {
 					syncGlobalMenuFavorites();
