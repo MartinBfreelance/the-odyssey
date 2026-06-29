@@ -313,7 +313,7 @@ import destinationsData from '../data/destinations.json';
     </div>
   </section>
   
-  <!-- BLOC DE FUSION PROGRESSIF MOINS LONG ET PLUS SERRÉ (DIVISÉ PAR DEUX) -->
+  <!-- BLOC DE FUSION PROGRESSIF MOINS LONG ET PLUS SERRÉ -->
   <div class="w-full bg-gradient-to-b from-transparent to-[#0A0A0A] h-[180px] mt-12 pointer-events-none -mb-[1px]"></div>
 
   <!-- ZONE DE CONCIERGERIE -->
@@ -341,55 +341,55 @@ import destinationsData from '../data/destinations.json';
               </p>
             </div>
             <h2 class="text-xl sm:text-2xl font-serif font-light tracking-tight">Les Réductions du Voyageur Privilégié</h2>
-            <p class="text-neutral-400 text-xs font-light leading-relaxed max-w-2xl">Nous sélectionnons nos partenaires with soin. En passant par nos invitations, vous économisez sur vos réservations tout en soutenant notre travail indépendant.</p>
+            <p class="text-neutral-400 text-xs font-light leading-relaxed max-w-2xl">Nous sélectionnons nos partenaires avec soin. En passant par nos invitations, vous économisez sur vos réservations tout en soutenant notre travail indépendant.</p>
           </div>
 
-          <!-- Grille des partenaires mise à jour sur 3 colonnes pour accueillir les 5 partenaires officiels de manière harmonieuse -->
+          <!-- Grille des partenaires liant vers notre Onepager éthique de façon unifiée (Sans pourcentages et 100% cohérente) -->
           <div id="astuces" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-left font-mono text-[10px]">
             
-            <!-- 1. Hébergements & Hôtels (Booking.com) -->
+            <!-- 1. Hébergements & Hôtels (Booking) -->
             <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm flex flex-col justify-between">
               <div>
                 <p class="text-amber-500 uppercase tracking-wider font-bold">🏡 Hébergements & Hôtels</p>
-                <p class="text-neutral-400 leading-relaxed mt-2">De la case créole typique au gîte de montagne authentique — trouvez votre logement idéal sélectionné sur le terrain avec Booking.</p>
+                <p class="text-neutral-400 leading-relaxed mt-2 font-sans text-xs">De la case créole typique au gîte de montagne authentique — trouvez votre logement idéal sélectionné sur le terrain avec Booking.</p>
               </div>
-              <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Réserver mon hébergement →</a>
+              <a href="/bons-plans#booking" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Trouver un hébergement →</a>
             </div>
 
-            <!-- 2. Forfaits Internet eSIM (Nomad) -->
+            <!-- 2. eSIM & Connexion (Nomad) -->
             <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm flex flex-col justify-between">
               <div>
-                <p class="text-amber-500 uppercase tracking-wider font-bold">📱 Forfaits Internet eSIM</p>
-                <p class="text-neutral-400 leading-relaxed mt-2">Activez vos données à l'étranger instantanément with Nomad. Idéal pour rester connecté sans frais d'itinérance et gérer son forfait directement depuis l'application.</p>
+                <p class="text-amber-500 uppercase tracking-wider font-bold">📶 eSIM & Connexion Internet</p>
+                <p class="text-neutral-400 leading-relaxed mt-2 font-sans text-xs">Activez vos données à l'étranger instantanément avec Nomad. Idéal pour rester connecté sans frais d'itinérance et gérer son forfait directement depuis l'application.</p>
               </div>
-              <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Lien Privilège Nomad →</a>
+              <a href="/bons-plans#nomad" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Activer mon eSIM Nomad →</a>
             </div>
 
             <!-- 3. Assurance Voyage & Santé (Chapka) -->
             <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm flex flex-col justify-between">
               <div>
                 <p class="text-amber-500 uppercase tracking-wider font-bold">🏥 Assurance Voyage & Santé</p>
-                <p class="text-neutral-400 leading-relaxed mt-2">Couverture médicale complète, rapatriement et annulation de vol pour explorer le globe en totale sérénité avec notre offre Chapka.</p>
+                <p class="text-neutral-400 leading-relaxed mt-2 font-sans text-xs">Couverture médicale complète, rapatriement et annulation de vol pour explorer le globe en totale sérénité avec notre offre Chapka.</p>
               </div>
-              <a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Bénéficier des 5% Chapka →</a>
+              <a href="/bons-plans#chapka" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">S'assurer avec Chapka →</a>
             </div>
 
-            <!-- 4. Comment y aller (Vols & Transport Aérien) -->
+            <!-- 4. Vols & Transports -->
             <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm flex flex-col justify-between">
               <div>
                 <p class="text-amber-500 uppercase tracking-wider font-bold">✈️ Vols & Transport Aérien</p>
-                <p class="text-neutral-400 leading-relaxed mt-2">Comparez et trouvez les meilleurs tarifs de vols directs ou avec escales depuis la Belgique pour rejoindre votre prochaine aventure.</p>
+                <p class="text-neutral-400 leading-relaxed mt-2 font-sans text-xs">Comparez et trouvez les meilleurs tarifs de vols directs ou avec escales depuis la Belgique pour rejoindre votre prochaine aventure.</p>
               </div>
-              <a href="https://booking.com/flights" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Rechercher un vol →</a>
+              <a href="/bons-plans#vols" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Rechercher un vol →</a>
             </div>
 
-            <!-- 5. Se déplacer (Location de Véhicule) -->
+            <!-- 5. Location de Véhicule -->
             <div class="border border-[#E0D9D0] p-6 space-y-3 bg-neutral-900/40 w-full rounded-sm flex flex-col justify-between">
               <div>
                 <p class="text-amber-500 uppercase tracking-wider font-bold">🚗 Location de Véhicule</p>
-                <p class="text-neutral-400 leading-relaxed mt-2">Explorez vos itinéraires de voyage en toute indépendance et à votre propre rythme avec nos agences de location de confiance.</p>
+                <p class="text-neutral-400 leading-relaxed mt-2 font-sans text-xs">Explorez vos itinéraires de voyage en toute indépendance et à votre propre rythme avec nos agences de location de confiance.</p>
               </div>
-              <a href="https://booking.com/carrental" target="_blank" rel="noopener noreferrer" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Louer un véhicule →</a>
+              <a href="/bons-plans#voiture" class="text-white uppercase tracking-widest border-b border-white pb-0.5 hover:text-amber-400 hover:border-amber-400 transition-colors inline-block mt-4 self-start">Louer un véhicule →</a>
             </div>
 
           </div>
@@ -417,9 +417,6 @@ import destinationsData from '../data/destinations.json';
     type: Lexicon;
     profil: ProfilLexicon;
   }
-
-  // 2. Définition des constantes et fonctions utilitaires au niveau GLOBAL du module de script
-  // Résout définitivement TOUTES les erreurs de portée "Cannot find name" de TypeScript et les race conditions [1.2.3, 2.1]
 
   const romanNumerals = ["", "I", "II", "III", "IV", "V", "VI"];
 
@@ -496,7 +493,6 @@ import destinationsData from '../data/destinations.json';
     };
   }
 
-  // 3. DOMContentLoaded pour la liaison stricte et différée des éléments réactifs [2.1]
   document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('destination-search') as HTMLInputElement | null;
     const compactSelect = document.getElementById('compact-filter') as HTMLSelectElement | null;
@@ -507,7 +503,7 @@ import destinationsData from '../data/destinations.json';
     const cards = document.querySelectorAll('.guide-card') as NodeListOf<HTMLElement>;
     const favBtnMenu = document.getElementById('favorites-menu-btn') as HTMLButtonElement | null;
 
-    // NOUVEAUX ÉLÉMENTS DE FILTRAGE
+    // ÉLÉMENTS DE FILTRAGE
     const typeButtons = document.querySelectorAll('.filter-btn-type') as NodeListOf<HTMLButtonElement>;
     const profilButtons = document.querySelectorAll('.filter-btn-profil') as NodeListOf<HTMLButtonElement>;
     const resultsCountEl = document.getElementById('results-count') as HTMLElement | null;
@@ -618,7 +614,7 @@ import destinationsData from '../data/destinations.json';
       }
     }
 
-    // GESTION SYNCHRONISÉE DES CŒURS (CARDS + MENU AVEC BORDURE BLANCHE RENFORCÉE)
+    // GESTION SYNCHRONISÉE DES CŒURS (CARDS + MENU)
     function updateFavStates() {
       const favs = getFavorites();
       
@@ -640,30 +636,9 @@ import destinationsData from '../data/destinations.json';
         }
       });
 
-      // 2. Cœur principal du menu supérieur avec bordure blanche grasse
-      const menuSvg = favBtnMenu ? favBtnMenu.querySelector('.fav-menu-svg') as SVGElement | null : null;
-      if (menuSvg) {
-        if (favs.length > 0) {
-          menuSvg.classList.add('text-amber-500', 'fill-amber-500', 'stroke-white');
-          menuSvg.classList.remove('text-white');
-          menuSvg.setAttribute('stroke-width', '2.5'); // Bordure blanche plus grasse
-        } else {
-          menuSvg.classList.remove('text-amber-500', 'fill-amber-500', 'stroke-white');
-          menuSvg.classList.add('text-white');
-          menuSvg.setAttribute('stroke-width', '1.8'); // Rétablissement de la finesse initiale
-        }
-      }
-
-      // 3. Point de notification discret
-      const dot = document.getElementById('favorites-dot') as HTMLElement | null;
-      if (dot) {
-        if (favs.length > 0) {
-          dot.classList.add('scale-100', 'opacity-100');
-          dot.classList.remove('scale-0', 'opacity-0');
-        } else {
-          dot.classList.add('scale-0', 'opacity-0');
-          dot.classList.remove('scale-100', 'opacity-100');
-        }
+      // 2. Appel de la méthode globale de Layout.astro pour synchroniser le cœur supérieur
+      if (typeof (window as any).syncGlobalMenuFavorites === 'function') {
+        (window as any).syncGlobalMenuFavorites();
       }
     }
 
@@ -714,7 +689,7 @@ import destinationsData from '../data/destinations.json';
       });
     });
 
-    // Assigne les clics favoris sur les cartes (Sans rafraîchir la grille globale pour supprimer le sursaut)
+    // Assigne les clics favoris sur les cartes
     cards.forEach(card => {
       const cardId = card.dataset.id;
       const btn = card.querySelector('.fav-btn') as HTMLButtonElement | null;
@@ -770,7 +745,7 @@ import destinationsData from '../data/destinations.json';
     function updatePagination() {
       const favs = getFavorites();
 
-      // 1. Calcul de toutes les cards correspondantes à l'intégralité des filtres actifs (Exclusion complète)
+      // 1. Calcul de toutes les cards correspondantes à l'intégralité des filtres actifs
       visibleCards = Array.from(cards).filter(card => {
         const continentSlug = card.dataset.continent ? card.dataset.continent.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
         const countrySlug = card.dataset.country ? card.dataset.country.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
@@ -804,7 +779,7 @@ import destinationsData from '../data/destinations.json';
       const totalPages = Math.ceil(visibleCards.length / cardsPerPage) || 1;
       if (currentPage > totalPages) currentPage = totalPages;
 
-      // 3. Affichage en une seule passe sans écroulement (Anti-sursaut complet)
+      // 3. Affichage en une seule passe sans écroulement
       const start = (currentPage - 1) * cardsPerPage;
       const pageCards = visibleCards.slice(start, start + cardsPerPage);
 
@@ -861,7 +836,7 @@ import destinationsData from '../data/destinations.json';
       }
     }
 
-    // CLIC MENU SUPÉRIEUR FAVORIS
+    // CLIC MENU SUPÉRIEUR FAVORIS (Pour l'accueil, gère le filtrage direct)
     if (favBtnMenu) {
       favBtnMenu.addEventListener('click', (e) => {
         e.preventDefault();
@@ -937,7 +912,7 @@ import destinationsData from '../data/destinations.json';
       });
     });
 
-    // ÉCOUTE ET SÉCURISATION DU CHAMP DE RECHERCHE (Sanitisation + Debounce 300ms)
+    // SÉCURISATION DU CHAMP DE RECHERCHE
     if (searchInput) {
       searchInput.addEventListener('input', debounce((e: Event) => {
         const target = e.target as HTMLInputElement | null;
@@ -960,7 +935,7 @@ import destinationsData from '../data/destinations.json';
       });
     }
 
-    // Initialisation
+    // Initialisation du menu déroulant compact de l'accueil
     const items = new Set<string>();
     cards.forEach(card => {
       if(card.dataset.continent) items.add(card.dataset.continent);
@@ -974,7 +949,7 @@ import destinationsData from '../data/destinations.json';
     });
     if(compactSelect) compactSelect.innerHTML = selectHTML;
 
-    // Initialisation globale, auto-classification et restauration éventuelle d'état
+    // Auto-classification et restauration d'état
     autoAttributeCards();
     updateFilterUI();
     updateFavStates();

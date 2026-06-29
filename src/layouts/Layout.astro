@@ -75,7 +75,7 @@ const bonsPlansHref = "/bons-plans";
 							<div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-48 opacity-0 pointer-events-none group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto transition-all duration-300 z-50">
 								<div class="bg-neutral-950/95 backdrop-blur-md border border-white/10 rounded-xl py-2 px-1 shadow-xl">
 									{destinationsData.map((dest) => (
-										<a href={`/destinations/${dest.slug}`} class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200">
+										<a href={`/destinations/${dest.slug}`} class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
 											{dest.titre.split(':')[0].trim()}
 										</a>
 									))}
@@ -207,15 +207,75 @@ const bonsPlansHref = "/bons-plans";
 			</div>
 		</footer>
 
-		<!-- Script de gestion d'état de redirection pour nettoyer les conflits de défilement (scroll) -->
+		<!-- Script global de gestion des états de redirection et des favoris -->
 		<script>
+			// 1. Lecture sécurisée des favoris depuis le localStorage
+			function getGlobalFavorites(): string[] {
+				try {
+					const stored = localStorage.getItem('the_odyssey_favorites');
+					return stored ? JSON.parse(stored) : [];
+				} catch (e) {
+					return [];
+				}
+			}
+
+			// 2. Synchronisation visuelle de l'état du cœur supérieur et du point de notification rouge
+			function syncGlobalMenuFavorites() {
+				const favs = getGlobalFavorites();
+				const menuBtn = document.getElementById('favorites-menu-btn');
+				const menuSvg = menuBtn ? menuBtn.querySelector('.fav-menu-svg') as SVGElement | null : null;
+				const dot = document.getElementById('favorites-dot') as HTMLElement | null;
+
+				if (menuSvg) {
+					if (favs.length > 0) {
+						menuSvg.classList.add('text-amber-500', 'fill-amber-500', 'stroke-white');
+						menuSvg.classList.remove('text-white');
+						menuSvg.setAttribute('stroke-width', '2.5');
+					} else {
+						menuSvg.classList.remove('text-amber-500', 'fill-amber-500', 'stroke-white');
+						menuSvg.classList.add('text-white');
+						menuSvg.setAttribute('stroke-width', '1.8');
+					}
+				}
+
+				if (dot) {
+					if (favs.length > 0) {
+						dot.classList.add('scale-100', 'opacity-100');
+						dot.classList.remove('scale-0', 'opacity-0');
+					} else {
+						dot.classList.add('scale-0', 'opacity-0');
+						dot.classList.remove('scale-100', 'opacity-100');
+					}
+				}
+			}
+
+			// Exposer la méthode de synchronisation globale sur l'objet window
+			(window as any).syncGlobalMenuFavorites = syncGlobalMenuFavorites;
+
 			document.addEventListener('DOMContentLoaded', () => {
 				const pathname = window.location.pathname;
 				const isHome = pathname === '/' || pathname === '/index.html' || pathname === '';
 				
-				// Si l'utilisateur est sur un Onepager et clique délibérément sur une section principale
+				// Exécuter la synchronisation des favoris dès le chargement de n'importe quelle page
+				syncGlobalMenuFavorites();
+
+				// Gestion unifiée du clic sur le cœur supérieur pour rediriger vers la home filtrée
+				const menuBtn = document.getElementById('favorites-menu-btn');
+				if (menuBtn) {
+					menuBtn.addEventListener('click', (e) => {
+						if (!isHome) {
+							e.preventDefault();
+							try {
+								sessionStorage.setItem('odyssey_home_filter', 'favorites');
+								sessionStorage.removeItem('odyssey_home_scroll'); // Nettoyage de la mémoire de scroll
+							} catch (err) {}
+							window.location.href = '/#destinations';
+						}
+					});
+				}
+
+				// Si l'utilisateur clique délibérément sur une section ou un logo depuis une sous-page
 				if (!isHome) {
-					// 1. Clic sur Destinations ou Bons Plans dans l'en-tête : on efface la mémoire de scroll
 					const navLinks = document.querySelectorAll('header nav a');
 					navLinks.forEach(link => {
 						link.addEventListener('click', () => {
@@ -226,7 +286,6 @@ const bonsPlansHref = "/bons-plans";
 						});
 					});
 
-					// 2. Clic sur le logo : on efface également la mémoire de scroll
 					const logoLink = document.querySelector('header a[href="/"]');
 					if (logoLink) {
 						logoLink.addEventListener('click', () => {
@@ -237,7 +296,6 @@ const bonsPlansHref = "/bons-plans";
 						});
 					}
 
-					// 3. Clic sur un continent dans le footer : on sauvegarde le continent mais on efface le scroll
 					const footerContinentLinks = document.querySelectorAll('[data-continent-trigger]') as NodeListOf<HTMLElement>;
 					footerContinentLinks.forEach(link => {
 						link.addEventListener('click', () => {
@@ -250,6 +308,13 @@ const bonsPlansHref = "/bons-plans";
 							}
 						});
 					});
+				}
+			});
+
+			// Écouter les changements de stockage local (si modifié depuis un autre onglet par exemple)
+			window.addEventListener('storage', (e) => {
+				if (e.key === 'the_odyssey_favorites') {
+					syncGlobalMenuFavorites();
 				}
 			});
 		</script>
