@@ -1,15 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-// TABLEAU DE CONFIGURATION DES PROMOS
-// Passez simplement "active" à true ou false pour afficher/masquer un code promo.
-const promos = {
-  booking: { active: false, code: "ODYSSEY",  reduction: "Tarif privilège" },
-  nomad:   { active: true,  code: "MF15",       reduction: "Tarif préférentiel" }, // Exemple activé
-  chapka:  { active: true,  code: "LIEN DIRECT", reduction: "Avantage exclusif" },  // Exemple activé (remise auto via le lien)
-  vols:    { active: false, code: "ODYSSEYVOLS", reduction: "Tarif préférentiel" },
-  voiture: { active: false, code: "ODYSSEYCAR",  reduction: "Tarif préférentiel" }
-};
+import promos from '../data/promos.json';
 ---
 
 <Layout title="Bons Plans & Partenaires Éthiques | THE ODYSSEY">
@@ -52,6 +43,8 @@ const promos = {
     <!-- SECTION TRANSPARENCE & ETHIQUE -->
     <section class="max-w-4xl mx-auto px-6 sm:px-8 py-12 -mt-10 relative z-30">
       <div class="bg-white border border-[#E0D9D0] p-6 sm:p-10 rounded-2xl shadow-sm space-y-6 text-center">
+        
+        <!-- TITRE INTERACTIF AVEC BOUSSOLE ET SURBRILLANCE -->
         <div class="flex items-center justify-center space-x-3 group/manifesto-title cursor-default">
           <div class="w-5 h-5 text-neutral-400 group-hover/manifesto-title:rotate-45 group-hover/manifesto-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
@@ -62,8 +55,9 @@ const promos = {
               <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
             </svg>
           </div>
-          <span class="text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold">
+          <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/manifesto-title:text-amber-800 transition-colors duration-300">
             Notre Charte de Transparence
+            <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/manifesto-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
           </span>
         </div>
         
@@ -113,7 +107,7 @@ const promos = {
             </div>
           </div>
           
-          <!-- CTA & BADGE PROMO ALIGNÉS -->
+          <!-- CTA & BADGE PROMO ALIGNÉS (DYNAMIQUE) -->
           <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 pt-4">
             <a href="https://booking.com" target="_blank" rel="noopener noreferrer" class="bp-cta inline-block text-center font-mono self-start sm:self-auto">
               Rechercher sur Booking →
@@ -124,7 +118,7 @@ const promos = {
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                 </span>
-                {promos.booking.reduction} avec le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.booking.code}</span>
+                {promos.booking.reduction} : Utilisez le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.booking.code}</span>
               </div>
             )}
           </div>
@@ -156,7 +150,7 @@ const promos = {
             </div>
           </div>
           
-          <!-- CTA & BADGE PROMO ALIGNÉS (ACTIF) -->
+          <!-- CTA & BADGE PROMO ALIGNÉS (DYNAMIQUE) -->
           <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 pt-4">
             <a href="https://www.nomadesim.com/" target="_blank" rel="noopener noreferrer" class="bp-cta inline-block text-center font-mono self-start sm:self-auto">
               Activer mon eSIM Nomad →
@@ -167,7 +161,7 @@ const promos = {
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                 </span>
-                {promos.nomad.reduction} avec le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.nomad.code}</span>
+                {promos.nomad.reduction} : Utilisez le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.nomad.code}</span>
               </div>
             )}
           </div>
@@ -198,7 +192,7 @@ const promos = {
             </div>
           </div>
           
-          <!-- CTA & BADGE PROMO ALIGNÉS (ACTIF) -->
+          <!-- CTA & BADGE PROMO ALIGNÉS (DYNAMIQUE) -->
           <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 pt-4">
             <a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="bp-cta inline-block text-center font-mono self-start sm:self-auto">
               S'assurer avec Chapka →
@@ -240,7 +234,7 @@ const promos = {
             </div>
           </div>
           
-          <!-- CTA & BADGE PROMO ALIGNÉS -->
+          <!-- CTA & BADGE PROMO ALIGNÉS (DYNAMIQUE) -->
           <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 pt-4">
             <a href="https://booking.com/flights" target="_blank" rel="noopener noreferrer" class="bp-cta inline-block text-center font-mono self-start sm:self-auto">
               Trouver un vol →
@@ -251,7 +245,7 @@ const promos = {
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                 </span>
-                {promos.vols.reduction} avec le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.vols.code}</span>
+                {promos.vols.reduction} : Utilisez le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.vols.code}</span>
               </div>
             )}
           </div>
@@ -283,7 +277,7 @@ const promos = {
             </div>
           </div>
           
-          <!-- CTA & BADGE PROMO ALIGNÉS -->
+          <!-- CTA & BADGE PROMO ALIGNÉS (DYNAMIQUE) -->
           <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 pt-4">
             <a href="https://booking.com/carrental" target="_blank" rel="noopener noreferrer" class="bp-cta inline-block text-center font-mono self-start sm:self-auto">
               Louer un véhicule →
@@ -294,7 +288,7 @@ const promos = {
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                 </span>
-                {promos.voiture.reduction} avec le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.voiture.code}</span>
+                {promos.voiture.reduction} : Utilisez le code <span class="bg-white/80 border border-amber-500/10 px-2.5 py-0.5 rounded-md font-bold tracking-widest text-neutral-900 select-all">{promos.voiture.code}</span>
               </div>
             )}
           </div>
@@ -332,7 +326,7 @@ const promos = {
     overflow: hidden;
   }
 
-  /* Style revu du bouton retour : contraste élevé, contour net et effet cinétique élégant au survol */
+  /* Style du bouton retour : contraste élevé, contour net et effet cinétique élégant au survol */
   .hero-back {
     display: inline-flex; 
     align-items: center; 

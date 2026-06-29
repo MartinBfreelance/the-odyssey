@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import destinationsData from '../../data/destinations.json';
+import promos from '../../data/promos.json';
 
 // Configuration du routage dynamique Astro
 export async function getStaticPaths() {
@@ -12,7 +13,7 @@ export async function getStaticPaths() {
 
 const { dest } = Astro.props;
 
-// 1. SÉCURISATION & EN-TÊTE [5]
+// SÉCURISATION & EN-TÊTE
 const slugRegex = /^[a-z0-9\-]+$/;
 if (!slugRegex.test(dest.slug)) {
   return Astro.redirect('/404');
@@ -49,26 +50,24 @@ const similarDestinations = destinationsData
   .slice(0, 3);
 
 // ==========================================================================
-// 2. ALGORITHME DE SCAN & EXTRACTION AUTOMATIQUE DU BANDEAU D'INFOS (NLP/REGEX)
+// ALGORITHME DE SCAN & EXTRACTION AUTOMATIQUE DU BANDEAU D'INFOS (NLP/REGEX)
 // ==========================================================================
 
-// Fusion de l'ensemble des textes existants pour analyse de détection (Sans dest.description pour éviter l'erreur TypeScript)
 const bodyToScan = `${dest.titre} ${dest.sous_titre} ${dest.stats.duree || ''} ${dest.stats.etapes || ''} ${dest.stats.budget || ''}`.toLowerCase();
 
 // A) Automatisation "Notre séjour" (Durée)
-let autoDuree = dest.stats.duree; // Repli par défaut sur le JSON
+let autoDuree = dest.stats.duree;
 const dureeRegex = /(\d+)\s*(jours|jours\b|j\b)/g;
 const dureeMatch = dureeRegex.exec(bodyToScan);
 
 if (dureeMatch) {
   autoDuree = `${dureeMatch[1]} jours`;
 } else if (bodyToScan.includes("semaine")) {
-  // Traduction automatique d'expressions courantes
   autoDuree = "7 jours";
 }
 
 // B) Automatisation "Itinéraire" (Étapes)
-let autoEtapes = dest.stats.etapes; // Repli par défaut sur le JSON
+let autoEtapes = dest.stats.etapes;
 const etapesRegex = /(\d+)\s*(étapes|étape|haltes|arrêts)/g;
 const etapesMatch = etapesRegex.exec(bodyToScan);
 
@@ -77,22 +76,20 @@ if (etapesMatch) {
 }
 
 // C) Automatisation "Budget"
-let autoBudget = dest.stats.budget; // Repli par défaut sur le JSON
+let autoBudget = dest.stats.budget;
 const budgetRegex = /(~?\s*\d+[\s\d]*)\s*(€|euros)/g;
 const budgetMatch = budgetRegex.exec(bodyToScan);
 
 if (budgetMatch) {
   let extractedVal = budgetMatch[1].trim();
-  // Standardisation esthétique de l'approximation (tildé)
   if (!extractedVal.startsWith('~') && (bodyToScan.includes('environ') || bodyToScan.includes('budget moyen'))) {
     extractedVal = `~${extractedVal}`;
   }
-  // Resserre l'espace dans les grands nombres (ex: 2 100€ -> 2100€ ou 2 100€)
   autoBudget = `${extractedVal}€`.replace(/\s+/g, ' ');
 }
 
 // D) Automatisation "Meilleure période" (Dictionnaire de données climatiques)
-let autoPeriode = dest.stats.periode; // Repli par défaut sur le JSON
+let autoPeriode = dest.stats.periode;
 const countryKey = country.toLowerCase().trim();
 
 const climateDatabase: Record<string, string> = {
@@ -145,19 +142,18 @@ if (dest.slug === 'albanie') {
       <img src={dest.image} alt={dest.titre} class="absolute inset-0 w-full h-full object-cover opacity-90 z-0" />
       <div class="hero-overlay z-10"></div>
       
-      <!-- Bouton de retour discret et élégant positionné sous l'en-tête de navigation -->
-      <div id="back-to-home-btn" class="hero-back z-30 group/back">
+      <!-- BOUTON DE RETOUR HARMONISÉ SUR LE LOOK DU ONEPAGER BONS PLANS -->
+      <a href="/#destinations" id="back-to-home-btn" class="hero-back z-30">
         ← Retour aux destinations
-        <span class="absolute bottom-1 left-3 w-0 h-[3px] bg-amber-500/35 transition-all duration-300 group-hover/back:w-[82%] -z-10 rounded-xs"></span>
-      </div>
+      </a>
       
-      <!-- Cœur favori interactif synchronisé, rehaussé en z-30 pour être cliquable en premier plan -->
+      <!-- Cœur favori interactif synchronisé -->
       <button id="dest-fav-btn" data-id={dest.slug} class="hero-fav z-30" aria-label="Ajouter aux favoris">
         <svg viewBox="0 0 24 24" class="transition-all duration-300"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </button>
       
       <div class="hero-content z-20">
-        <!-- Localisation géo stylisée (le pays ressort en orange ambré fluide) -->
+        <!-- Localisation géo stylisée -->
         <span class="hero-geo uppercase">
           {geoPartsList.map((part, idx) => (
             <>
@@ -167,13 +163,13 @@ if (dest.slug === 'albanie') {
           ))}
         </span>
 
-        <!-- Titre principal : Avec l'accentuation de thème sur une nouvelle ligne en italique ambré fluide -->
+        <!-- Titre principal -->
         <h1 class="hero-title">
           {titleMain}
           {titleSub && <span class="hero-title-accent block mt-1.5 sm:mt-2">{titleSub}</span>}
         </h1>
 
-        <!-- Sous-titre automatique en blanc doux pour une visibilité irréprochable -->
+        <!-- Sous-titre automatique -->
         <h2 class="hero-subtitle">{dest.sous_titre}</h2>
         
         <div class="hero-tags">
@@ -191,9 +187,8 @@ if (dest.slug === 'albanie') {
       </div>
     </section>
 
-    <!-- BLOC AUTEUR & STATS AVEC ÉTOILES À GAUCHE ET STATS DYNAMIQUES À DROITE -->
+    <!-- BLOC AUTEUR & STATS -->
     <div class="author-stats border-b border-[#E0D9D0]">
-      <!-- Gauche : Auteur & Avis / Étoiles -->
       <div class="author-part select-none">
         <div class="author-avatar">{dest.auteur.initiale}</div>
         <div>
@@ -205,7 +200,6 @@ if (dest.slug === 'albanie') {
         </div>
       </div>
       
-      <!-- Droite : Stats du séjour (Désormais dynamiques et automatisées) -->
       <div class="stats-right select-none">
         <div class="stat-inline"><span class="text-base block mb-0.5">📅</span><div class="stat-inline-val font-serif font-bold">{autoDuree}</div><div class="stat-inline-lbl">Notre séjour</div></div>
         <div class="sep-v"></div>
@@ -250,7 +244,7 @@ if (dest.slug === 'albanie') {
       <!-- CONTENU ÉDITORIAL (À GAUCHE) -->
       <div class="content w-full lg:w-[calc(100%-44px)]">
         
-        <!-- NOTRE COUP DE COEUR (Peut être personnalisé via coup_de_coeur_titre/texte dans le JSON) -->
+        <!-- NOTRE COUP DE COEUR -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -271,7 +265,7 @@ if (dest.slug === 'albanie') {
           </div>
         </div>
 
-        <!-- NOTRE ITINÉRAIRE (Rapproché du texte et visuels x3 plus grands, dynamique s'il est renseigné dans le JSON) -->
+        <!-- NOTRE ITINÉRAIRE -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -287,7 +281,6 @@ if (dest.slug === 'albanie') {
             <div class="section-line"></div>
           </div>
 
-          <!-- Boucle de rendu dynamique des étapes de l'itinéraire s'ils sont renseignés dans le JSON (Commentaires HTML retirés pour la compatibilité JSX d'Astro) -->
           {dest.etapes_details ? (
             dest.etapes_details.map((etape, idx) => (
               <div class="etape pb-6 border-b border-[#E0D9D0]/60 last:border-b-0 last:pb-0">
@@ -344,7 +337,7 @@ if (dest.slug === 'albanie') {
           )}
         </div>
 
-        <!-- NOS TROUVAILLES (Dynamique s'il est renseigné dans le JSON) -->
+        <!-- NOS TROUVAILLES -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -391,7 +384,7 @@ if (dest.slug === 'albanie') {
           </div>
         </div>
 
-        <!-- NOS PARTENAIRES -->
+        <!-- NOS PARTENAIRES (STRATÉGIE HYBRIDE UNIFIÉE ET DYNAMIQUE) -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -403,50 +396,97 @@ if (dest.slug === 'albanie') {
                 <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
               </svg>
             </div>
-            <span class="section-label-text">Nos partenaires</span>
+            <span class="section-label-text">Préparer votre voyage</span>
             <div class="section-line"></div>
           </div>
+
+          <!-- 1. HÉBERGEMENT (CIBLÉ DYNAMIQUE) -->
           <div class="partner-block">
             <div class="partner-icon">🏡</div>
             <div style="flex:1">
               <div class="partner-label">Où dormir</div>
-              <div class="partner-title font-serif">Trouver son logement à Booking</div>
-              <div class="partner-text font-sans">De la case créole au gîte de montagne — notre sélection approuvée sur le terrain.</div>
+              <div class="partner-title font-serif">Trouver son hébergement à {titleMain}</div>
+              <div class="partner-text font-sans text-xs">
+                Notre sélection de guesthouses et d'hôtels de charme testés et validés par nos soins sur le terrain.
+                {promos.booking.active && (
+                  <span class="text-amber-800 font-bold block mt-1">🎁 Offre partenaire : {promos.booking.reduction} avec le code {promos.booking.code}.</span>
+                )}
+              </div>
             </div>
-            <a href={bookingLink} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Voir les hébergements</a>
+            <a href={bookingLink} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Voir notre sélection →</a>
           </div>
+
+          <!-- 2. ESIM (CIBLÉ DYNAMIQUE) -->
           <div class="partner-block">
             <div class="partner-icon">📱</div>
             <div style="flex:1">
               <div class="partner-label">Rester connecté</div>
-              <div class="partner-title font-serif">Activer son eSIM locale</div>
-              <div class="partner-text font-sans">Couverture correcte sur le littoral, limitée dans les cirques. On recommande Nomad.</div>
+              <div class="partner-title font-serif">Activer son eSIM pour {titleMain}</div>
+              <div class="partner-text font-sans text-xs">
+                Achetez vos données internet locales avant votre départ avec Nomad. 
+                {promos.nomad.active && (
+                  <span class="text-amber-800 font-bold block mt-1">🎁 Code avantage : Utilisez le code {promos.nomad.code} ({promos.nomad.reduction}).</span>
+                )}
+              </div>
             </div>
-            <a href={esimLink} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Activer mon eSIM</a>
+            <a href={esimLink} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Activer mon eSIM →</a>
           </div>
-          <!-- Partenaire d'anticipation : Vol Aérien -->
+
+          <!-- 3. ASSURANCE (CIBLÉ DYNAMIQUE) -->
+          <div class="partner-block">
+            <div class="partner-icon">🏥</div>
+            <div style="flex:1">
+              <div class="partner-label">Santé & Sécurité</div>
+              <div class="partner-title font-serif">S'assurer pour ce voyage avec Chapka</div>
+              <div class="partner-text font-sans text-xs">
+                Partez l'esprit libre. Assistance médicale, rapatriement et annulation.
+                {promos.chapka.active && (
+                  <span class="text-amber-800 font-bold block mt-1">🎁 Offre partenaire : {promos.chapka.reduction} appliquée via notre lien.</span>
+                )}
+              </div>
+            </div>
+            <a href="https://chapkadirect.fr" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Profiter de l'offre Chapka →</a>
+          </div>
+
+          <!-- 4. TRANSPORTS (CIBLÉ DYNAMIQUE) -->
           <div class="partner-block">
             <div class="partner-icon">✈️</div>
             <div style="flex:1">
               <div class="partner-label">Comment y aller</div>
-              <div class="partner-title font-serif">Trouver un vol avantageux</div>
-              <div class="partner-text font-sans">Comparez les meilleurs tarifs de vols directs ou avec escales depuis la Belgique.</div>
+              <div class="partner-title font-serif">Trouver un vol avantageux pour {titleMain}</div>
+              <div class="partner-text font-sans text-xs">
+                Comparez les tarifs et trouvez les meilleurs plans de vols réguliers ou directs depuis la Belgique.
+                {promos.vols.active && (
+                  <span class="text-amber-800 font-bold block mt-1">🎁 Offre partenaire : {promos.vols.reduction} avec le code {promos.vols.code}.</span>
+                )}
+              </div>
             </div>
-            <a href="https://booking.com/flights" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Rechercher un vol</a>
+            <a href="https://booking.com/flights" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Rechercher un vol →</a>
           </div>
-          <!-- Partenaire d'anticipation : Location de Voiture -->
+
+          <!-- 5. VOITURE (CIBLÉ DYNAMIQUE) -->
           <div class="partner-block">
             <div class="partner-icon">🚗</div>
             <div style="flex:1">
               <div class="partner-label">Se déplacer</div>
-              <div class="partner-title font-serif">Louer un véhicule sur place</div>
-              <div class="partner-text font-sans">Explorez l'itinéraire en toute liberté avec notre sélection d'agences fiables.</div>
+              <div class="partner-title font-serif">Louer un véhicule pour votre itinéraire</div>
+              <div class="partner-text font-sans text-xs">
+                Le moyen idéal pour explorer l'arrière-pays et suivre notre itinéraire étape par étape à votre rythme.
+                {promos.voiture.active && (
+                  <span class="text-amber-800 font-bold block mt-1">🎁 Offre partenaire : {promos.voiture.reduction} avec le code {promos.voiture.code}.</span>
+                )}
+              </div>
             </div>
-            <a href="https://booking.com/carrental" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Louer un véhicule</a>
+            <a href="https://booking.com/carrental" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">Louer un véhicule →</a>
+          </div>
+
+          <!-- PONT VERS LE ONEPAGER GÉNÉRAL -->
+          <div class="text-left mt-6 font-mono text-[9px] tracking-wider uppercase text-neutral-500 select-none">
+            * Retrouvez notre charte éthique complète et tous nos codes avantages sur notre page <a href="/bons-plans" class="text-amber-700 hover:text-neutral-900 underline font-bold">Bons Plans Voyageurs →</a>
           </div>
         </div>
 
-        <!-- INFOS PRATIQUES (Belgique-Centric, adaptées et corrigées du bug d'icône monnaie) -->
+        <!-- INFOS PRATIQUES -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -483,7 +523,6 @@ if (dest.slug === 'albanie') {
                 <div class="pratique-text">{deplacerPratique}</div>
               </div>
             </div>
-            <!-- Correction du bug de l'icône de monnaie -->
             <div class="pratique-item">
               <div class="pratique-icon">💶</div>
               <div>
@@ -494,7 +533,7 @@ if (dest.slug === 'albanie') {
           </div>
         </div>
 
-        <!-- BLOC D'AVIS INTERACTIF ET LIGNE VERS INSTAGRAM (Déplacé sous Infos Pratiques et avant les Similaires, sans marge manuelle pour un espacement 100% régulier) -->
+        <!-- BLOC D'AVIS INTERACTIF ET LIGNE VERS INSTAGRAM -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -519,7 +558,6 @@ if (dest.slug === 'albanie') {
                 </p>
               </div>
               
-              <!-- Zone d'action de notation interactive -->
               <div class="flex flex-col items-center gap-4 shrink-0 min-w-[240px] w-full md:w-auto">
                 <!-- Étoiles de notation interactive -->
                 <div id="interactive-rating-stars" class="flex items-center gap-2 text-3xl text-neutral-200 cursor-pointer">
@@ -543,7 +581,7 @@ if (dest.slug === 'albanie') {
           </div>
         </div>
 
-        <!-- SIMILAIRES (Placé en dernier, sous "Votre avis compte", pour clore la page) -->
+        <!-- SIMILAIRES -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -572,9 +610,8 @@ if (dest.slug === 'albanie') {
             ))}
           </div>
           
-          <!-- NOUVEAU BOUTON : Voir tous les guides de voyages (Style partner-cta et aligné à gauche) -->
           <div class="text-left mt-6">
-            <a href="/#destinations" id="see-all-routes-btn" class="partner-cta inline-block select-none">
+            <a href="/#destinations" id="see-all-routes-btn" class="partner-cta inline-block select-none font-sans">
               Voir tous les guides de voyages →
             </a>
           </div>
@@ -589,7 +626,7 @@ if (dest.slug === 'albanie') {
   <div class="w-full bg-[#FAF9F6] py-16 border-t border-[#E0D9D0] relative z-20">
     <div class="max-w-[1600px] mx-auto px-8 sm:px-12 text-center">
       <a href="/#destinations" class="inline-block text-[10px] font-mono uppercase tracking-[0.25em] bg-neutral-900 text-white font-bold px-8 py-4 rounded-xl hover:bg-amber-600 hover:scale-102 transition-all duration-300 shadow-xs">
-        ← Retourner au Tabloir d'Exploration
+        ← Retourner au Tableau d'Exploration
       </a>
     </div>
   </div>
@@ -603,59 +640,63 @@ if (dest.slug === 'albanie') {
     font-family: 'Playfair Display', Georgia, serif;
   }
 
-  /* Hauteur de 560px pour faire respirer l'image */
+  /* Hauteur de 560px */
   .hero {
     position: relative;
     height: 560px; 
     overflow: hidden;
   }
   
-  /* Filtre d'arrière-plan progressif à 3 points pour un contraste optimal */
+  /* Filtre d'arrière-plan progressif */
   .hero-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.4) 0%,     /* Assombrit le haut sous le header fixe */
-      rgba(0, 0, 0, 0.25) 45%,   /* Assombrit légèrement le milieu pour détacher les textes */
-      rgba(0, 0, 0, 0.5) 100%    /* Assombrit le bas */
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.25) 45%,
+      rgba(0, 0, 0, 0.5) 100%
     );
     z-index: 10;
   }
   
-  /* Bouton retour épuré, élégant, descendu à top 105px */
+  /* Style unifié et corrigé du bouton retour (Identique à celui du Onepager Bons Plans) */
   .hero-back {
     position: absolute; 
-    top: 105px; /* Positionné sous l'en-tête de navigation h-20 (80px) */
+    top: 105px; 
     left: 32px;
-    display: flex; 
+    display: inline-flex; 
     align-items: center; 
-    gap: 6px;
-    color: rgba(255, 255, 255, 0.85); 
+    gap: 8px;
+    color: #ffffff; /* Blanc pur de base */
     font-family: 'Inter', sans-serif; 
-    font-size: 9px; 
-    letter-spacing: 0.12em; 
+    font-size: 10px; 
+    letter-spacing: 0.15em; 
     text-transform: uppercase; 
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.12); /* Fond lumineux */
+    padding: 8px 18px; 
+    border-radius: 30px;
+    backdrop-filter: blur(8px); 
+    border: 1px solid rgba(255, 255, 255, 0.35); /* Contour net */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     cursor: pointer;
-    background: rgba(0, 0, 0, 0.15); 
-    padding: 6px 14px; 
-    border-radius: 20px;
-    backdrop-filter: blur(4px); 
-    border: 1px solid rgba(255, 255, 255, 0.2); 
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    font-weight: 500;
-  }
-  .hero-back:hover { 
-    background: rgba(255, 255, 255, 0.25); 
-    color: #ffffff; 
-    border-color: rgba(255, 255, 255, 0.6);
-    transform: translateY(-1.5px);
   }
   
-  /* Style de base pour le cœur favori rehaussé en z-index 30 */
+  .hero-back:hover { 
+    background: #C8813A; /* Ambre marque */
+    color: #ffffff; 
+    border-color: #C8813A;
+    transform: translateX(-4px); /* Léger décalage horizontal vers la gauche */
+    box-shadow: 0 4px 18px rgba(200, 129, 58, 0.35); /* Halo lumineux */
+  }
+  
+  /* Style de base pour le cœur favori */
   .hero-fav {
     position: absolute; 
-    top: 105px; /* Aligné avec le bouton retour sous l'en-tête */
+    top: 105px; 
     right: 32px;
     width: 36px;
     height: 36px;
@@ -682,14 +723,13 @@ if (dest.slug === 'albanie') {
     transition: all 0.3s ease; 
   }
   
-  /* Style actif du cœur quand l'itinéraire est dans les favoris */
+  /* Style actif du cœur favori */
   .hero-fav.is-active svg {
-    fill: #e2b173 !important; /* Remplissage ambre doré fluide assorti */
-    stroke: #ffffff !important; /* Contour blanc net */
+    fill: #e2b173 !important; 
+    stroke: #ffffff !important; 
     stroke-width: 2.2px;
   }
   
-  /* Padding-top de 100px pour descendre les textes et libérer de l'espace sous le header fixe */
   .hero-content {
     position: absolute; 
     inset: 0;
@@ -701,7 +741,6 @@ if (dest.slug === 'albanie') {
     padding: 100px 40px 20px 40px; 
   }
   
-  /* Géolocalisation avec séparateurs discrets et pays mis en avant en orange ambré fluide */
   .hero-geo {
     font-family: 'Inter', sans-serif; 
     font-size: 10px; 
@@ -720,32 +759,30 @@ if (dest.slug === 'albanie') {
     color: rgba(255, 255, 255, 0.3);
   }
   .geo-country {
-    color: #e2b173; /* Ambre doré fluide et soyeux (moins lourd) */
+    color: #e2b173; 
     font-weight: 600;
   }
   
-  /* Titre principal : Style serif blanc léger et accentuation ambrée fluide (sans le double point) */
   .hero-title {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 64px; color: #fff; line-height: 1.15; margin-bottom: 12px;
-    font-weight: 300; /* font-light */
-    letter-spacing: -0.025em; /* tracking-tight */
+    font-weight: 300; 
+    letter-spacing: -0.025em; 
     text-shadow: 0 3px 18px rgba(0, 0, 0, 0.6), 0 1px 4px rgba(0, 0, 0, 0.4);
     max-width: 900px;
   }
   .hero-title-accent {
-    color: #e2b173; /* Ambre champagne soyeux (visuel haut de gamme et fluide) */
+    color: #e2b173; 
     font-style: italic;
     font-weight: 400;
   }
 
-  /* Sous-titre automatique en blanc doux et en italique (Style serif) */
   .hero-subtitle {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 24px;
     color: rgba(255, 255, 255, 0.95); 
-    font-style: italic; /* Italique */
-    font-weight: 400; /* font-normal */
+    font-style: italic; 
+    font-weight: 400; 
     line-height: 1.35;
     margin-bottom: 24px;
     text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.4);
@@ -761,7 +798,6 @@ if (dest.slug === 'albanie') {
     border: 1px solid rgba(255,255,255,0.2);
   }
 
-  /* BARRE FUSIONNÉE : ÉTOILES À GAUCHE, DETAILS À DROITE */
   .author-stats {
     background: #fff; border-bottom: 1px solid #E0D9D0;
     padding: 16px 40px; display: flex; align-items: center;
@@ -776,32 +812,26 @@ if (dest.slug === 'albanie') {
   }
   .author-name { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 1px; color: #2C3E50; text-transform: uppercase; font-weight: 600; }
   
-  /* Intégration des avis à la place de l'année */
   .rating-inline { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
   .stars { color: #C8813A; font-size: 11px; letter-spacing: 1px; }
   .rating-count { font-family: 'Inter', sans-serif; font-size: 9px; color: #9a9088; }
 
-  /* Regroupement des stats à droite */
   .stats-right { display: flex; align-items: center; flex-wrap: wrap; }
   .sep-v { width: 1px; height: 32px; background: #E0D9D0; margin: 0 18px; flex-shrink: 0; }
   .stat-inline { display: flex; flex-direction: column; align-items: center; padding: 0 12px; }
   .stat-inline-val { font-size: 13px; color: #2C3E50; font-weight: 700; }
   .stat-inline-lbl { font-family: 'Inter', sans-serif; font-size: 7.5px; letter-spacing: 1px; color: #b0a898; text-transform: uppercase; margin-top: 2px; }
 
-  /* PAGE LAYOUT */
   .page { display: flex; position: relative; padding: 40px 0; }
 
-  /* VAN CÔTÉ DROIT */
   .trail-right { position: absolute; right: 8px; top: 0; bottom: 0; width: 44px; pointer-events: none; z-index: 10; }
   .trail-sticky { position: sticky; top: 120px; } 
 
-  /* CONTENT */
   .content { flex: 1; padding: 28px 64px 0 40px; }
   @media (max-width: 1024px) {
     .content { padding: 28px 32px 0 32px; }
   }
 
-  /* SECTION TITLES */
   .section-header {
     display: flex; align-items: center; gap: 10px;
     margin-bottom: 14px; cursor: default;
@@ -824,12 +854,10 @@ if (dest.slug === 'albanie') {
   .section-header:hover .section-label-text::after { width: 100%; }
   .section-line { flex: 1; height: 1px; background: #E0D9D0; }
   
-  /* Espacement global régulier appliqué à chaque bloc de section de la page d'un Onepager */
   .section { margin-bottom: 28px; }
   .section-title { font-size: 19px; color: #2a2520; margin-bottom: 8px; font-weight: normal; line-height: 1.3; }
   .section-text { font-family: 'Inter', sans-serif; font-size: 11px; color: #5a5248; line-height: 1.8; }
 
-  /* ÉTAPES */
   .etape { margin-bottom: 22px; }
   .etape-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
   .etape-num {
@@ -854,7 +882,6 @@ if (dest.slug === 'albanie') {
   .media-caption { font-family: 'Inter', sans-serif; font-size: 9px; color: #9a9088; margin-top: 5px; font-style: italic; text-align: center; }
   .etape-text-block { display: flex; flex-direction: column; justify-content: center; }
 
-  /* TROUVAILLES */
   .trouvailles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .trouvaille-card { background: #fff; border: 1px solid #E0D9D0; border-radius: 12px; padding: 14px; transition: box-shadow 0.2s; }
   .trouvaille-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
@@ -862,7 +889,6 @@ if (dest.slug === 'albanie') {
   .trouvaille-title { font-size: 12px; color: #2a2520; margin-bottom: 4px; }
   .trouvaille-text { font-family: 'Inter', sans-serif; font-size: 9.5px; color: #7a7060; line-height: 1.6; }
 
-  /* PARTENAIRES */
   .partner-block { background: #fff; border: 1px solid #E0D9D0; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 10px; transition: box-shadow 0.2s; }
   .partner-block:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
   .partner-icon { font-size: 26px; flex-shrink: 0; }
@@ -872,23 +898,20 @@ if (dest.slug === 'albanie') {
   .partner-cta { background: #C8813A; color: #fff; font-family: 'Inter', sans-serif; font-size: 8.5px; letter-spacing: 1.5px; text-transform: uppercase; border: none; border-radius: 20px; padding: 8px 14px; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.2s; text-decoration: none; }
   .partner-cta:hover { background: #2C3E50; }
 
-  /* PRATIQUE */
   .pratique-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .pratique-item { background: #fff; border: 1px solid #E0D9D0; border-radius: 10px; padding: 12px; display: flex; gap: 8px; }
   .pratique-icon { font-size: 15px; flex-shrink: 0; }
   .pratique-label { font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 1px; color: #C8813A; text-transform: uppercase; margin-bottom: 2px; }
   .pratique-text { font-family: 'Inter', sans-serif; font-size: 10px; color: #5a5248; line-height: 1.5; }
 
-  /* SIMILAIRES : Agrandissement de la hauteur des cartes pour gommer le vide et dynamiser le rendu */
   .similaires-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .sim-card { background: #fff; border: 1px solid #E0D9D0; border-radius: 10px; overflow: hidden; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; }
   .sim-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-  .sim-img { height: 160px; } /* Augmenté de 100px à 160px pour une visibilité accrue des photos */
+  .sim-img { height: 160px; } 
   .sim-body { padding: 10px; }
   .sim-region { font-family: 'Inter', sans-serif; font-size: 7.5px; letter-spacing: 1px; color: #C8813A; text-transform: uppercase; margin-bottom: 3px; }
   .sim-title { font-family: 'Playfair Display', Georgia, serif; font-size: 11px; color: #2a2520; }
 
-  /* RESPONSIVE AJUSTEMENTS BARRES ET TITRES */
   @media (max-width: 1024px) {
     .author-stats {
       flex-direction: column;
@@ -926,7 +949,7 @@ if (dest.slug === 'albanie') {
     const van = document.getElementById('scrolling-van') as SVGGraphicsElement | null;
     const path = document.getElementById('travel-path') as SVGPathElement | null;
     const destFavBtn = document.getElementById('dest-fav-btn') as HTMLButtonElement | null;
-    const backBtn = document.getElementById('back-to-home-btn') as HTMLDivElement | null;
+    const backBtn = document.getElementById('back-to-home-btn') as HTMLAnchorElement | null;
 
     // 1. ANIMATION DU VAN SVG AU SCROLL
     if (pageEl && van && path) {
@@ -955,13 +978,13 @@ if (dest.slug === 'albanie') {
         e.preventDefault();
         try {
           sessionStorage.removeItem('odyssey_home_scroll'); // On efface la mémoire de défilement pour forcer l'ancre #destinations
-          sessionStorage.removeItem('odyssey_home_filter'); // Optionnel
+          sessionStorage.removeItem('odyssey_home_filter'); 
         } catch (err) {}
         window.location.href = '/#destinations';
       });
     }
 
-    // 3. SYNCHRONISATION DU BOUTON FAVORIS LOCAL DE LA CARD ET DU MENU SUPERIEUR
+    // 3. SYNCHRONISATION DU BOUTON FAVORIS LOCAL DE LA CARD
     if (destFavBtn) {
       const cardId = destFavBtn.getAttribute('data-id');
 
@@ -982,38 +1005,16 @@ if (dest.slug === 'albanie') {
         if (svg) {
           if (isFavorite(cardId)) {
             destFavBtn.classList.add('is-active');
-            svg.setAttribute('stroke-width', '2.2'); // Même valeur que le CSS
+            svg.setAttribute('stroke-width', '2.2'); 
           } else {
             destFavBtn.classList.remove('is-active');
             svg.setAttribute('stroke-width', '1.8');
           }
         }
 
-        // Mettre à jour également le cœur et le point rouge du menu de navigation fixe tout en haut
-        const menuBtn = document.getElementById('favorites-menu-btn');
-        const menuSvg = menuBtn ? menuBtn.querySelector('svg') : null;
-        const dot = document.getElementById('favorites-dot');
-        
-        if (menuSvg) {
-          if (favs.length > 0) {
-            menuSvg.classList.add('text-amber-500', 'fill-amber-500', 'stroke-white');
-            menuSvg.classList.remove('text-white');
-            menuSvg.setAttribute('stroke-width', '2.5');
-          } else {
-            menuSvg.classList.remove('text-amber-500', 'fill-amber-500', 'stroke-white');
-            menuSvg.classList.add('text-white');
-            menuSvg.setAttribute('stroke-width', '1.8');
-          }
-        }
-
-        if (dot) {
-          if (favs.length > 0) {
-            dot.classList.add('scale-100', 'opacity-100');
-            dot.classList.remove('scale-0', 'opacity-0');
-          } else {
-            dot.classList.add('scale-0', 'opacity-0');
-            dot.classList.remove('scale-100', 'opacity-100');
-          }
+        // Appel de la synchronisation globale exposée sur window par Layout.astro
+        if (typeof (window as any).syncGlobalMenuFavorites === 'function') {
+          (window as any).syncGlobalMenuFavorites();
         }
       };
 
@@ -1028,18 +1029,6 @@ if (dest.slug === 'albanie') {
         localStorage.setItem('the_odyssey_favorites', JSON.stringify(favs));
         updateFavButtonUI();
       });
-
-      // Permettre au clic sur le bouton de favoris du menu supérieur de rediriger vers la home filtrée
-      const menuBtn = document.getElementById('favorites-menu-btn');
-      if (menuBtn) {
-        menuBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          try {
-            sessionStorage.setItem('odyssey_home_filter', 'favorites');
-          } catch (err) {}
-          window.location.href = '/#destinations';
-        });
-      }
 
       updateFavButtonUI();
     }
@@ -1074,14 +1063,12 @@ if (dest.slug === 'albanie') {
         const newCount = baseCount + 1;
         const newNote = ((baseNote * baseCount) + votedVal) / newCount;
         
-        // Génération visuelle des étoiles
         const roundedNote = Math.round(newNote);
         const newStars = "★".repeat(roundedNote) + "☆".repeat(5 - Math.round(newNote));
         
         headerStarsEl.textContent = newStars;
         headerCountEl.textContent = `${newNote.toFixed(1)} · ${newCount} avis`;
 
-        // Petite animation de flash/surbrillance ambrée sur la barre de stats pour valider visuellement le vote
         const authorStatsBar = document.querySelector('.author-stats');
         if (authorStatsBar) {
           authorStatsBar.classList.add('scale-[1.01]', 'border-amber-500', 'transition-all', 'duration-300');
@@ -1105,7 +1092,6 @@ if (dest.slug === 'albanie') {
       };
 
       const initRatingSystem = () => {
-        // Gérer l'état de survol (hover) et le clic interactif à tout moment (modifications infinies autorisées)
         stars.forEach((star, idx) => {
           const starEl = star as HTMLElement;
           
@@ -1126,7 +1112,6 @@ if (dest.slug === 'albanie') {
             }
           });
 
-          // Action de clic pour enregistrer et modifier le choix à tout moment
           starEl.addEventListener('click', () => {
             const voteVal = idx + 1;
             setVote(voteVal);
@@ -1136,7 +1121,6 @@ if (dest.slug === 'albanie') {
           });
         });
 
-        // Initialisation de l'état d'un vote existant lors du chargement de la page
         const existingVote = getVote();
         if (existingVote) {
           const voteVal = parseInt(existingVote);

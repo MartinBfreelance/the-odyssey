@@ -1,0 +1,7 @@
+{
+  "booking": { "active": false, "code": "ODYSSEY", "reduction": "Tarif privilège" },
+  "nomad": { "active": true, "code": "MF15", "reduction": "Tarif préférentiel" },
+  "chapka": { "active": true, "code": "LIEN DIRECT", "reduction": "Avantage exclusif" },
+  "vols": { "active": false, "code": "ODYSSEYVOLS", "reduction": "Tarif préférentiel" },
+  "voiture": { "active": false, "code": "ODYSSEYCAR", "reduction": "Tarif préférentiel" }
+}
