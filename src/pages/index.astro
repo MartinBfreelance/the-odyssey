@@ -16,16 +16,18 @@ import partners from '../data/partners.json';
           class={`slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${idx === 0 ? 'opacity-65' : 'opacity-0'}`} 
         />
       ))}
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#FAF9F6] z-10"></div>
+      <!-- Le fondu de fondu (gradient) est désormais délégué à notre classe sur-mesure hero-fade-gradient -->
+      <div class="absolute inset-0 hero-fade-gradient z-10"></div>
     </div>
 
-    <!-- ZONE DE TEXTE INTÉGRÉE (AVEC CONTRASTE BICOLORE) -->
+    <!-- ZONE DE TEXTE INTÉGRÉE (AVEC CONTRASTE BICOLORE & SOUS-TITRE AGRANDI) -->
     <div class="relative z-20 w-full max-w-4xl mx-auto text-white space-y-4 px-2">
       <span class="text-[10px] font-mono tracking-[0.5em] uppercase text-neutral-200 block drop-shadow-xs">Slow Travel Journal</span>
       <h1 class="text-3xl sm:text-5xl md:text-7xl font-serif font-light tracking-tight leading-[1.2] drop-shadow-md">
         Take the time to<br/><span class="italic font-normal text-amber-500">discover the world.</span>
       </h1>
-      <p class="text-neutral-200/90 max-w-md mx-auto text-[9px] sm:text-[10px] font-mono tracking-widest uppercase pt-2 sm:pt-4 drop-shadow-xs">
+      <!-- Sous-titre agrandi et aéré pour une lisibilité irréprochable -->
+      <p class="text-neutral-200/90 max-w-xl mx-auto text-[11px] sm:text-xs font-mono tracking-[0.3em] uppercase pt-3 sm:pt-5 drop-shadow-xs select-none">
         Complete guides from one explorer to another
       </p>
     </div>
@@ -134,7 +136,7 @@ import partners from '../data/partners.json';
       </div>
     </div>
     
-    <!-- CONTENEUR GRILLE RE-DESIGNÉ -->
+    <!-- CONTENEUR GRILLE RE-DESIGNÉ (3 COLONNES MAX TYPE VOYAGE PRIVÉ) -->
     <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 transition-all duration-500">
       {destinationsData.map((dest) => (
         <article 
@@ -160,7 +162,7 @@ import partners from '../data/partners.json';
               <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">{dest.sous_titre}</p>
             </div>
             
-            <!-- FOOTER DE LA CARD : ARCHITECTURE RE-DESIGNÉE SUR 2 LIGNES (Bouton aligné à gauche avec la mention "notre") -->
+            <!-- FOOTER DE LA CARD : ARCHITECTURE RE-DESIGNÉE SUR 2 LIGNES (Bouton aligné à gauche) -->
             <div class="pt-4 border-t border-neutral-100 space-y-4 select-none">
               
               <!-- Ligne 1 : Caractéristiques de voyage (Durée, Budget, Étoiles et Avis) -->
@@ -170,7 +172,7 @@ import partners from '../data/partners.json';
                 <span>💶 {dest.stats.budget}</span>
                 <span class="text-neutral-200 font-sans select-none">•</span>
                 
-                <!-- Ajout d'attributs de données dynamiques pour la synchronisation locale de la note et des avis -->
+                <!-- Attributs de données dynamiques pour la synchronisation locale de la note et des avis -->
                 <span class="flex items-center gap-1" data-card-rating data-slug={dest.slug} data-base-note={dest.note} data-base-count={dest.nb_avis}>
                   <span class="text-amber-500 text-[10px]">★</span>
                   <span class="text-neutral-800 font-bold" data-card-note>{dest.note.toFixed(1)}</span>
@@ -356,7 +358,7 @@ import partners from '../data/partners.json';
   </div>
 </Layout>
 
-<!-- Script global réactif (Laissé identique mais nettoyé pour correspondre à vos fonctions existantes) -->
+<!-- Script global réactif -->
 <script>
   interface Lexicon {
     aventure: string[];
@@ -560,7 +562,14 @@ import partners from '../data/partners.json';
         const savedProfil = sessionStorage.getItem('odyssey_home_profil');
         const savedSearch = sessionStorage.getItem('odyssey_home_search');
 
-        if (savedFilter) currentFilter = savedFilter;
+        // Securité : Si le filtre mémorisé est 'favorites' mais que la liste est vide, on force le retour sur 'all'
+        if (savedFilter) {
+          if (savedFilter === 'favorites' && getFavorites().length === 0) {
+            currentFilter = 'all';
+          } else {
+            currentFilter = savedFilter;
+          }
+        }
         if (savedType) currentFilterType = savedType;
         if (savedProfil) currentFilterProfil = savedProfil;
         if (savedSearch) {
@@ -584,7 +593,7 @@ import partners from '../data/partners.json';
       } catch (e) {}
     }
 
-    // NOUVELLE FONCTION : Synchronisation dynamique locale de la note et des avis sur la carte
+    // Synchronisation dynamique locale de la note et des avis sur la carte
     function syncCardRatings() {
       const ratingEls = document.querySelectorAll('[data-card-rating]') as NodeListOf<HTMLElement>;
       ratingEls.forEach(el => {
