@@ -134,7 +134,7 @@ import partners from '../data/partners.json';
       </div>
     </div>
     
-    <!-- CONTENEUR GRILLE RE-DESIGNÉ (3 COLONNES MAX TYPE VOYAGE PRIVÉ) -->
+    <!-- CONTENEUR GRILLE RE-DESIGNÉ -->
     <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 transition-all duration-500">
       {destinationsData.map((dest) => (
         <article 
@@ -165,14 +165,16 @@ import partners from '../data/partners.json';
               
               <!-- Ligne 1 : Caractéristiques de voyage (Durée, Budget, Étoiles et Avis) -->
               <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-[9px] font-mono text-neutral-400 uppercase tracking-wider">
-                <span class="flex items-center gap-1">📅 {dest.stats.duree}</span>
+                <span>📅 {dest.stats.duree}</span>
                 <span class="text-neutral-200 font-sans select-none">•</span>
-                <span class="flex items-center gap-1">💶 {dest.stats.budget}</span>
+                <span>💶 {dest.stats.budget}</span>
                 <span class="text-neutral-200 font-sans select-none">•</span>
-                <span class="flex items-center gap-1">
+                
+                <!-- Ajout d'attributs de données dynamiques pour la synchronisation locale de la note et des avis -->
+                <span class="flex items-center gap-1" data-card-rating data-slug={dest.slug} data-base-note={dest.note} data-base-count={dest.nb_avis}>
                   <span class="text-amber-500 text-[10px]">★</span>
-                  <span class="text-neutral-800 font-bold">{dest.note.toFixed(1)}</span>
-                  <span class="text-neutral-400 font-normal">({dest.nb_avis} avis)</span>
+                  <span class="text-neutral-800 font-bold" data-card-note>{dest.note.toFixed(1)}</span>
+                  <span class="text-neutral-400 font-normal" data-card-count>({dest.nb_avis} avis)</span>
                 </span>
               </div>
               
@@ -228,8 +230,7 @@ import partners from '../data/partners.json';
           <div class="flex items-center space-x-3 justify-center lg:justify-start group/manifesto-title cursor-default">
             <div class="w-5 h-5 text-neutral-400 group-hover/manifesto-title:rotate-45 group-hover/manifesto-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5" stroke="currentColor"></circle>
+                <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5" stroke="currentColor"></circle>
                 <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
                 <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
                 <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
@@ -261,8 +262,7 @@ import partners from '../data/partners.json';
       <div class="flex items-center justify-center space-x-3 group/insta-title cursor-default mt-6 mb-8">
         <div class="w-5 h-5 text-neutral-400 group-hover/insta-title:rotate-45 group-hover/insta-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-            <circle cx="12" cy="12" r="10"></circle>
-            <circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5" stroke="currentColor"></circle>
+            <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5" stroke="currentColor"></circle>
             <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
             <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
             <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
@@ -306,7 +306,6 @@ import partners from '../data/partners.json';
     </div>
   </section>
   
-  <!-- BLOC DE FUSION PROGRESSIF MOINS LONG ET PLUS SERRÉ -->
   <div class="w-full bg-[#FAF9F6] h-[180px] mt-12 pointer-events-none -mb-[1px]"></div>
 
   <!-- ZONE DE CONCIERGERIE -->
@@ -357,7 +356,7 @@ import partners from '../data/partners.json';
   </div>
 </Layout>
 
-<!-- Script global réactif -->
+<!-- Script global réactif (Laissé identique mais nettoyé pour correspondre à vos fonctions existantes) -->
 <script>
   interface Lexicon {
     aventure: string[];
@@ -583,6 +582,31 @@ import partners from '../data/partners.json';
           }, 400);
         }
       } catch (e) {}
+    }
+
+    // NOUVELLE FONCTION : Synchronisation dynamique locale de la note et des avis sur la carte
+    function syncCardRatings() {
+      const ratingEls = document.querySelectorAll('[data-card-rating]') as NodeListOf<HTMLElement>;
+      ratingEls.forEach(el => {
+        const slug = el.dataset.slug;
+        if (!slug) return;
+        try {
+          const voteValStr = localStorage.getItem(`vote_${slug}`);
+          if (voteValStr) {
+            const votedVal = parseInt(voteValStr);
+            const baseNote = parseFloat(el.dataset.baseNote || '0');
+            const baseCount = parseInt(el.dataset.baseCount || '0');
+            
+            const newCount = baseCount + 1;
+            const newNote = ((baseNote * baseCount) + votedVal) / newCount;
+            
+            const noteEl = el.querySelector('[data-card-note]');
+            const countEl = el.querySelector('[data-card-count]');
+            if (noteEl) noteEl.textContent = newNote.toFixed(1);
+            if (countEl) countEl.textContent = `(${newCount} avis)`;
+          }
+        } catch (e) {}
+      });
     }
 
     const destLinks = document.querySelectorAll('.dest-link') as NodeListOf<HTMLAnchorElement>;
@@ -849,6 +873,7 @@ import partners from '../data/partners.json';
     autoAttributeCards();
     updateFilterUI();
     updateFavStates();
+    syncCardRatings(); // Exécution de la synchronisation dynamique de la note au démarrage
     restoreSessionState();
 
     const images = document.querySelectorAll('.slide-img') as NodeListOf<HTMLElement>;
