@@ -17,7 +17,7 @@ if (!slugRegex.test(dest.slug)) {
   return Astro.redirect('/404');
 }
 
-// Correction du typage TypeScript pour indexer de façon dynamique dest.liens de manière sécurisée
+// Typage sécurisé pour TypeScript en mode strict
 const getPartnerUrl = (partnerId: string, defaultUrl: string) => {
   const liens = dest.liens as Record<string, string> | undefined;
   return liens && liens[partnerId] ? liens[partnerId] : defaultUrl;
@@ -65,27 +65,11 @@ if (climateDatabase[country.toLowerCase().trim()]) {
   autoPeriode = climateDatabase[country.toLowerCase().trim()];
 }
 
-let docPratique = "Passeport ou carte d'identité en cours de validité (UE). Aucun visa requis.";
-let volPratique = "Vols directs ou avec escale depuis la Belgique.";
-let deplacerPratique = "Location de voiture recommandée sur place. Réseau de bus limité.";
-let monnaiePratique = "Euro (€) fortement conseillé.";
-
-if (dest.slug === 'albanie') {
-  docPratique = "Carte d'identité ou passeport en cours de validité. Aucun visa requis.";
-  volPratique = "Environ 2h30 de vol direct depuis l'aéroport de Bruxelles (BRU) ou Charleroi (CRL).";
-  deplacerPratique = "Location de voiture indispensable sur place pour explorer l'arrière-pays.";
-  monnaiePratique = "Lek albanais (ALL). L'Euro (€) est également très largement accepté.";
-} else if (dest.slug === 'corse') {
-  docPratique = "Carte d'identité ou passeport en cours de validité. Aucune formalité douanière.";
-  volPratique = "Environ 1h45 de vol direct depuis Bruxelles (BRU) ou Charleroi (CRL) vers Bastia/Ajaccio.";
-  deplacerPratique = "Location de véhicule (voiture ou scooter) indispensable pour arpenter les routes.";
-  monnaiePratique = "Euro (€). Les cartes bancaires sont acceptées partout, prévoyez un peu de cash.";
-} else if (dest.slug === 'chicago') {
-  docPratique = "Passeport biométrique valide + autorisation électronique ESTA obligatoire.";
-  volPratique = "Environ 8h30 de vol direct depuis Bruxelles (BRU) vers Chicago O'Hare (ORD).";
-  deplacerPratique = "Réseau de métro (L-Train) et marche à pied recommandés. Voiture déconseillée.";
-  monnaiePratique = "Dollar américain (USD). Paiement par carte de crédit ultra-généralisé.";
-}
+// Lecture des infos pratiques directement du JSON (avec repli sur les valeurs par défaut globales)
+const docPratique = dest.doc_pratique || "Carte d'identité ou passeport en cours de validité (UE). Aucun visa requis.";
+const volPratique = dest.vol_pratique || "Vols directs ou avec escale depuis la Belgique.";
+const deplacerPratique = dest.deplacement_pratique || "Location de voiture recommandée sur place.";
+const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
 ---
 
 <Layout title={`${dest.titre} | The Odyssey`}>
@@ -171,7 +155,19 @@ if (dest.slug === 'albanie') {
         <!-- COUP DE COEUR -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <span class="section-label-text">Notre coup de cœur</span><div class="section-line"></div>
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
+              Notre coup de cœur
+              <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+            </span>
+            <div class="section-line"></div>
           </div>
           <div class="section-title">{dest.coup_de_coeur_titre || "L'île qui résume tout ce qu'on aime dans le voyage"}</div>
           <div class="section-text font-sans">{dest.coup_de_coeur_texte || "On ne s'attendait pas à tomber aussi fort pour cette destination."}</div>
@@ -180,8 +176,21 @@ if (dest.slug === 'albanie') {
         <!-- ITINÉRAIRE -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <span class="section-label-text">Notre itinéraire</span><div class="section-line"></div>
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
+              Notre itinéraire
+              <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+            </span>
+            <div class="section-line"></div>
           </div>
+
           {dest.etapes_details ? (
             dest.etapes_details.map((etape, idx) => (
               <div class="etape pb-6 border-b border-[#E0D9D0]/60 last:border-b-0 last:pb-0">
@@ -217,10 +226,68 @@ if (dest.slug === 'albanie') {
           )}
         </div>
 
-        <!-- TROUVAILLES -->
+        <!-- BLOC : LA FEUILLE DE ROUTE (Titre principal fusionné et espacement mt-2 corrigé sans sous-titre parasite) -->
+        {dest.points_interet && (
+          <div class="section text-left">
+            <div class="section-header group/sec-title">
+              <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                  <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                  <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+                  <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                  <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+                </svg>
+              </div>
+              <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
+                Nos spots clés que vous devez absolument voir
+                <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+              </span>
+              <div class="section-line"></div>
+            </div>
+            
+            <!-- Liste à puces positionnée directement sous l'en-tête avec une marge mt-2 soignée -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-4 mt-2 font-sans text-xs text-neutral-600 font-light leading-relaxed select-text">
+              {dest.points_interet.map((point) => {
+                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${point} ${country}`)}`;
+                
+                return (
+                  <div class="flex items-start gap-3">
+                    <span class="text-amber-600 text-sm select-none shrink-0 font-bold">✔</span>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3 flex-wrap">
+                      <span class="text-neutral-800 font-normal">{point}</span>
+                      <a 
+                        href={mapsUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="inline-flex items-center gap-1 text-[9px] font-mono text-amber-700 hover:text-neutral-900 border-b border-amber-700/20 hover:border-neutral-900 transition-colors uppercase tracking-wider select-none shrink-0"
+                        title={`Chercher "${point}" sur Google Maps`}
+                      >
+                        📍 Localiser
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        <!-- NOS TROUVAILLES (Logo Boussole & Highlight restaurés) -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <span class="section-label-text">Nos trouvailles</span><div class="section-line"></div>
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
+              Nos trouvailles
+              <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+            </span>
+            <div class="section-line"></div>
           </div>
           <div class="trouvailles-grid font-mono">
             {dest.trouvailles ? (
@@ -241,54 +308,128 @@ if (dest.slug === 'albanie') {
           </div>
         </div>
 
-        <!-- PARTENAIRES DYNAMIQUES -->
+        <!-- INFOS PRATIQUES (Alignement harmonisé et boîtes fines) -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <span class="section-label-text">Préparer votre voyage</span><div class="section-line"></div>
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
+              Infos pratiques
+              <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+            </span>
+            <div class="section-line"></div>
           </div>
-          {partners.filter(p => p.active).map((p) => {
-            const resolvedUrl = getPartnerUrl(p.id, p.default_url);
-            return (
-              <div class="partner-block">
-                <div class="partner-icon">{p.emoji}</div>
-                <div style="flex:1">
-                  <div class="partner-label">{p.category}</div>
-                  <div class="partner-title font-serif">{p.id === 'booking' || p.id === 'nomad' || p.id === 'vols' ? `${p.button_text} pour ${titleMain}` : p.title.split(' — ')[0]}</div>
-                  <div class="partner-text font-sans text-xs">
-                    {p.desc}
-                    {p.promo.active && (
-                      <span class="text-amber-800 font-bold block mt-1">
-                        🎁 Code avantage : {p.promo.code === 'LIEN DIRECT' ? 'Remise appliquée automatiquement.' : `Utilisez le code ${p.promo.code} (${p.promo.reduction}).`}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <a href={resolvedUrl} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none">{p.button_text} →</a>
-              </div>
-            );
-          })}
-          <div class="text-left mt-6 font-mono text-[9px] tracking-wider uppercase text-neutral-500 select-none">
-            * Retrouvez notre charte complète sur notre page <a href="/bons-plans" class="text-amber-700 hover:text-neutral-900 underline font-bold">Bons Plans Voyageurs →</a>
+          <div class="pratique-grid font-sans text-left select-none">
+            <!-- Modification de la mention Documents par Documents nécessaires sur demande -->
+            <div class="pratique-item"><div class="pratique-icon">🛂</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Documents nécessaires</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{docPratique}</div></div></div>
+            <div class="pratique-item"><div class="pratique-icon">✈️</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Vol depuis la Belgique</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{volPratique}</div></div></div>
+            <div class="pratique-item"><div class="pratique-icon">🚗</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Se déplacer</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{deplacerPratique}</div></div></div>
+            <div class="pratique-item"><div class="pratique-icon">💶</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Monnaie</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{monnaiePratique}</div></div></div>
           </div>
         </div>
 
-        <!-- INFOS PRATIQUES -->
+        <!-- PRÉPARER VOTRE VOYAGE (Serré, sans padding pt-4 parasite, et fiches partenaires minces) -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <span class="section-label-text">Infos pratiques</span><div class="section-line"></div>
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
+              Préparer votre voyage
+              <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+            </span>
+            <div class="section-line"></div>
           </div>
-          <div class="pratique-grid font-sans text-left">
-            <div class="pratique-item"><div class="pratique-icon">🛂</div><div><div class="pratique-label">Documents</div><div class="pratique-text">{docPratique}</div></div></div>
-            <div class="pratique-item"><div class="pratique-icon">✈️</div><div><div class="pratique-label">Vol depuis la Belgique</div><div class="pratique-text">{volPratique}</div></div></div>
-            <div class="pratique-item"><div class="pratique-icon">🚗</div><div><div class="pratique-label">Se déplacer</div><div class="pratique-text">{deplacerPratique}</div></div></div>
-            <div class="pratique-item"><div class="pratique-icon">💶</div><div><div class="pratique-label">Monnaie</div><div class="pratique-text">{monnaiePratique}</div></div></div>
+          
+          <!-- Espacement corrigé : pt-0 pour un alignement symétrique parfait -->
+          <div class="space-y-3 select-none">
+            {partners.filter(p => p.active).map((p) => {
+              const resolvedUrl = getPartnerUrl(p.id, p.default_url);
+              
+              // Automatisation textuelle éditoriale
+              let customDesc = p.desc;
+              if (p.id === 'booking') {
+                customDesc = `Dénichez votre hébergement idéal à ${titleMain} : guesthouses de charme, hôtels confidentiels ou adresses insolites sélectionnés par nos soins.`;
+              } else if (p.id === 'nomad') {
+                customDesc = `Restez connectés dès votre arrivée à ${titleMain} en activant une eSIM locale. Idéal pour utiliser vos cartes GPS et WhatsApp sans frais d'itinérance.`;
+              } else if (p.id === 'chapka') {
+                customDesc = `Partez l'esprit serein pour explorer ${country}. Profitez d'une couverture médicale complète, d'une assistance rapatriement et d'une assurance annulation de vol.`;
+              } else if (p.id === 'vols') {
+                customDesc = `Comparez et réservez les meilleures liaisons aériennes et billets d'avion depuis la Belgique pour rejoindre ${titleMain} au meilleur tarif.`;
+              } else if (p.id === 'voiture') {
+                customDesc = `Explorez ${titleMain} et ses environs en toute liberté. Louer un véhicule est le moyen idéal pour arpenter notre feuille de route à votre propre rythme.`;
+              }
+
+              return (
+                <div class="partner-block flex flex-col md:flex-row md:items-center justify-between gap-6 p-4 border border-[#E0D9D0]/40 bg-white rounded-xl">
+                  <div class="flex items-start gap-4">
+                    <!-- Taille d'icône fine et proportionnelle -->
+                    <div class="partner-icon text-xl shrink-0 mt-0.5">{p.emoji}</div>
+                    <div class="space-y-0.5">
+                      <div class="partner-label text-[8px] font-mono tracking-widest text-amber-700 uppercase font-bold">{p.category}</div>
+                      <h4 class="partner-title font-serif font-bold text-neutral-900 leading-snug">
+                        {p.id === 'booking' || p.id === 'nomad' || p.id === 'vols' ? `${p.button_text} pour ${titleMain}` : p.title.split(' — ')[0]}
+                      </h4>
+                      <p class="partner-text font-sans text-neutral-500 font-light text-[10.5px] leading-relaxed max-w-2xl">
+                        {customDesc}
+                      </p>
+                      
+                      {p.promo.active && (
+                        <div class="pt-1 select-none">
+                          <div class="inline-flex items-center gap-2 bg-amber-50/70 border border-amber-500/10 text-amber-800 rounded-full px-3 py-0.5 text-[8.5px] font-mono tracking-wider font-bold">
+                            <span class="flex h-1.5 w-1.5 relative">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
+                            </span>
+                            {p.promo.code === 'LIEN DIRECT' ? 'Remise appliquée automatiquement via notre lien' : `Code : ${p.promo.code} (${p.promo.reduction})`}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div class="shrink-0 self-start md:self-auto select-none">
+                    <a href={resolvedUrl} target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none whitespace-nowrap">
+                      {p.button_text} →
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div class="text-left mt-6 font-mono text-[9px] tracking-wider uppercase text-neutral-500 select-none">
+            * Retrouvez notre charte complète sur notre page <a href="/bons-plans" class="text-amber-700 hover:text-neutral-900 underline font-bold">Bons Plans Voyageurs →</a>
           </div>
         </div>
 
         <!-- RATING INTERACTIF -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <span class="section-label-text">Votre avis compte</span><div class="section-line"></div>
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
+              Votre avis compte
+              <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+            </span>
+            <div class="section-line"></div>
           </div>
           <div class="rating-box-container select-none" data-base-note={dest.note} data-base-count={dest.nb_avis} data-slug={dest.slug}>
             <div class="rating-box bg-white border border-[#E0D9D0] rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xs">
@@ -314,7 +455,19 @@ if (dest.slug === 'albanie') {
         <!-- SIMILAIRES -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
-            <span class="section-label-text">Ces destinations pourraient vous plaire</span><div class="section-line"></div>
+            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+              </svg>
+            </div>
+            <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
+              Ces destinations pourraient vous plaire
+              <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+            </span>
+            <div class="section-line"></div>
           </div>
           <div class="similaires-grid select-none">
             {similarDestinations.map((sim) => (
@@ -329,8 +482,11 @@ if (dest.slug === 'albanie') {
               </a>
             ))}
           </div>
-          <div class="text-left mt-6">
-            <a href="/#destinations" id="see-all-routes-btn" class="partner-cta inline-block select-none font-sans">Voir tous les guides →</a>
+          <!-- BOUTON DE RETOUR RESTAURÉ ET SÉCURISÉ EN COULEUR AMBRÉE D'ORIGINE -->
+          <div class="text-left mt-8 select-none">
+            <a href="/#destinations" id="see-all-routes-btn" class="partner-cta inline-block select-none font-sans">
+              Voir tous les guides →
+            </a>
           </div>
         </div>
 
@@ -407,14 +563,66 @@ if (dest.slug === 'albanie') {
   .trouvaille-icon { font-size: 20px; margin-bottom: 7px; }
   .trouvaille-title { font-size: 12px; color: #2a2520; margin-bottom: 4px; }
   .trouvaille-text { font-family: 'Inter', sans-serif; font-size: 9.5px; color: #7a7060; line-height: 1.5; }
-  .partner-block { background: #fff; border: 1px solid #E0D9D0; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 10px; transition: box-shadow 0.2s; }
-  .partner-block:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
-  .partner-icon { font-size: 26px; flex-shrink: 0; }
-  .partner-label { font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 1.5px; color: #C8813A; text-transform: uppercase; margin-bottom: 3px; }
-  .partner-title { font-size: 13px; color: #2a2520; margin-bottom: 3px; }
-  .partner-text { font-family: 'Inter', sans-serif; font-size: 9.5px; color: #7a7060; line-height: 1.5; }
-  .partner-cta { background: #C8813A; color: #fff; font-family: 'Inter', sans-serif; font-size: 8.5px; letter-spacing: 1.5px; text-transform: uppercase; border: none; border-radius: 20px; padding: 8px 14px; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.2s; text-decoration: none; }
-  .partner-cta:hover { background: #2C3E50; }
+  
+  /* Ligne horizontale fine et compacte des partenaires */
+  .partner-block { 
+    background: #fff; 
+    border: 1px solid rgba(224, 217, 208, 0.45); 
+    border-radius: 12px; 
+    padding: 12px 20px; /* Rembourrage aminci à 12px vertical pour alléger visuellement */
+    transition: box-shadow 0.2s; 
+  }
+  .partner-block:hover { 
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04); 
+  }
+  .partner-icon { 
+    font-size: 20px; /* Taille proportionnelle et ajustée */
+    flex-shrink: 0; 
+  }
+  .partner-label { 
+    font-family: 'Inter', sans-serif; 
+    font-size: 8px; 
+    letter-spacing: 1.5px; 
+    color: #C8813A; 
+    text-transform: uppercase; 
+    margin-bottom: 3px; 
+  }
+  .partner-title { 
+    font-size: 13px; 
+    color: #2a2520; 
+    margin-bottom: 3px; 
+  }
+  .partner-text { 
+    font-family: 'Inter', sans-serif; 
+    font-size: 10.5px; 
+    color: #7a7060; 
+    line-height: 1.5; 
+  }
+  .partner-cta { 
+    background: #C8813A; 
+    color: #fff; 
+    font-family: 'Inter', sans-serif; 
+    font-size: 8.5px; 
+    letter-spacing: 1.5px; 
+    text-transform: uppercase; 
+    font-weight: bold; 
+    border: none; 
+    border-radius: 20px; 
+    padding: 8px 16px; 
+    cursor: pointer; 
+    white-space: nowrap; 
+    flex-shrink: 0; 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    text-decoration: none; 
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(200, 129, 58, 0.15);
+  }
+  .partner-cta:hover { 
+    background: #2C3E50; 
+    transform: translateY(-1.5px);
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.22);
+  }
+
   .pratique-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .pratique-item { background: #fff; border: 1px solid #E0D9D0; border-radius: 10px; padding: 12px; display: flex; gap: 8px; }
   .pratique-icon { font-size: 15px; flex-shrink: 0; }
@@ -422,7 +630,7 @@ if (dest.slug === 'albanie') {
   .pratique-text { font-family: 'Inter', sans-serif; font-size: 10px; color: #5a5248; line-height: 1.5; }
   .similaires-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .sim-card { background: #fff; border: 1px solid #E0D9D0; border-radius: 10px; overflow: hidden; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; }
-  .sim-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  .sim-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); }
   .sim-img { height: 160px; } 
   .sim-body { padding: 10px; }
   .sim-region { font-family: 'Inter', sans-serif; font-size: 7.5px; letter-spacing: 1px; color: #C8813A; text-transform: uppercase; margin-bottom: 3px; }
@@ -560,7 +768,7 @@ if (dest.slug === 'albanie') {
           if (currentVote) {
             const voteVal = parseInt(currentVote);
             highlightStars(voteVal, '#e2b173', '#e5e5e5');
-            if (feedbackMsg) feedbackMsg.textContent = `Note enregistrée (${voteVal}/5)`;
+            if (feedbackMsg) feedbackMsg.textContent = `Votre note enregistrée (${voteVal}/5)`;
           } else {
             highlightStars(0);
             if (feedbackMsg) feedbackMsg.textContent = 'Cliquez pour noter ce guide';
@@ -571,7 +779,7 @@ if (dest.slug === 'albanie') {
           const voteVal = idx + 1;
           setVote(voteVal);
           highlightStars(voteVal, '#e2b173', '#e5e5e5');
-          if (feedbackMsg) feedbackMsg.textContent = `Note enregistrée (${voteVal}/5)`;
+          if (feedbackMsg) feedbackMsg.textContent = `Votre note enregistrée (${voteVal}/5)`;
           updateHeaderRating(voteVal);
         });
       });

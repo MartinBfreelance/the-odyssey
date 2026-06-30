@@ -25,8 +25,20 @@
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
     },
+    "doc_pratique": "Carte d'identité ou passeport en cours de validité. Aucun visa requis.",
+    "vol_pratique": "Environ 2h30 de vol direct depuis l'aéroport de Bruxelles (BRU) ou Charleroi (CRL).",
+    "deplacement_pratique": "Location de voiture indispensable sur place pour explorer l'arrière-pays.",
+    "monnaie_pratique": "Lek albanais (ALL). L'Euro (€) est également très largement accepté dans les zones touristiques.",
     "coup_de_coeur_titre": "L'île qui résume tout ce qu'on aime dans le voyage",
     "coup_de_coeur_texte": "On ne s'attendait pas à tomber aussi fort pour cette destination. Entre la nature brute qui s'exprime à chaque kilomètre et le lagon turquoise qui appelle au calme, c'est une terre qui réunit tout ce qui nous fait voyager — la force sauvage, l'effort récompensé, et la douceur infinie de l'après.",
+    "points_interet": [
+      "Faire une expédition en bateau traditionnel sur la Riviera",
+      "Se baigner dans le lagon de Ksamil au lever du soleil",
+      "Découvrir la source naturelle de l'Œil Bleu (Syri i Kaltër)",
+      "Prendre la route panoramique du col de Llogara face à la mer",
+      "Passer deux nuits à Sarandë pour explorer l'extrême Sud",
+      "Arpenter les ruines antiques de la cité de Butrint"
+    ],
     "trouvailles": [
       {
         "icon": "🍽️",
@@ -83,8 +95,20 @@
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
     },
+    "doc_pratique": "Carte d'identité ou passeport en cours de validité. Aucune formalité douanière.",
+    "vol_pratique": "Environ 1h45 de vol direct depuis Bruxelles (BRU) ou Charleroi (CRL) vers Bastia/Ajaccio.",
+    "deplacement_pratique": "Location de véhicule indispensable pour arpenter les routes de montagne.",
+    "monnaie_pratique": "Euro (€) - monnaie locale officielle. Les cartes de crédit sont acceptées partout.",
     "coup_de_coeur_titre": "La montagne dans la mer",
     "coup_de_coeur_texte": "La Corse regorge de paysages à couper le souffle. Entre les sommets acérés des aiguilles de Bavella, les piscines de rivières limpides et les criques confidentielles de l'extrême sud, chaque journée est une nouvelle aventure sauvage et inoubliable.",
+    "points_interet": [
+      "Explorer les falaises calcaires de Bonifacio en bateau",
+      "Faire une randonnée d'une journée au cœur des Aiguilles de Bavella",
+      "Se baigner dans les piscines de rivière de la vallée de la Solenzara",
+      "Se détendre sur le sable blanc de la plage de Palombaggia",
+      "Admirer le coucher de soleil embrasé sur les calanques de Piana",
+      "Flâner dans la vieille ville fortifiée de Sartène"
+    ],
     "trouvailles": [
       {
         "icon": "🍽️",
@@ -111,7 +135,7 @@
       {
         "titre": "Les joyaux du Sud sauvage — Jours 6 à 15",
         "texte": "Cap sur le sud ! Des falaises calcaires de Bonifacio aux plages de Palombaggia et Santa Giulia, en passant par les randonnées de l'Alta Rocca, cette seconde partie de road-trip est un enchantement permanent.",
-        "image": "/images/drone/drone-albania-2.JPG"
+        "image": "/images/drone/drone-albania-5.JPG"
       }
     ]
   },
@@ -141,8 +165,20 @@
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
     },
+    "doc_pratique": "Passeport biométrique valide + autorisation électronique ESTA obligatoire.",
+    "vol_pratique": "Environ 8h30 de vol direct depuis Bruxelles (BRU) vers Chicago O'Hare (ORD).",
+    "deplacement_pratique": "Réseau de métro (L-Train) et marche à pied recommandés. Voiture déconseillée.",
+    "monnaie_pratique": "Dollar américain (USD) - monnaie locale officielle. Paiements par carte ultra-généralisés.",
     "coup_de_coeur_titre": "La force tranquille du Midwest",
     "coup_de_coeur_texte": "Chicago nous a séduits par son dynamisme culturel et la bienveillance de ses habitants. Traversée par sa rivière emblématique et bordée par l'immensité du lac Michigan, c'est une métropole d'art et d'histoire qui se visite merveilleusement bien à pied.",
+    "points_interet": [
+      "Faire la croisière d'architecture sur la rivière Chicago le soir",
+      "Prendre un selfie devant le Bean (Cloud Gate) à Millennium Park",
+      "Monter au Skydeck de la Willis Tower et marcher sur le balcon de verre",
+      "Arpenter les galeries du Art Institute of Chicago",
+      "Prendre l'air le long de l'immense lac Michigan sur Navy Pier",
+      "Écouter une session de jazz intimiste au Green Mill"
+    ],
     "trouvailles": [
       {
         "icon": "🍕",
@@ -155,9 +191,9 @@
         "texte": "Une session de jazz intimiste et mémorable dans le sous-sol d'un club ouvert depuis les années 1940."
       },
       {
-        "icon": "🚢",
-        "titre": "La croisière d'architecture",
-        "texte": "Prendre le bateau à la tombée de la nuit pour observer les reflets des gratte-ciels sur la skyline."
+        "icon": "🏡",
+        "titre": "La guesthouse confit",
+        "texte": "Une demeure en pierres de taille offrant un accueil sincère et des petits déjeuners maison."
       }
     ],
     "etapes_details": [
@@ -179,7 +215,7 @@
     "geo": "EUROPE // FRANCE // SAINT-TROPEZ",
     "image": "/images/drone/drone-albania-5.JPG",
     "titre": "Saint-Tropez & Var",
-    "sous_titre": "Un week-end de 3 jours entre villages perchés de Provence, criques sauvages et plages de sable blanc.",
+    "sous_titre": "Un week-end de 3 jours entre villages de Provence, criques sauvages et plages de sable blanc.",
     "type": ["plages", "culture"],
     "profil": ["couple", "amis"],
     "note": 4.4,
@@ -191,14 +227,55 @@
     },
     "stats": {
       "duree": "3 jours",
-      "etapes": "3 étapes",
+      "etapes": "2 étapes",
       "budget": "~450€",
       "periode": "Mai – Oct."
     },
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
-    }
+    },
+    "doc_pratique": "Carte d'identité ou passeport en cours de validité (espace Schengen).",
+    "vol_pratique": "Environ 1h35 de vol direct depuis Bruxelles vers l'aéroport de Nice ou Toulon-Hyères.",
+    "deplacement_pratique": "Voiture de location ou scooter recommandé pour circuler librement dans le Var.",
+    "monnaie_pratique": "Euro (€) - monnaie locale officielle. Espèces très conseillées pour les marchés varois.",
+    "points_interet": [
+      "Flâner sur le port de plaisance de Saint-Tropez le matin",
+      "Se baigner dans les eaux turquoises de la plage de Pampelonne",
+      "Parcourir à pied le sentier des douaniers jusqu'au Cap Camarat",
+      "Visiter le magnifique village perché provençal de Ramatuelle",
+      "Se mêler aux locaux sur le marché de la Place des Lices",
+      "Découvrir la Citadelle historique et son panorama sur le golfe"
+    ],
+    "trouvailles": [
+      {
+        "icon": "🍽️",
+        "titre": "La Tarte Tropézienne",
+        "texte": "Dégustez la véritable et mythique brioche à la crème tropézienne à la pâtisserie d'Albert Dufrêne, place des Lices."
+      },
+      {
+        "icon": "🏖️",
+        "titre": "La crique des Canebiers",
+        "texte": "Une plage sauvage abritée du vent et entourée de pins maritimes, idéale pour échapper à la foule de Pampelonne."
+      },
+      {
+        "icon": "🏡",
+        "titre": "La bastide des Maures",
+        "texte": "Une magnifique maison d'hôtes provençale nichée au milieu des vignes pour un séjour au calme."
+      }
+    ],
+    "etapes_details": [
+      {
+        "titre": "Vibrations tropéziennes — Jours 1 et 2",
+        "texte": "Découverte des ruelles ocre de la vieille ville, du port historique emblématique et de l'ambiance des boulistes de la Place des Lices.",
+        "image": "/images/drone/drone-albania-5.JPG"
+      },
+      {
+        "titre": "Pampelonne et villages perchés — Jour 3",
+        "texte": "Une journée de baignade sur la plage légendaire avant de monter flâner dans les ruelles pavées de Ramatuelle au coucher du soleil.",
+        "image": "/images/drone/drone-albania-1.JPG"
+      }
+    ]
   },
   {
     "slug": "miami",
@@ -225,7 +302,48 @@
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
-    }
+    },
+    "doc_pratique": "Passeport biométrique valide + autorisation électronique ESTA obligatoire avant le départ.",
+    "vol_pratique": "Environ 9h45 de vol depuis Bruxelles vers l'aéroport de Miami (MIA).",
+    "deplacement_pratique": "Location de voiture indispensable pour explorer les Everglades et descendre vers les Keys.",
+    "monnaie_pratique": "Dollar américain (USD) - monnaie locale officielle. Cartes bancaires acceptées partout.",
+    "points_interet": [
+      "Arpenter le quartier Art Déco historique d'Ocean Drive",
+      "Prendre un café cubain dans Little Havana",
+      "Faire une balade en hydroglisseur au cœur du parc des Everglades",
+      "Traverser le légendaire pont Seven Mile Bridge vers Key West",
+      "S'émerveiller devant les graffitis muraux géants de Wynwood Walls",
+      "Prendre un bain de soleil sur la plage mythique de South Beach"
+    ],
+    "trouvailles": [
+      {
+        "icon": "🍽️",
+        "titre": "Le Versailles Restaurant",
+        "texte": "Une institution cubaine culinaire emblématique à Little Havana pour déguster les meilleurs croquetas de Miami."
+      },
+      {
+        "icon": "🚲",
+        "titre": "Le Key Biscayne trail",
+        "texte": "Louez un vélo pour parcourir cette île sauvage à l'abri du tumulte, offrant des panoramas imprenables sur la skyline."
+      },
+      {
+        "icon": "🏡",
+        "titre": "The Freehand Miami",
+        "texte": "Une adresse bohème avec un magnifique jardin tropical et l'un des meilleurs bars à cocktails artisanaux de la ville."
+      }
+    ],
+    "etapes_details": [
+      {
+        "titre": "Miami Beach et le design Art Déco — Jours 1 à 4",
+        "texte": "Nous explorons les avenues colorées d'Ocean Drive, les galeries contemporaines et les plages infinies de South Beach au rythme du soleil floridien.",
+        "image": "/images/drone/drone-albania-2.JPG"
+      },
+      {
+        "titre": "Everglades et le grand Sud sauvage — Jours 5 à 10",
+        "texte": "Cap vers la nature ! Nous traversons les marais des Everglades et longeons la magnifique route suspendue au-dessus de l'océan vers les Keys.",
+        "image": "/images/drone/drone-albania-1.JPG"
+      }
+    ]
   },
   {
     "slug": "bordeaux",
@@ -252,7 +370,48 @@
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
-    }
+    },
+    "doc_pratique": "Carte d'identité ou passeport en cours de validité pour les belges.",
+    "vol_pratique": "Environ 1h25 de vol direct depuis Bruxelles vers l'aéroport de Bordeaux-Mérignac (BOD).",
+    "deplacement_pratique": "Tramway en ville. Voiture de location conseillée pour les vignobles et le bassin d'Arcachon.",
+    "monnaie_pratique": "Euro (€) - monnaie locale officielle. Paiements par carte sans contact acceptés partout.",
+    "points_interet": [
+      "Se promener sur les quais de la Garonne devant le Miroir d'Eau",
+      "Visiter la Cité du Vin pour une immersion sensorielle",
+      "Explorer l'ancienne cité médiévale et les châteaux de Saint-Émilion",
+      "Grimper au sommet de la Dune du Pilat face au bassin d'Arcachon",
+      "Déguster des huîtres fraîches dans les cabanes de Gujan-Mestras",
+      "Flâner dans le quartier historique de la place de la Bourse"
+    ],
+    "trouvailles": [
+      {
+        "icon": "🍷",
+        "titre": "Le bar à vin du CIVB",
+        "texte": "Un salon d'exception au cœur de Bordeaux pour déguster des verres de grands crus classés à des prix incroyablement doux."
+      },
+      {
+        "icon": "🐚",
+        "titre": "La cabane de l'Aiguillon",
+        "texte": "Dégustez des huîtres d'Arcachon fraîches les pieds dans le sable dans une cabane de pêcheur typique."
+      },
+      {
+        "icon": "🏡",
+        "titre": "L'Hôtel de Tourny",
+        "texte": "Une ancienne demeure bourgeoise du XVIIIe siècle entièrement réhabilitée en un hôtel de charme intimiste."
+      }
+    ],
+    "etapes_details": [
+      {
+        "titre": "Bordeaux urbain et culture du vin — Jours 1 et 2",
+        "texte": "Exploration des ruelles médiévales du quartier Saint-Pierre, pique-nique sur les quais de la Garonne et dégustations sensorielles à la Cité du Vin.",
+        "image": "/images/drone/drone-albania-5.JPG"
+      },
+      {
+        "titre": "Vignobles de prestige et bassin d'Arcachon — Jours 3 et 4",
+        "texte": "Balade au cœur des vignes à Saint-Émilion, suivie d'une grimpée mémorable de la Dune du Pilat au coucher du soleil face à l'océan.",
+        "image": "/images/drone/drone-albania-1.JPG"
+      }
+    ]
   },
   {
     "slug": "tokyo",
@@ -279,7 +438,48 @@
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
-    }
+    },
+    "doc_pratique": "Passeport en cours de validité. Aucun visa requis pour un séjour de moins de 90 jours.",
+    "vol_pratique": "Environ 11h30 de vol depuis Bruxelles vers l'aéroport de Haneda (HND) ou Narita (NRT).",
+    "deplacement_pratique": "Réseau de métro ultra-performant. Cartes de transport Suica ou Pasmo recommandées.",
+    "monnaie_pratique": "Yen japonais (JPY) - monnaie locale officielle. Les espèces restent très recommandées.",
+    "points_interet": [
+      "Traverser le carrefour piéton le plus célèbre du monde à Shibuya",
+      "Visiter le plus vieux temple de la ville, le Senso-ji à Asakusa",
+      "Se promener sous les néons de Shinjuku et manger dans l'allée Omoide Yokocho",
+      "Se ressourcer au cœur de la forêt du sanctuaire Meiji-jingu",
+      "Arpenter les boutiques créatives et extravagantes d'Harajuku",
+      "Prendre de la hauteur pour observer le mont Fuji depuis la Tokyo Skytree"
+    ],
+    "trouvailles": [
+      {
+        "icon": "🍜",
+        "titre": "Le ramen secret d'Asakusa",
+        "texte": "Une minuscule échoppe de seulement 6 places assises cachée dans une venelle, servant un bouillon de poulet d'exception."
+      },
+      {
+        "icon": "🌳",
+        "titre": "Le jardin Shinjuku Gyoen",
+        "texte": "Le plus beau parc de Tokyo. Venez à l'aube pour apprécier le calme absolu de ses pavillons traditionnels en bois."
+      },
+      {
+        "icon": "🏡",
+        "titre": "Ryokan Shigetsu",
+        "texte": "Un ryokan traditionnel japonais niché au cœur d'Asakusa, avec de grands bains chauds d'époque et des futons sur tatamis."
+      }
+    ],
+    "etapes_details": [
+      {
+        "titre": "L'effervescence moderne et les sanctuaires — Jours 1 à 4",
+        "texte": "Immersion dans le tumulte du carrefour de Shibuya, shopping décalé à Harajuku et retour au calme sous la canopée sacrée du Meiji-jingu.",
+        "image": "/images/drone/drone-albania-1.JPG"
+      },
+      {
+        "titre": "Le Tokyo historique et nocturne — Jours 5 à 8",
+        "texte": "Visite à l'aube du temple d'Asakusa, suivie d'une plongée nocturne féerique au milieu des gratte-ciels et des petites allées illuminées de Shinjuku.",
+        "image": "/images/drone/drone-albania-5.JPG"
+      }
+    ]
   },
   {
     "slug": "lisbonne",
@@ -306,7 +506,48 @@
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
-    }
+    },
+    "doc_pratique": "Carte d'identité ou passeport en cours de validité (espace Schengen).",
+    "vol_pratique": "Environ 2h45 de vol direct depuis Bruxelles (BRU) ou Charleroi (CRL).",
+    "deplacement_pratique": "Tramway historique (ligne 28), métros et marche à pied. Escapade à Sintra en train.",
+    "monnaie_pratique": "Euro (€) - monnaie locale officielle. Prévoyez un peu d'espèces pour les petits commerces.",
+    "points_interet": [
+      "Embarquer à bord du tramway historique 28 dans l'Alfama",
+      "Savourer les authentiques et tièdes Pastéis de Belém",
+      "Profiter du panorama sur les toits depuis le mirador Senhora do Monte",
+      "Visiter le grandiose Monastère des Hiéronymites",
+      "S'échapper une journée pour explorer les palais féeriques de Sintra",
+      "Écouter du Fado traditionnel dans une taverne de la Mouraria"
+    ],
+    "trouvailles": [
+      {
+        "icon": "🍽️",
+        "titre": "Conserveira de Lisboa",
+        "texte": "Une boutique historique ouverte depuis 1930 vendant d'exquises sardines en conserves dans des emballages rétro splendides."
+      },
+      {
+        "icon": "🌅",
+        "titre": "Miradouro de Santa Catarina",
+        "texte": "Le meilleur spot d'observation secret pour écouter les musiciens de rue au coucher du soleil face au pont du 25 Avril."
+      },
+      {
+        "icon": "🏡",
+        "titre": "The Independente Hostel",
+        "texte": "Un ancien palais d'ambassadeur réhabilité en auberge de charme rétro face au célèbre belvédère de São Pedro."
+      }
+    ],
+    "etapes_details": [
+      {
+        "titre": "L'Alfama et l'âme de Lisbonne — Jours 1 à 3",
+        "texte": "Exploration des ruelles médiévales et fleuries de l'Alfama, couchers de soleil spectaculaires depuis les miradors de la ville au son mélancolique du Fado.",
+        "image": "/images/drone/drone-albania-5.JPG"
+      },
+      {
+        "titre": "Sintra féerique et l'océan à Belém — Jours 4 et 5",
+        "texte": "Dégustation des Pastéis de Belém chauds puis journée magique à Sintra à la découverte du Palais de Pena.",
+        "image": "/images/drone/drone-albania-1.JPG"
+      }
+    ]
   },
   {
     "slug": "moscou",
@@ -333,7 +574,48 @@
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
-    }
+    },
+    "doc_pratique": "Passeport valide + Visa obligatoire à obtenir à l'avance auprès du consulat.",
+    "vol_pratique": "Vols avec escales depuis la Belgique vers l'aéroport de Sheremetyevo (SVO).",
+    "deplacement_pratique": "Métro de Moscou (très rapide et somptueux), taxis via des applications locales.",
+    "monnaie_pratique": "Rouble russe (RUB) - monnaie locale officielle. Cartes bancaires non-russes souvent inactives.",
+    "points_interet": [
+      "Arpenter la célèbre et monumentale Place Rouge",
+      "S'émerveiller devant les bulbes colorés de la Cathédrale Saint-Basile",
+      "Visiter les cathédrales et le palais historique du Kremlin",
+      "Faire un safari souterrain dans les plus belles stations de métro",
+      "Prendre l'air au cœur du parc culturel et artistique Gorki",
+      "Découvrir l'art traditionnel russe à la Galerie Tretiakov"
+    ],
+    "trouvailles": [
+      {
+        "icon": "🍵",
+        "titre": "Le mythique Café Pouchkine",
+        "texte": "Une expérience littéraire et culinaire russe hors du temps dans un somptueux décor de bibliothèque aristocratique du XIXe siècle."
+      },
+      {
+        "icon": "🏰",
+        "titre": "Le domaine de Kolomenskoye",
+        "texte": "Un immense parc historique abritant une magnifique et rare église en bois d'époque classée à l'UNESCO, en bordure du fleuve."
+      },
+      {
+        "icon": "🏡",
+        "titre": "Moss Boutique Hotel",
+        "texte": "Une adresse ultra design, feutrée et chaleureuse cachée dans les ruelles calmes du quartier historique de Chistye Prudy."
+      }
+    ],
+    "etapes_details": [
+      {
+        "titre": "Le cœur impérial et historique — Jours 1 à 3",
+        "texte": "Visite des joyaux moscovites : les murs rouges du Kremlin fortifié, le mausolée de la Place Rouge et les décors uniques de conte de fées de la cathédrale Saint-Basile.",
+        "image": "/images/drone/drone-albania-1.JPG"
+      },
+      {
+        "titre": "Moscou moderne, métros et parcs — Jours 4 à 6",
+        "texte": "Exploration souterraine des stations de métro en marbre et mosaïques, suivie d'une balade détendue avec les locaux au bord des étangs du parc Gorki.",
+        "image": "/images/drone/drone-albania-5.JPG"
+      }
+    ]
   },
   {
     "slug": "islande",
@@ -360,6 +642,47 @@
     "liens": {
       "booking": "https://booking.com",
       "esim": "https://www.nomadesim.com/"
-    }
+    },
+    "doc_pratique": "Carte d'identité ou passeport en cours de validité (UE/espace Schengen).",
+    "vol_pratique": "Environ 3h30 de vol direct depuis l'aéroport de Bruxelles (BRU) vers Keflavik (KEF).",
+    "deplacement_pratique": "Location d'un véhicule 4x4 indispensable pour circuler sur les pistes intérieures.",
+    "monnaie_pratique": "Couronne islandaise (ISK) - monnaie locale officielle. L'Euro (€) est peu utilisé sur place.",
+    "points_interet": [
+      "Admirer la cascade géante de Gullfoss sur le Cercle d'Or",
+      "Se prélasser dans les eaux thermales laiteuses du Blue Lagoon",
+      "Observer le geyser Strokkur jaillir à Geysir",
+      "Fouler la plage volcanique de sable noir de Reynisfjara",
+      "Contempler la danse des icebergs sur la lagune de Jökulsárlón",
+      "Faire un trek dans les reliefs colorés de Landmannalaugar"
+    ],
+    "trouvailles": [
+      {
+        "icon": "🥯",
+        "titre": "La boulangerie Brauð & Co",
+        "texte": "Une échoppe colorée légendaire à Reykjavik servant les meilleurs roulés à la cannelle (Kanilsnúðar) chauds de l'île."
+      },
+      {
+        "icon": "♨️",
+        "titre": "La piscine sauvage Seljavallalaug",
+        "texte": "Un bassin géothermique secret niché de façon spectaculaire au fond d'une vallée étroite entre deux montagnes rocheuses."
+      },
+      {
+        "icon": "🏡",
+        "titre": "Le Kex Hostel",
+        "texte": "Une ancienne usine de biscuits reconvertie en un hostel rétro industriel ultra-chaleureux face à la baie de Reykjavik."
+      }
+    ],
+    "etapes_details": [
+      {
+        "titre": "Le Cercle d'Or et les sources chaudes — Jours 1 à 4",
+        "texte": "Nous explorons les failles de Thingvellir, les chutes rugissantes de Gullfoss et savourons un bain à 38°C dans les eaux géothermales laiteuses du Blue Lagoon.",
+        "image": "/images/drone/drone-albania-2.JPG"
+      },
+      {
+        "titre": "Les glaciers et plages de sable noir — Jours 5 à 12",
+        "texte": "Grand road-trip le long de la côte Sud. Nous marchons sur le sable volcanique de Vik, contemplons les icebergs bleutés flotter sur la lagune de Jökulsárlón et suivons la Route 1 le long des fjords.",
+        "image": "/images/drone/drone-albania-1.JPG"
+      }
+    ]
   }
 ]

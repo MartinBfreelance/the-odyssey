@@ -160,7 +160,7 @@ import partners from '../data/partners.json';
               <p class="text-[11px] sm:text-xs text-neutral-500 font-light leading-relaxed">{dest.sous_titre}</p>
             </div>
             
-            <!-- FOOTER DE LA CARD : ARCHITECTURE RE-DESIGNÉE SUR 2 LIGNES (Bouton aligné à gauche) -->
+            <!-- FOOTER DE LA CARD : ARCHITECTURE RE-DESIGNÉE SUR 2 LIGNES (Bouton aligné à gauche avec la mention "notre") -->
             <div class="pt-4 border-t border-neutral-100 space-y-4 select-none">
               
               <!-- Ligne 1 : Caractéristiques de voyage (Durée, Budget, Étoiles et Avis) -->
@@ -176,10 +176,10 @@ import partners from '../data/partners.json';
                 </span>
               </div>
               
-              <!-- Ligne 2 : Bouton "Pilule" Premium (Désormais aligné à gauche pour un équilibre parfait) -->
+              <!-- Ligne 2 : Bouton "Pilule" Premium personnalisé (Désormais aligné à gauche) -->
               <div class="flex justify-start pt-0.5">
                 <a href={`/destinations/${dest.slug}`} class="card-cta relative group/card-link inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-200/80 hover:border-amber-600 bg-neutral-50/50 hover:bg-amber-600 text-neutral-800 hover:text-white font-mono text-[9px] uppercase font-bold tracking-widest transition-all duration-300 hover:scale-102 hover:shadow-2xs">
-                  Découvrir le guide
+                  Découvrir notre guide
                   <span class="inline-block transition-transform duration-300 ease-out group-hover/card-link:translate-x-1">→</span>
                 </a>
               </div>
@@ -307,7 +307,7 @@ import partners from '../data/partners.json';
   </section>
   
   <!-- BLOC DE FUSION PROGRESSIF MOINS LONG ET PLUS SERRÉ -->
-  <div class="w-full bg-gradient-to-b from-transparent to-[#0A0A0A] h-[180px] mt-12 pointer-events-none -mb-[1px]"></div>
+  <div class="w-full bg-[#FAF9F6] h-[180px] mt-12 pointer-events-none -mb-[1px]"></div>
 
   <!-- ZONE DE CONCIERGERIE -->
   <div class="w-full bg-[#0A0A0A] text-white pb-12 relative z-10">
@@ -472,7 +472,7 @@ import partners from '../data/partners.json';
           }
         });
         if (matchedProfils.length === 0) matchedProfils.push('couple');
-        card.setAttribute('data-profil', matchedProfils.slice(0, 2).join(' '));
+        card.setAttribute('data-profil', matchedProfils.join(' '));
       });
     }
 
