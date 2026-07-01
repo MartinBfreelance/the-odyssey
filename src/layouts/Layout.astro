@@ -14,6 +14,13 @@ const isHome = pathname === '/' || pathname === '/index.html' || pathname === ''
 const destinationsHref = isHome ? "#destinations" : "/#destinations";
 
 const bonsPlansHref = "/bons-plans";
+
+// Tri et classification automatique des destinations par continent
+const continents = ["Europe", "Amérique", "Asie"];
+const groupedDestinations = continents.reduce((acc, continent) => {
+  acc[continent] = destinationsData.filter(dest => dest.continent === continent);
+  return acc;
+}, {} as Record<string, typeof destinationsData>);
 ---
 
 <!DOCTYPE html>
@@ -59,24 +66,40 @@ const bonsPlansHref = "/bons-plans";
 					</div>
 				</a>
 
-				<!-- NAVIGATION SUPÉRIEURE AUTOMATIQUE -->
+				<!-- BLOC NAVIGATION DROITE -->
 				<div class="flex items-center">
 					<nav class="hidden md:flex items-center space-x-10 text-[10px] font-mono uppercase tracking-[0.25em]">
 						
-						<!-- Menu Destinations -->
+						<!-- Menu Déroulant Destinations (Nomenclature par Continent) -->
 						<div class="relative group/dropdown py-2">
 							<a href={destinationsHref} class="relative py-2 text-white hover:text-amber-400 hover:scale-105 transition-all duration-300 group/link flex items-center gap-1.5 cursor-pointer">
 								Destinations
 								<span class="text-[7px] text-neutral-400 group-hover/dropdown:rotate-180 transition-transform duration-300">▼</span>
 								<span class="absolute bottom-1 left-0 w-0 h-[3px] bg-amber-500/30 transition-all duration-300 group-hover/link:w-full -z-10 rounded-xs"></span>
 							</a>
-							<div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-48 opacity-0 pointer-events-none group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto transition-all duration-300 z-50">
-								<div class="bg-neutral-950/95 backdrop-blur-md border border-white/10 rounded-xl py-2 px-1 shadow-xl">
-									{destinationsData.map((dest) => (
-										<a href={`/destinations/${dest.slug}`} class="block px-4 py-2 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-amber-400 hover:bg-white/5 rounded-lg transition-all duration-200 font-medium">
-											{dest.titre.split(':')[0].trim()}
-										</a>
-									))}
+							<!-- Boîte de sous-menu classée par continent -->
+							<div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-60 opacity-0 pointer-events-none group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto transition-all duration-300 z-50">
+								<div class="bg-neutral-950/95 backdrop-blur-md border border-white/10 rounded-xl py-3 px-2 shadow-xl space-y-3 max-h-[420px] overflow-y-auto">
+									{continents.map((continent) => {
+										const dests = groupedDestinations[continent];
+										if (!dests || dests.length === 0) return null;
+										return (
+											<div class="space-y-1">
+												<!-- En-tête de continent délicat ambré -->
+												<div class="px-3 py-1 text-[7.5px] font-mono tracking-[0.3em] uppercase text-amber-500/80 font-bold border-b border-white/5 select-none">
+													{continent}
+												</div>
+												<!-- Liste des pays de ce continent -->
+												<div class="space-y-0.5">
+													{dests.map((dest) => (
+														<a href={`/destinations/${dest.slug}`} class="block px-3 py-1.5 text-[9px] font-mono uppercase tracking-widest text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200">
+															{dest.titre.split(':')[0].trim()}
+														</a>
+													))}
+												</div>
+											</div>
+										);
+									})}
 								</div>
 							</div>
 						</div>
@@ -116,7 +139,7 @@ const bonsPlansHref = "/bons-plans";
 			<slot />
 		</main>
 
-		<!-- PIED DE PAGE MAGAZINE (Automatique via partners.json) -->
+		<!-- PIED DE PAGE MAGAZINE -->
 		<footer class="bg-neutral-950 text-neutral-400 py-16 px-6 sm:px-8 md:px-12 border-t border-neutral-900 font-mono text-[10px] tracking-widest relative z-20">
 			<div class="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 pb-16 border-b border-neutral-900">
 				
