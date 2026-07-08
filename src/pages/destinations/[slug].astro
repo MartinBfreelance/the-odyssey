@@ -30,8 +30,9 @@ const titleSub = titleParts[1] ? titleParts[1].trim() : '';
 const geoPartsList = dest.geo.split(' // ');
 const ratingStars = "★".repeat(Math.round(dest.note)) + "☆".repeat(5 - Math.round(dest.note));
 
+// Suggestion par ambiance (type) uniquement
 const similarDestinations = destinationsData
-  .filter((d) => d.slug !== dest.slug && (d.type.some(t => dest.type.includes(t)) || d.profil.some(p => dest.profil.includes(p))))
+  .filter((d) => d.slug !== dest.slug && (d.type.some(t => dest.type.includes(t))))
   .slice(0, 3);
 
 // ANALYSE AUTO INFOS PRATIQUES
@@ -65,7 +66,7 @@ if (climateDatabase[country.toLowerCase().trim()]) {
   autoPeriode = climateDatabase[country.toLowerCase().trim()];
 }
 
-// Lecture des infos pratiques directement du JSON (avec repli sur les valeurs par défaut globales)
+// Lecture des infos pratiques
 const docPratique = dest.doc_pratique || "Carte d'identité ou passeport en cours de validité (UE). Aucun visa requis.";
 const volPratique = dest.vol_pratique || "Vols directs ou avec escale depuis la Belgique.";
 const deplacerPratique = dest.deplacement_pratique || "Location de voiture recommandée sur place.";
@@ -102,7 +103,6 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
         <h2 class="hero-subtitle">{dest.sous_titre}</h2>
         <div class="hero-tags">
           {dest.type.map((t) => <span class="hero-tag">{t === 'aventure' ? '🥾 Aventure' : t === 'plages' ? '🏖️ Plages' : '🏛️ Culture'}</span>)}
-          {dest.profil.map((p) => <span class="hero-tag">{p === 'couple' ? '👫 Couple' : p === 'famille' ? '👨‍👩‍👧 Famille' : p === 'solo' ? '🧍 Solo' : '👥 Amis'}</span>)}
         </div>
       </div>
     </section>
@@ -226,7 +226,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
           )}
         </div>
 
-        <!-- BLOC : LA FEUILLE DE ROUTE (Titre principal fusionné et espacement mt-2 corrigé sans sous-titre parasite) -->
+        <!-- FEUILLE DE ROUTE -->
         {dest.points_interet && (
           <div class="section text-left">
             <div class="section-header group/sec-title">
@@ -245,7 +245,6 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
               <div class="section-line"></div>
             </div>
             
-            <!-- Liste à puces positionnée directement sous l'en-tête avec une marge mt-2 soignée -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-4 mt-2 font-sans text-xs text-neutral-600 font-light leading-relaxed select-text">
               {dest.points_interet.map((point) => {
                 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${point} ${country}`)}`;
@@ -272,7 +271,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
           </div>
         )}
 
-        <!-- NOS TROUVAILLES (Logo Boussole & Highlight restaurés) -->
+        <!-- NOS TROUVAILLES -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -308,7 +307,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
           </div>
         </div>
 
-        <!-- INFOS PRATIQUES (Alignement harmonisé et boîtes fines) -->
+        <!-- INFOS PRATIQUES -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -326,7 +325,6 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
             <div class="section-line"></div>
           </div>
           <div class="pratique-grid font-sans text-left select-none">
-            <!-- Modification de la mention Documents par Documents nécessaires sur demande -->
             <div class="pratique-item"><div class="pratique-icon">🛂</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Documents nécessaires</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{docPratique}</div></div></div>
             <div class="pratique-item"><div class="pratique-icon">✈️</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Vol depuis la Belgique</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{volPratique}</div></div></div>
             <div class="pratique-item"><div class="pratique-icon">🚗</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Se déplacer</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{deplacerPratique}</div></div></div>
@@ -334,7 +332,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
           </div>
         </div>
 
-        <!-- PRÉPARER VOTRE VOYAGE (Serré, sans padding pt-4 parasite, et fiches partenaires minces) -->
+        <!-- PRÉPARER VOTRE VOYAGE -->
         <div class="section text-left">
           <div class="section-header group/sec-title">
             <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
@@ -352,12 +350,10 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
             <div class="section-line"></div>
           </div>
           
-          <!-- Espacement corrigé : pt-0 pour un alignement symétrique parfait -->
           <div class="space-y-3 select-none">
             {partners.filter(p => p.active).map((p) => {
               const resolvedUrl = getPartnerUrl(p.id, p.default_url);
               
-              // Automatisation textuelle éditoriale
               let customDesc = p.desc;
               if (p.id === 'booking') {
                 customDesc = `Dénichez votre hébergement idéal à ${titleMain} : guesthouses de charme, hôtels confidentiels ou adresses insolites sélectionnés par nos soins.`;
@@ -374,7 +370,6 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
               return (
                 <div class="partner-block flex flex-col md:flex-row md:items-center justify-between gap-6 p-4 border border-[#E0D9D0]/40 bg-white rounded-xl">
                   <div class="flex items-start gap-4">
-                    <!-- Taille d'icône fine et proportionnelle -->
                     <div class="partner-icon text-xl shrink-0 mt-0.5">{p.emoji}</div>
                     <div class="space-y-0.5">
                       <div class="partner-label text-[8px] font-mono tracking-widest text-amber-700 uppercase font-bold">{p.category}</div>
@@ -446,7 +441,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
                   <span data-star="5" class="interactive-star hover:scale-115 transition-transform duration-150">★</span>
                 </div>
                 <div id="rating-feedback-msg" class="text-[9px] font-mono uppercase tracking-widest text-neutral-400 h-4">Cliquez pour noter ce guide</div>
-                <a href="https://instagram.com/the_odyssey_travel_journal" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none w-full py-2.5">Suivre notre aventure ❤️</a>
+                <a href="https://www.instagram.com/the_odyssey_travel_journal/" target="_blank" rel="noopener noreferrer" class="partner-cta block text-center select-none w-full py-2.5">Suivre notre aventure ❤️</a>
               </div>
             </div>
           </div>
@@ -482,7 +477,6 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
               </a>
             ))}
           </div>
-          <!-- BOUTON DE RETOUR RESTAURÉ ET SÉCURISÉ EN COULEUR AMBRÉE D'ORIGINE -->
           <div class="text-left mt-8 select-none">
             <a href="/#destinations" id="see-all-routes-btn" class="partner-cta inline-block select-none font-sans">
               Voir tous les guides →
@@ -563,66 +557,19 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
   .trouvaille-icon { font-size: 20px; margin-bottom: 7px; }
   .trouvaille-title { font-size: 12px; color: #2a2520; margin-bottom: 4px; }
   .trouvaille-text { font-family: 'Inter', sans-serif; font-size: 9.5px; color: #7a7060; line-height: 1.5; }
-  
-  /* Ligne horizontale fine et compacte des partenaires */
-  .partner-block { 
-    background: #fff; 
-    border: 1px solid rgba(224, 217, 208, 0.45); 
-    border-radius: 12px; 
-    padding: 12px 20px; /* Rembourrage aminci à 12px vertical pour alléger visuellement */
-    transition: box-shadow 0.2s; 
-  }
-  .partner-block:hover { 
-    box-shadow: 0 4px 16px rgba(0,0,0,0.04); 
-  }
-  .partner-icon { 
-    font-size: 20px; /* Taille proportionnelle et ajustée */
-    flex-shrink: 0; 
-  }
-  .partner-label { 
-    font-family: 'Inter', sans-serif; 
-    font-size: 8px; 
-    letter-spacing: 1.5px; 
-    color: #C8813A; 
-    text-transform: uppercase; 
-    margin-bottom: 3px; 
-  }
-  .partner-title { 
-    font-size: 13px; 
-    color: #2a2520; 
-    margin-bottom: 3px; 
-  }
-  .partner-text { 
-    font-family: 'Inter', sans-serif; 
-    font-size: 10.5px; 
-    color: #7a7060; 
-    line-height: 1.5; 
-  }
+  .partner-block { background: #fff; border: 1px solid rgba(224, 217, 208, 0.45); border-radius: 12px; padding: 12px 20px; transition: box-shadow 0.2s; }
+  .partner-block:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.04); }
+  .partner-icon { font-size: 20px; flex-shrink: 0; }
+  .partner-label { font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 1.5px; color: #C8813A; text-transform: uppercase; margin-bottom: 3px; }
+  .partner-title { font-size: 13px; color: #2a2520; margin-bottom: 3px; }
+  .partner-text { font-family: 'Inter', sans-serif; font-size: 10.5px; color: #7a7060; line-height: 1.5; }
   .partner-cta { 
-    background: #C8813A; 
-    color: #fff; 
-    font-family: 'Inter', sans-serif; 
-    font-size: 8.5px; 
-    letter-spacing: 1.5px; 
-    text-transform: uppercase; 
-    font-weight: bold; 
-    border: none; 
-    border-radius: 20px; 
-    padding: 8px 16px; 
-    cursor: pointer; 
-    white-space: nowrap; 
-    flex-shrink: 0; 
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-    text-decoration: none; 
-    display: inline-block;
-    box-shadow: 0 2px 8px rgba(200, 129, 58, 0.15);
+    background: #C8813A; color: #fff; font-family: 'Inter', sans-serif; font-size: 8.5px; letter-spacing: 1.5px; 
+    text-transform: uppercase; font-weight: bold; border: none; border-radius: 20px; padding: 8px 16px; 
+    cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    text-decoration: none; display: inline-block; box-shadow: 0 2px 8px rgba(200, 129, 58, 0.15);
   }
-  .partner-cta:hover { 
-    background: #2C3E50; 
-    transform: translateY(-1.5px);
-    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.22);
-  }
-
+  .partner-cta:hover { background: #2C3E50; transform: translateY(-1.5px); box-shadow: 0 4px 12px rgba(44, 62, 80, 0.22); }
   .pratique-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .pratique-item { background: #fff; border: 1px solid #E0D9D0; border-radius: 10px; padding: 12px; display: flex; gap: 8px; }
   .pratique-icon { font-size: 15px; flex-shrink: 0; }
@@ -680,7 +627,6 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
 
       const updateFavButtonUI = () => {
         if (!cardId) return;
-        const favs = getFavorites();
         const svg = destFavBtn.querySelector('svg');
         if (svg) {
           if (isFavorite(cardId)) {
@@ -803,4 +749,3 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
     }
   });
 </script>
-</Layout>
