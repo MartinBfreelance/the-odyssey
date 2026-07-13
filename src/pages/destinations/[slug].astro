@@ -30,6 +30,23 @@ const titleSub = titleParts[1] ? titleParts[1].trim() : '';
 const geoPartsList = dest.geo.split(' // ');
 const ratingStars = "★".repeat(Math.round(dest.note)) + "☆".repeat(5 - Math.round(dest.note));
 
+// Base de coordonnées géographiques fixes ultra-robustes pour vos 10 destinations [latitude, longitude]
+const coordsDatabase: Record<string, [number, number]> = {
+  'albanie': [40.0673, 19.7423],      // Riviera albanaise (Sarandë)
+  'corse': [42.1524, 9.0129],         // Centre de la Corse
+  'chicago': [41.8781, -87.6298],     // Chicago Loop
+  'saint-tropez': [43.2677, 6.6406],  // Saint-Tropez
+  'miami': [25.7617, -80.1918],       // Miami (Floride)
+  'bordeaux': [44.8378, -0.5792],     // Bordeaux
+  'tokyo': [35.6762, 139.6503],       // Tokyo
+  'lisbonne': [38.7223, -9.1393],     // Lisbonne
+  'moscou': [55.7558, 37.6173],       // Moscou
+  'islande': [64.9631, -19.0208]       // Centre de l'Islande
+};
+
+const coords = coordsDatabase[dest.slug] || [0, 0];
+const mapAvailable = coords[0] !== 0;
+
 // Suggestion par ambiance (type) uniquement
 const similarDestinations = destinationsData
   .filter((d) => d.slug !== dest.slug && (d.type.some(t => dest.type.includes(t))))
@@ -189,7 +206,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
               </svg>
             </div>
             <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
-              Notre itinerary
+              Notre itinéraire
               <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
             </span>
             <div class="section-line"></div>
@@ -333,16 +350,18 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
             </div>
 
             <!-- Carte de situation dynamique via Leaflet & OpenStreetMap (Dessinée nativement sans Iframe et 100% compatible Vercel) -->
-            <!-- data-query fournit dynamiquement la ville et le pays au script Leaflet -->
+            <!-- data-lat et data-lon injectent directement les coordonnées statiques incassables -->
             <div 
               id="leaflet-map" 
-              data-query={`${titleMain}, ${country}`}
+              data-lat={coords[0]} 
+              data-lon={coords[1]}
               class="w-full h-48 lg:h-auto lg:flex-grow overflow-hidden rounded-2xl border border-[#E0D9D0]/50 shadow-2xs relative bg-neutral-100 select-none z-10"
             >
-              <!-- Message de chargement de la carte -->
-              <div class="absolute inset-0 flex items-center justify-center text-neutral-400 font-mono text-[9px] tracking-widest uppercase">
-                Chargement de la carte...
-              </div>
+              {(!mapAvailable) && (
+                <div class="absolute inset-0 flex items-center justify-center text-neutral-400 font-mono text-[9px] tracking-widest uppercase">
+                  Carte indisponible
+                </div>
+              )}
             </div>
           </div>
 
@@ -538,51 +557,40 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
   </div>
 </Layout>
 
-<!-- LOGIQUE D'INITIALISATION DE LA CARTE NATIVE SANS IFRAME (PROTÈGE DU BLOCAGE VERCEL) -->
+<!-- LOGIQUE DU CHARGEMENT DE LA CARTE NATIVE LEAFLET SANS AUCUNE IFRAME (Garantit une compatibilité 100% stable en ligne) -->
 <script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
     const mapElement = document.getElementById('leaflet-map');
     if (!mapElement) return;
 
-    const query = mapElement.dataset.query;
-    if (!query) return;
+    // Récupération des coordonnées géographiques fixes et incassables stockées lors de la compilation
+    const latAttr = mapElement.dataset.lat;
+    const lonAttr = mapElement.dataset.lon;
+    if (!latAttr || !lonAttr) return;
 
-    // Requête vers Nominatim (API OpenStreetMap gratuite et libre d'accès) pour géocoder la destination
-    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.length > 0) {
-          const lat = parseFloat(data[0].lat);
-          const lon = parseFloat(data[0].lon);
+    const lat = parseFloat(latAttr);
+    const lon = parseFloat(lonAttr);
+    if (lat === 0 && lon === 0) return;
 
-          // Vider le message de chargement
-          mapElement.innerHTML = '';
+    // Effacer le message de chargement
+    mapElement.innerHTML = '';
 
-          // Initialisation de la carte Leaflet
-          // Desactivation du scroll-zoom par défaut pour le confort de lecture mobile
-          // @ts-ignore
-          const map = L.map('leaflet-map', {
-            zoomControl: true,
-            scrollWheelZoom: false,
-          }).setView([lat, lon], 9);
+    // Initialisation de la carte Leaflet
+    // @ts-ignore
+    const map = L.map('leaflet-map', {
+      zoomControl: true,
+      scrollWheelZoom: false, // Désactive le scroll de souris involontaire au défilement tactile ou de page
+    }).setView([lat, lon], 9);
 
-          // Chargement des dalles CartoDB Positron (Gris épuré style Mapbox, sans traceur tiers ni cookies)
-          // @ts-ignore
-          L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          }).addTo(map);
+    // Chargement des dalles CartoDB Positron (Teintes grises épurées haut de gamme raccord avec la DA d'albâtre)
+    // @ts-ignore
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
 
-          // Ajout du marqueur à l'emplacement exact trouvé
-          // @ts-ignore
-          L.marker([lat, lon]).addTo(map);
-        } else {
-          // Affichage de secours neutre si la ville n'est pas trouvée dans la bdd mondiale
-          mapElement.innerHTML = '<div class="absolute inset-0 flex items-center justify-center text-neutral-400 font-mono text-[9px] tracking-widest uppercase">Carte indisponible</div>';
-        }
-      })
-      .catch(() => {
-        mapElement.innerHTML = '<div class="absolute inset-0 flex items-center justify-center text-neutral-400 font-mono text-[9px] tracking-widest uppercase">Erreur de chargement de la carte</div>';
-      });
+    // Ajout d'un marqueur classique à l'emplacement exact
+    // @ts-ignore
+    L.marker([lat, lon]).addTo(map);
   });
 </script>
 
@@ -615,6 +623,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
   .author-stats { background: #fff; border-bottom: 1px solid #E0D9D0; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
   .author-part { display: flex; align-items: center; gap: 10px; }
   .author-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #C8813A, #8a5a2a); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0; }
+  .author-part:hover .author-avatar { transform: rotate(10deg); }
   .author-name { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 1px; color: #2C3E50; text-transform: uppercase; font-weight: 600; }
   .rating-inline { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
   .stars { color: #C8813A; font-size: 11px; letter-spacing: 1px; }
