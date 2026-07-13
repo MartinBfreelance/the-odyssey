@@ -307,29 +307,69 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
           </div>
         </div>
 
-        <!-- INFOS PRATIQUES -->
-        <div class="section text-left">
-          <div class="section-header group/sec-title">
-            <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
-                <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
-                <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
-                <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
-              </svg>
+        <!-- SPLIT 50/50 : SITUATION GÉOGRAPHIQUE & INFOS PRATIQUES (HAUTEUR MIROIR CORRIGÉE) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch section mb-12">
+          
+          <!-- COLONNE GAUCHE : SITUATION GÉOGRAPHIQUE -->
+          <div class="flex flex-col h-full text-left">
+            <div class="section-header group/sec-title">
+              <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                  <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                  <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+                  <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                  <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+                </svg>
+              </div>
+              <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
+                Situation géographique
+                <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+              </span>
+              <div class="section-line"></div>
             </div>
-            <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
-              Infos pratiques
-              <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
-            </span>
-            <div class="section-line"></div>
+
+            <!-- Carte de situation dynamique s'associant parfaitement au pixel près avec la hauteur des blocs d'en face -->
+            <div class="w-full h-48 lg:h-auto lg:flex-grow overflow-hidden rounded-2xl border border-[#E0D9D0]/50 shadow-2xs relative bg-neutral-100 select-none">
+              <iframe
+                title={`Situation géographique de ${titleMain}`}
+                width="100%"
+                height="100%"
+                style="border:0; filter: grayscale(45%) contrast(100%) brightness(98%);"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(`${titleMain}, ${country}`)}&t=&z=8&ie=UTF8&iwloc=&output=embed`}
+              ></iframe>
+            </div>
           </div>
-          <div class="pratique-grid font-sans text-left select-none">
-            <div class="pratique-item"><div class="pratique-icon">🛂</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Documents nécessaires</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{docPratique}</div></div></div>
-            <div class="pratique-item"><div class="pratique-icon">✈️</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Vol depuis la Belgique</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{volPratique}</div></div></div>
-            <div class="pratique-item"><div class="pratique-icon">🚗</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Se déplacer</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{deplacerPratique}</div></div></div>
-            <div class="pratique-item"><div class="pratique-icon">💶</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Monnaie</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{monnaiePratique}</div></div></div>
+
+          <!-- COLONNE DROITE : INFOS PRATIQUES -->
+          <div class="flex flex-col h-full text-left">
+            <div class="section-header group/sec-title">
+              <div class="w-5 h-5 text-neutral-400 group-hover/sec-title:rotate-45 group-hover/sec-title:text-amber-600 transition-all duration-500 ease-out shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
+                  <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
+                  <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2"></path>
+                  <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                  <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
+                </svg>
+              </div>
+              <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
+                Infos pratiques
+                <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
+              </span>
+              <div class="section-line"></div>
+            </div>
+
+            <!-- Grille 2x2 des blocs pratiques -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-sans text-left select-none flex-grow">
+              <div class="pratique-item flex flex-col justify-between"><div class="flex gap-3"><div class="pratique-icon">🛂</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Documents nécessaires</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{docPratique}</div></div></div></div>
+              <div class="pratique-item flex flex-col justify-between"><div class="flex gap-3"><div class="pratique-icon">✈️</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Vol depuis la Belgique</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{volPratique}</div></div></div></div>
+              <div class="pratique-item flex flex-col justify-between"><div class="flex gap-3"><div class="pratique-icon">🚗</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Se déplacer</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{deplacerPratique}</div></div></div></div>
+              <div class="pratique-item flex flex-col justify-between"><div class="flex gap-3"><div class="pratique-icon">💶</div><div><div class="pratique-label font-bold text-[8px] tracking-wider text-amber-700 uppercase">Monnaie</div><div class="pratique-text text-[10.5px] leading-relaxed text-neutral-600">{monnaiePratique}</div></div></div></div>
+            </div>
           </div>
+
         </div>
 
         <!-- PRÉPARER VOTRE VOYAGE -->
@@ -749,3 +789,4 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
     }
   });
 </script>
+</Layout>
