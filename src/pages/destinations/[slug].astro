@@ -91,9 +91,8 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
 ---
 
 <Layout title={`${dest.titre} | The Odyssey`}>
-  <!-- IMPORT DIRECT DE LEAFLET POUR LA CARTE INTERACTIVE -->
+  <!-- IMPORT DU STYLE LEAFLET UNIQUE POUR LA CARTE INTERACTIVE -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" is:inline></script>
 
   <div class="dest-page-wrapper">
     
@@ -557,13 +556,13 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
   </div>
 </Layout>
 
-<!-- LOGIQUE DU CHARGEMENT DE LA CARTE NATIVE LEAFLET SANS AUCUNE IFRAME (Garantit une compatibilité 100% stable en ligne) -->
+<!-- LOGIQUE DU CHARGEMENT DE LA CARTE NATIVE SANS RACE CONDITION (Attente asynchrone de Leaflet) -->
 <script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
     const mapElement = document.getElementById('leaflet-map');
     if (!mapElement) return;
 
-    // Récupération des coordonnées géographiques fixes et incassables stockées lors de la compilation
+    // Récupération des coordonnées géographiques fixes et incassables injectées lors de la compilation
     const latAttr = mapElement.dataset.lat;
     const lonAttr = mapElement.dataset.lon;
     if (!latAttr || !lonAttr) return;
@@ -572,25 +571,44 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
     const lon = parseFloat(lonAttr);
     if (lat === 0 && lon === 0) return;
 
-    // Effacer le message de chargement
-    mapElement.innerHTML = '';
+    // Fonction pour forcer le téléchargement asynchrone de Leaflet dans le bon ordre avant l'initialisation de la carte
+    const loadLeaflet = () => {
+      return new Promise((resolve, reject) => {
+        if (window.L) {
+          resolve(window.L);
+          return;
+        }
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        script.onload = () => resolve(window.L);
+        script.onerror = () => reject(new Error('Leaflet script load error'));
+        document.head.appendChild(script);
+      });
+    };
 
-    // Initialisation de la carte Leaflet
-    // @ts-ignore
-    const map = L.map('leaflet-map', {
-      zoomControl: true,
-      scrollWheelZoom: false, // Désactive le scroll de souris involontaire au défilement tactile ou de page
-    }).setView([lat, lon], 9);
+    loadLeaflet()
+      .then((L) => {
+        // Effacer le message de chargement
+        mapElement.innerHTML = '';
 
-    // Chargement des dalles CartoDB Positron (Teintes grises épurées haut de gamme raccord avec la DA d'albâtre)
-    // @ts-ignore
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+        // Initialisation de la carte Leaflet
+        const map = L.map('leaflet-map', {
+          zoomControl: true,
+          scrollWheelZoom: false, // Désactive le scroll de souris involontaire au défilement tactile ou de page
+        }).setView([lat, lon], 9);
 
-    // Ajout d'un marqueur classique à l'emplacement exact
-    // @ts-ignore
-    L.marker([lat, lon]).addTo(map);
+        // Chargement des dalles CartoDB Positron (Gris épuré Mapbox-like en adéquation avec la DA d'albâtre)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        // Ajout d'un marqueur classique à l'emplacement exact
+        L.marker([lat, lon]).addTo(map);
+      })
+      .catch((err) => {
+        console.error(err);
+        mapElement.innerHTML = '<div class="absolute inset-0 flex items-center justify-center text-neutral-400 font-mono text-[9px] tracking-widest uppercase">Erreur de chargement de la carte</div>';
+      });
   });
 </script>
 
@@ -623,7 +641,6 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
   .author-stats { background: #fff; border-bottom: 1px solid #E0D9D0; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
   .author-part { display: flex; align-items: center; gap: 10px; }
   .author-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #C8813A, #8a5a2a); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0; }
-  .author-part:hover .author-avatar { transform: rotate(10deg); }
   .author-name { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 1px; color: #2C3E50; text-transform: uppercase; font-weight: 600; }
   .rating-inline { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
   .stars { color: #C8813A; font-size: 11px; letter-spacing: 1px; }
@@ -634,7 +651,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
   .stat-inline-val { font-size: 13px; color: #2C3E50; font-weight: 700; }
   .stat-inline-lbl { font-family: 'Inter', sans-serif; font-size: 7.5px; letter-spacing: 1px; color: #b0a898; text-transform: uppercase; margin-top: 2px; }
   .page { display: flex; position: relative; padding: 40px 0; }
-  .trail-right { position: absolute; right: 8px; top: 0; bottom: 0; width: 44px; pointer-events: none; z-index: 10; }
+  .trail-right { position: absolute; right: 8px; top: 0; bottom: 0; width: 44px; pointer-events: none; z-10; }
   .trail-sticky { position: sticky; top: 120px; } 
   .content { flex: 1; padding: 28px 64px 0 40px; }
   @media (max-width: 1024px) { .content { padding: 28px 32px 0 32px; } .author-stats { flex-direction: column; align-items: flex-start; gap: 16px; padding: 20px; } .stats-right { width: 100%; justify-content: space-between; } }
