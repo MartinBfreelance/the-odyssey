@@ -307,7 +307,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
           </div>
         </div>
 
-        <!-- SPLIT 50/50 : SITUATION GÉOGRAPHIQUE & INFOS PRATIQUES (HAUTEUR MIROIR CORRIGÉE) -->
+        <!-- SPLIT 50/50 : SITUATION GÉOGRAPHIQUE & INFOS PRATIQUES (HAUTEUR MIROIR CORRIGÉE POUR VERCEL) -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch section mb-12">
           
           <!-- COLONNE GAUCHE : SITUATION GÉOGRAPHIQUE -->
@@ -338,7 +338,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
-                src={`https://maps.google.com/maps?q=${encodeURIComponent(`${titleMain}, ${country}`)}&t=&z=8&ie=UTF8&iwloc=&output=embed`}
+                src={`https://www.google.com/maps?q=${encodeURIComponent(`${titleMain}, ${country}`)}&z=9&output=embed`}
               ></iframe>
             </div>
           </div>
