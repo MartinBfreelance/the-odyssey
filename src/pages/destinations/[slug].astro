@@ -74,6 +74,10 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
 ---
 
 <Layout title={`${dest.titre} | The Odyssey`}>
+  <!-- IMPORT DIRECT DE LEAFLET POUR LA CARTE INTERACTIVE -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" is:inline></script>
+
   <div class="dest-page-wrapper">
     
     <!-- HERO HEADER -->
@@ -185,7 +189,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
               </svg>
             </div>
             <span class="relative text-[9px] font-mono tracking-[0.4em] uppercase text-neutral-950 font-bold group-hover/sec-title:text-amber-800 transition-colors duration-300 select-none">
-              Notre itinéraire
+              Notre itinerary
               <span class="absolute bottom-0 left-0 w-0 h-[4px] bg-amber-500/15 group-hover/sec-title:w-full transition-all duration-500 ease-out rounded-xs"></span>
             </span>
             <div class="section-line"></div>
@@ -307,7 +311,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
           </div>
         </div>
 
-        <!-- SPLIT 50/50 : SITUATION GÉOGRAPHIQUE & INFOS PRATIQUES (VERSION CARTE INTERACTIVE CORRIGÉE POUR VERCEL) -->
+        <!-- SPLIT 50/50 : SITUATION GÉOGRAPHIQUE (LEAFLET NATIVE) & INFOS PRATIQUES (HAUTEUR MIROIR CORRIGÉE POUR VERCEL) -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch section mb-12">
           
           <!-- COLONNE GAUCHE : SITUATION GÉOGRAPHIQUE -->
@@ -328,18 +332,17 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
               <div class="section-line"></div>
             </div>
 
-            <!-- Carte de situation dynamique interactive - maps.google.com avec output=embed est autorisé en Iframe et fonctionne à 100% en ligne -->
-            <div class="w-full h-48 lg:h-auto lg:flex-grow overflow-hidden rounded-2xl border border-[#E0D9D0]/50 shadow-2xs relative bg-neutral-100 select-none">
-              <iframe
-                title={`Situation géographique de ${titleMain}`}
-                width="100%"
-                height="100%"
-                style="border:0; filter: grayscale(45%) contrast(100%) brightness(98%);"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                src={`https://maps.google.com/maps?q=${encodeURIComponent(`${titleMain}, ${country}`)}&z=9&output=embed`}
-              ></iframe>
+            <!-- Carte de situation dynamique via Leaflet & OpenStreetMap (Dessinée nativement sans Iframe et 100% compatible Vercel) -->
+            <!-- data-query fournit dynamiquement la ville et le pays au script Leaflet -->
+            <div 
+              id="leaflet-map" 
+              data-query={`${titleMain}, ${country}`}
+              class="w-full h-48 lg:h-auto lg:flex-grow overflow-hidden rounded-2xl border border-[#E0D9D0]/50 shadow-2xs relative bg-neutral-100 select-none z-10"
+            >
+              <!-- Message de chargement de la carte -->
+              <div class="absolute inset-0 flex items-center justify-center text-neutral-400 font-mono text-[9px] tracking-widest uppercase">
+                Chargement de la carte...
+              </div>
             </div>
           </div>
 
@@ -534,6 +537,54 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
     </div>
   </div>
 </Layout>
+
+<!-- LOGIQUE D'INITIALISATION DE LA CARTE NATIVE SANS IFRAME (PROTÈGE DU BLOCAGE VERCEL) -->
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mapElement = document.getElementById('leaflet-map');
+    if (!mapElement) return;
+
+    const query = mapElement.dataset.query;
+    if (!query) return;
+
+    // Requête vers Nominatim (API OpenStreetMap gratuite et libre d'accès) pour géocoder la destination
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const lat = parseFloat(data[0].lat);
+          const lon = parseFloat(data[0].lon);
+
+          // Vider le message de chargement
+          mapElement.innerHTML = '';
+
+          // Initialisation de la carte Leaflet
+          // Desactivation du scroll-zoom par défaut pour le confort de lecture mobile
+          // @ts-ignore
+          const map = L.map('leaflet-map', {
+            zoomControl: true,
+            scrollWheelZoom: false,
+          }).setView([lat, lon], 9);
+
+          // Chargement des dalles CartoDB Positron (Gris épuré style Mapbox, sans traceur tiers ni cookies)
+          // @ts-ignore
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          }).addTo(map);
+
+          // Ajout du marqueur à l'emplacement exact trouvé
+          // @ts-ignore
+          L.marker([lat, lon]).addTo(map);
+        } else {
+          // Affichage de secours neutre si la ville n'est pas trouvée dans la bdd mondiale
+          mapElement.innerHTML = '<div class="absolute inset-0 flex items-center justify-center text-neutral-400 font-mono text-[9px] tracking-widest uppercase">Carte indisponible</div>';
+        }
+      })
+      .catch(() => {
+        mapElement.innerHTML = '<div class="absolute inset-0 flex items-center justify-center text-neutral-400 font-mono text-[9px] tracking-widest uppercase">Erreur de chargement de la carte</div>';
+      });
+  });
+</script>
 
 <style>
   .dest-page-wrapper { background-color: #F5F2ED; color: #2a2520; font-family: 'Playfair Display', Georgia, serif; }
