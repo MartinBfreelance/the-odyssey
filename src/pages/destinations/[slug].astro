@@ -234,7 +234,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-full h-full">
                   <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="7.2" stroke-dasharray="1.8 1.5"></circle>
                   <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke-width="1.2" stroke="currentColor"></path>
-                  <path fill="currentColor" d="M12 4.5l2.2 7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
+                  <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-amber-600"></path>
                   <path fill="currentColor" d="M12 19.5l2.2-7.5L12 14.2l-2.2-2.2z" class="text-neutral-300"></path>
                 </svg>
               </div>
@@ -307,7 +307,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
           </div>
         </div>
 
-        <!-- SPLIT 50/50 : SITUATION GÉOGRAPHIQUE & INFOS PRATIQUES (HAUTEUR MIROIR CORRIGÉE POUR VERCEL) -->
+        <!-- SPLIT 50/50 : SITUATION GÉOGRAPHIQUE & INFOS PRATIQUES (VERSION CARTE INTERACTIVE CORRIGÉE POUR VERCEL) -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch section mb-12">
           
           <!-- COLONNE GAUCHE : SITUATION GÉOGRAPHIQUE -->
@@ -328,7 +328,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
               <div class="section-line"></div>
             </div>
 
-            <!-- Carte de situation dynamique s'associant parfaitement au pixel près avec la hauteur des blocs d'en face -->
+            <!-- Carte de situation dynamique interactive - maps.google.com avec output=embed est autorisé en Iframe et fonctionne à 100% en ligne -->
             <div class="w-full h-48 lg:h-auto lg:flex-grow overflow-hidden rounded-2xl border border-[#E0D9D0]/50 shadow-2xs relative bg-neutral-100 select-none">
               <iframe
                 title={`Situation géographique de ${titleMain}`}
@@ -338,7 +338,7 @@ const monnaiePratique = dest.monnaie_pratique || "Euro (€) conseillé.";
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
-                src={`https://www.google.com/maps?q=${encodeURIComponent(`${titleMain}, ${country}`)}&z=9&output=embed`}
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(`${titleMain}, ${country}`)}&z=9&output=embed`}
               ></iframe>
             </div>
           </div>
